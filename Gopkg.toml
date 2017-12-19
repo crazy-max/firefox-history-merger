@@ -1,0 +1,20 @@
+[metadata]
+package = "github.com/crazy-max/firefox-history-merger"
+homepage = "https://github.com/crazy-max/firefox-history-merger"
+license = "MIT"
+
+[[constraint]]
+  name = "github.com/spf13/cobra"
+  version = "0.0.1"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/jinzhu/gorm"
+
+[[constraint]]
+  name = "gopkg.in/cheggaaa/pb.v1"
+  version = "1.0.18"
+
+[[constraint]]
+  name = "github.com/mat/besticon"
+  version = "3.5.0"
