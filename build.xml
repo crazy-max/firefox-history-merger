@@ -47,6 +47,7 @@
   <macrodef name="xc">
     <attribute name="platform"/>
     <attribute name="arch"/>
+    <attribute name="cc" default=""/>
     <sequential>
       <var name="xc.ext" unset="true"/>
       <if>
@@ -64,6 +65,7 @@
         <env key="CGO_ENABLED" value="1"/>
         <env key="GOOS" value="@{platform}"/>
         <env key="GOARCH" value="@{arch}"/>
+        <env key="CC_FOR_TARGET" value="@{cc}"/>
         <arg value="build"/>
         <arg value="-ldflags"/>
         <arg value="${ldflags}"/>
@@ -156,8 +158,9 @@
     <ldflags add="-X '${app.package}/utils.AppPackage=${app.package}'"/>
     <ldflags add="-X '${app.package}/utils.AppUrl=${app.url}'"/>
     <ldflags add="-X '${app.package}/utils.AppVersion=${app.version}'"/>
-    <xc platform="windows" arch="386"/>
-    <xc platform="windows" arch="amd64"/>
+
+    <xc platform="windows" arch="386" cc="i686-w64-mingw32-gcc"/>
+    <xc platform="windows" arch="amd64" cc="x86_64-w64-mingw32-gcc"/>
     <xc platform="darwin" arch="386"/>
     <xc platform="darwin" arch="amd64"/>
     <xc platform="linux" arch="386"/>
