@@ -34,8 +34,8 @@
 
 ## Requirements
 
-The schema used by firefox-history-merger is based on **Firefox 57** (places v39). If you use an older schema, the database schema will be merged to this version. So be careful with the working `places.sqlite` you want to merge.<br />
-You can check the compatibility of your working `places.sqlite` with the `info` command.
+Schema used by firefox-history-merger is based on **Firefox 57** (places v39). If you use an older schema, database schema will be merged to this version. So be careful with your working `places.sqlite` you want to merge.<br />
+You can check current version of your working `places.sqlite` with `info` command.
 
 ## Usage
 
@@ -54,7 +54,7 @@ Places entries:   129947
 Last used on:     2017-12-09 18:26:56
 ```
 
-Now if you want to merge your current `places.sqlite` with others, here is the folder structure used in this example :
+Here is the folder structure that will be used in this example :
 
 ```
 [-] other_places_folder
@@ -64,7 +64,7 @@ firefox-history-merger.exe
 places.sqlite
 ```
 
-Then execute this command to merge the `*.sqlite` files in `./other_places_folder/` with the working `places.sqlite` :
+Now execute this command to merge the `*.sqlite` files in `./other_places_folder/` with your working `places.sqlite` :
 
 ```
 $ firefox-history-merger merge places.sqlite ./other_places_folder/ --merge-full
@@ -104,7 +104,7 @@ Once you create it and set it, check the value of `places.history.expiration.tra
 
 ### Database schema
 
-Schema version of database is stored in `user_version` [pragma statement](https://sqlite.org/pragma.html). Linked Firefox version to database schema can be found in [Database.cpp](https://dxr.mozilla.org/mozilla-central/source/toolkit/components/places/Database.cpp#993).
+Database schema version is stored in `user_version` [pragma statement](https://sqlite.org/pragma.html). Linked Firefox version to database schema can be found in [Database.cpp](https://dxr.mozilla.org/mozilla-central/source/toolkit/components/places/Database.cpp#993).
 
 ![places v39 database schema](https://raw.githubusercontent.com/crazy-max/firefox-history-merger/master/.res/schemas/places_v39.png)
 > [Edit this diagram](https://www.draw.io/?title=places_v39.png&url=https%3A%2F%2Fraw.githubusercontent.com%2Fcrazy-max%2Ffirefox-history-merger%2Fmaster%2F.res%2Fschemas%2Fplaces_v39.png%3Ft%3D0) in your browser. 
