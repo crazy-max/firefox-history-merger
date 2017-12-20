@@ -75,40 +75,14 @@
         <env key="CGO_ENABLED" value="1"/>
         <env key="GOOS" value="@{platform}"/>
         <env key="GOARCH" value="@{arch}"/>
-        <env key="PATH" value="${gcc.path};${env.PATH}"/>
+        <env key="PATH" value="${gcc.path}${xc.pathsep}${env.PATH}"/>
         <arg value="build"/>
         <arg value="-ldflags"/>
         <arg value="${ldflags}"/>
         <arg value="-o"/>
-        <arg value="${build.path}/@{platform}/@{arch}/${app.name}${xc.ext}"/>
+        <arg value="${release.path}/${app.name}-@{platform}-@{arch}${xc.ext}"/>
         <arg value="-v"/>
       </exec>
-
-      <copy todir="${build.path}/@{platform}/@{arch}/">
-        <fileset dir="${project.basedir}">
-          <include name="CHANGELOG.md"/>
-          <include name="LICENSE"/>
-          <include name="README.md"/>
-        </fileset>
-      </copy>
-
-      <if>
-        <equals arg1="@{platform}" arg2="windows"/>
-        <then>
-          <zip destfile="${release.path}/${app.name}_@{platform}_@{arch}.zip">
-            <fileset dir="${build.path}/@{platform}/@{arch}"/>
-          </zip>
-        </then>
-        <else>
-          <tar destfile="${release.path}/${app.name}_@{platform}_@{arch}.tar">
-            <fileset dir="${build.path}/@{platform}/@{arch}"/>
-          </tar>
-          <gzip destfile="${release.path}/${app.name}_@{platform}_@{arch}.tar.gz"
-            src="${release.path}/${app.name}_@{platform}_@{arch}.tar"
-          />
-          <delete file="${release.path}/${app.name}_@{platform}_@{arch}.tar"/>
-        </else>
-      </if>
     </sequential>
   </macrodef>
 
@@ -172,9 +146,6 @@
     <if>
       <isset property="env.TRAVIS"/>
       <then>
-        <exec executable="docker" failonerror="true" dir="${project.basedir}">
-          <arg value="info"/>
-        </exec>
         <exec executable="docker" failonerror="true" dir="${project.basedir}">
           <arg value="run"/>
           <arg value="--rm"/>

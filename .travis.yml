@@ -18,11 +18,13 @@ after_success:
   - git config --global user.email "builds@travis-ci.com"
   - git config --global user.name "Travis CI"
   - git tag $APP_VERSION -a -m "Generated tag from TravisCI for $APP_VERSION"
+  - ls -al bin/release
 
 deploy:
   provider: releases
   api_key:
     secure: eshUquuMnGbmuOXA6VuxugGsiXzv0eNUbkQ8Jx2/rBgHsnQ45YVlB+Zluk0tRadUqhZJEYZN9DbI9rzc/hgCkWwSQ6QkKMJrcW9GUgBw305LSPfxLvx7Krt4sdJhl7K6wrANEePxOH/fd8bFKuZNfyPvyRK7vRTaPxC0HU+4ZOGecthUHCT6E5B2OUHvL8D4zf1ljRqMs1/0COrtR6SQNLOofPxSix+S9bBfYRlh4BPQXq+rQua6/NEvmUoBE1f8e7w8r7raDoha+gST5XiH77WQFZVVQi6Y4mqEDanyWEFeAXYDCcLw3aW4I3/u40gkO9R4xlWW1cYJCoRhge+o4XcffnY6rq08c9hzPj/V3wNiKWtjC/kHwvzQubyA/wYSZZmr3UaQhHtdmkPPrDWfOAjKgRMr2muqxpP55U0dVpi6zlnfXNa4WP0m/desK8ux5fvIlzZKuIgBXzbiJ0Ns60p4BuILQU2TS8H8D/CHo3iWBTzqJO58hfswVaL5wke8xoQ+TI5TF9Se9jwREOqmFblbFZNOOuKrS/8uq/WQ7PvSiD3layFtRm4JUjZnV5Soj9+wqbPMtP6F1Iv4iQe25/eoeROiZCufgZGhD8vJ7EiiNvj740+7rj+TeiVuHwKMxeiSLCjr+N5Z2ymfG0nL3+aeDDJ9WSYBifpAWZcIJsU=
+  file_glob: true
   file: bin/release/*
   skip_cleanup: true
   on:
