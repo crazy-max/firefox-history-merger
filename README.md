@@ -27,7 +27,6 @@
 
 ## TODO
 
-* [ ] Create artifacts for Linux and macOS (using xgo?)
 * [ ] Add support for Firefox 56
 * [ ] Merge `moz_annos` and `moz_inputhistory`
 * [ ] Merge ancestors of `moz_historyvisits`
