@@ -11,7 +11,7 @@ before_install:
   - go env
 
 script:
-  - ant release
+  - ant release.xgo
 
 after_success:
   - export APP_VERSION=`cat bin/tmp/version.dat`
