@@ -198,7 +198,7 @@
           <arg value="--rm"/>
           <arg value="-i"/>
           <arg value="-v"/>
-          <arg value="C:/Users/${env.USERNAME}/build:C:/build"/>
+          <arg value="//c/build:/build"/>
           <arg value="-e"/>
           <arg value="TARGETS=windows/386 windows/amd64 linux/386 linux/amd64 darwin/386 darwin/amd64"/>
           <arg value="-e"/>
