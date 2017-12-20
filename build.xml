@@ -204,7 +204,7 @@
           <arg value="-e"/>
           <arg value="FLAG_LDFLAGS=${ldflags}"/>
           <arg value="karalabe/xgo-latest"/>
-          <arg value="."/>
+          <arg value="${app.package}"/>
         </exec>
       </then>
       <else>
