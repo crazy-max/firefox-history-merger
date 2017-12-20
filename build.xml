@@ -15,8 +15,8 @@
   <property name="ldflags" value="-s -w"/>
 
   <!-- Build number -->
-  <condition property="app.release" value="${env.APPVEYOR_BUILD_NUMBER}"><isset property="env.APPVEYOR_BUILD_NUMBER"/></condition>
-  <condition property="app.release" value="${app.default.release}"><not><isset property="env.APPVEYOR_BUILD_NUMBER"/></not></condition>
+  <condition property="app.release" value="${env.TRAVIS_BUILD_NUMBER}"><isset property="env.TRAVIS_BUILD_NUMBER"/></condition>
+  <condition property="app.release" value="${app.default.release}"><not><isset property="env.TRAVIS_BUILD_NUMBER"/></not></condition>
 
   <!-- Macros -->
   <macrodef name="assertdir">
@@ -188,7 +188,7 @@
     <ldflags add="-X '${app.package}/utils.AppVersion=${app.version}'"/>
 
     <if>
-      <isset property="env.APPVEYOR"/>
+      <isset property="env.TRAVIS"/>
       <then>
         <exec executable="docker" failonerror="true" dir="${project.basedir}">
           <arg value="info"/>
@@ -198,7 +198,7 @@
           <arg value="--rm"/>
           <arg value="-i"/>
           <arg value="-v"/>
-          <arg value="//c/build:/build"/>
+          <arg value="${build.path}:/build"/>
           <arg value="-e"/>
           <arg value="TARGETS=windows/386 windows/amd64 linux/386 linux/amd64 darwin/386 darwin/amd64"/>
           <arg value="-e"/>
