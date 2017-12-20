@@ -2,10 +2,6 @@ language: go
 go: 1.9
 sudo: required
 
-env:
-  global:
-    - secure: EmMK3e3MAxXhWWRcSA4ZG/A//HX5VyQeCpsuX41nNkyJfysEhhLHJdtX3pzAv9F/WCG9BEo1UwIfq6gq294W7KrzJiFrIWqATERvvZso/A4uIz9RZmmRc3zXqGRHVgfcx9oktp/M5F2Dd2NVQikn+z7kSwIcSbfeLymDPK9MUxi7JKVHC11zbCwwzkzBHEeJfyP/yN/NZARtmbZjirnkcF6x9Rp+MXwhNUpdT/kahB1c/2bZp3K8YKp0o36+mMttCULu12P1ah2rFoWgOxCk6PdX5iBiXbHnHQpxVCNgnzaGhJEUI2G5ppaX653C9/ugobC2GHu5rJDr7sBFevsvkHHFfk+PauHLihrsPT9VFm1nNYaNMIggL3djvpnaxJ0Dgi82Ha6vmdvPlcNLVUtkrsiqekxR2IIPmqQkOWmUnjkHzFtRkEd2bJZ1/j1/V3K/PMUI8Ng3yyzITtP7OGPZYXcA8F1UElez/RVjcmIKYFe0SopGdbAkBxxsLdJ7OZXPyBHelPwz4z/JUEdklbo+PQO7ohhjTd7bb4ymhK4ot2Egx+CeUZA8Khr6xUHPot87jdHCOAK8aHzpm6GVcR/Rd8FzT+ofcAa33c3LRoukzAiGrgZ/yFOQamkRV7mQiRBZ+oj4lCa4uWAO7PjSSJcixmJKh9vuAyzry9yt2gMDpBA=
-
 before_install:
   - sudo apt-get update
   - java -version
@@ -17,7 +13,6 @@ script:
   - ant release
 
 after_success:
-  - ls -al bin/build
   - export APP_VERSION=`cat bin/tmp/version.dat`
   - echo $APP_VERSION
   - git config --global user.email "builds@travis-ci.com"
@@ -27,7 +22,7 @@ after_success:
 deploy:
   provider: releases
   api_key:
-    - secure: NzmdEw55zt52iim3lu90947KpUZOCJCC6n+glwPXW8IRPb7PdIgjxtSFrILqKGKdJcaI5J6xPbiu3hi2FekKqM9fPNlIOst1jlsSunBkgSTsQcxB3evq+Heo/CVHYvloqBOmNKqMn3DQv6zDkcOxwm6/e8sRo8fq3uaxf5jk5MoqPmGG/JJ2AiOhT/XvAJ8MxU3ZJ9U3/F7VhDD8ypUGJWublSCVwqcliXmEN2pZqx4nH7sY9lQezY7LjYh1FuJdQHyIvtKz6jQw3x5qlok/OqQ9MdCk5Tj5BPUNCUj68B8HUGGhE1kpS3b15mnPSckPhbomTv79zE5Cjs74CONNtZm72mfzPqjIAu8DiPrafm0J0lWeMTTdyp7CPHJjyrvhZhY8xLYPFnOpQrryUcsi0nJ2giYCEG8FDzfCvc4zwDKmYm48spnb1gahAUbKbLgMVMCo/lbMsEpKX8ulZsE6gZ3YkmhsI+qxgtnctoo7+w5wVMJhmp37+/KDn3tsZL5rpPKsClNCM8xeEX1Te20ALaDtuD1CeCO924VjimfYFPI7lV5zmpO4j108Nr1PdO1HQK7he1ZN4emjw1jefMrpxIdQfp6p+GXwktBjImXpd8NYWP8y6MWEB9DWqZB81WNEcrXP4gcGs3bMFFPiA/0qLsIjNKf+piXkj+Wq8/eECg4=
+    secure: eshUquuMnGbmuOXA6VuxugGsiXzv0eNUbkQ8Jx2/rBgHsnQ45YVlB+Zluk0tRadUqhZJEYZN9DbI9rzc/hgCkWwSQ6QkKMJrcW9GUgBw305LSPfxLvx7Krt4sdJhl7K6wrANEePxOH/fd8bFKuZNfyPvyRK7vRTaPxC0HU+4ZOGecthUHCT6E5B2OUHvL8D4zf1ljRqMs1/0COrtR6SQNLOofPxSix+S9bBfYRlh4BPQXq+rQua6/NEvmUoBE1f8e7w8r7raDoha+gST5XiH77WQFZVVQi6Y4mqEDanyWEFeAXYDCcLw3aW4I3/u40gkO9R4xlWW1cYJCoRhge+o4XcffnY6rq08c9hzPj/V3wNiKWtjC/kHwvzQubyA/wYSZZmr3UaQhHtdmkPPrDWfOAjKgRMr2muqxpP55U0dVpi6zlnfXNa4WP0m/desK8ux5fvIlzZKuIgBXzbiJ0Ns60p4BuILQU2TS8H8D/CHo3iWBTzqJO58hfswVaL5wke8xoQ+TI5TF9Se9jwREOqmFblbFZNOOuKrS/8uq/WQ7PvSiD3layFtRm4JUjZnV5Soj9+wqbPMtP6F1Iv4iQe25/eoeROiZCufgZGhD8vJ7EiiNvj740+7rj+TeiVuHwKMxeiSLCjr+N5Z2ymfG0nL3+aeDDJ9WSYBifpAWZcIJsU=
   file: bin/release/*
   skip_cleanup: true
   on:

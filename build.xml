@@ -63,29 +63,11 @@
       </if>
 
       <var name="gcc.path" unset="true"/>
-      <condition property="gcc.path" value="${gcc.appveyor.x86}">
-        <and>
+      <condition property="gcc.path" value="${gcc.x86}">
           <equals arg1="@{arch}" arg2="386"/>
-          <isset property="env.APPVEYOR"/>
-        </and>
       </condition>
-      <condition property="gcc.path" value="${gcc.local.x86}">
-        <and>
-          <equals arg1="@{arch}" arg2="386"/>
-          <not><isset property="env.APPVEYOR"/></not>
-        </and>
-      </condition>
-      <condition property="gcc.path" value="${gcc.appveyor.x64}">
-        <and>
-          <not><equals arg1="@{arch}" arg2="386"/></not>
-          <isset property="env.APPVEYOR"/>
-        </and>
-      </condition>
-      <condition property="gcc.path" value="${gcc.local.x64}">
-        <and>
-          <not><equals arg1="@{arch}" arg2="386"/></not>
-          <not><isset property="env.APPVEYOR"/></not>
-        </and>
+      <condition property="gcc.path" value="${gcc.x64}">
+        <not><equals arg1="@{arch}" arg2="386"/></not>
       </condition>
 
       <echo message="${line.separator}## Building for @{platform} @{arch}"/>
@@ -198,7 +180,7 @@
           <arg value="--rm"/>
           <arg value="-i"/>
           <arg value="-v"/>
-          <arg value="${build.path}:/build"/>
+          <arg value="${release.path}:/build"/>
           <arg value="-e"/>
           <arg value="TARGETS=windows/386 windows/amd64 linux/386 linux/amd64 darwin/386 darwin/amd64"/>
           <arg value="-e"/>
