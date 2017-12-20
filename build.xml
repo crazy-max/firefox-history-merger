@@ -48,13 +48,6 @@
     <attribute name="platform"/>
     <attribute name="arch"/>
     <sequential>
-      <var name="ldflags" value="-s -w"/>
-      <ldflags add="-X '${app.package}/utils.AppName=${app.name}'"/>
-      <ldflags add="-X '${app.package}/utils.AppDescription=${app.desc}'"/>
-      <ldflags add="-X '${app.package}/utils.AppPackage=${app.package}'"/>
-      <ldflags add="-X '${app.package}/utils.AppUrl=${app.url}'"/>
-      <ldflags add="-X '${app.package}/utils.AppVersion=${app.version}'"/>
-
       <var name="xc.ext" unset="true"/>
       <var name="xc.pathsep" unset="true"/>
       <if>
@@ -187,14 +180,52 @@
   </target>
 
   <target name="build">
-    <xc platform="windows" arch="386"/>
-    <xc platform="windows" arch="amd64"/>
-    <!--xc platform="darwin" arch="386"/>
-    <xc platform="darwin" arch="amd64"/>
-    <xc platform="linux" arch="386"/>
-    <xc platform="linux" arch="amd64"/>
-    <xc platform="linux" arch="arm"/>
-    <xc platform="linux" arch="arm64"/-->
+    <var name="ldflags" value="-s -w"/>
+    <ldflags add="-X '${app.package}/utils.AppName=${app.name}'"/>
+    <ldflags add="-X '${app.package}/utils.AppDescription=${app.desc}'"/>
+    <ldflags add="-X '${app.package}/utils.AppPackage=${app.package}'"/>
+    <ldflags add="-X '${app.package}/utils.AppUrl=${app.url}'"/>
+    <ldflags add="-X '${app.package}/utils.AppVersion=${app.version}'"/>
+
+    <if>
+      <isset property="env.APPVEYOR"/>
+      <then>
+        <exec executable="docker-machine" failonerror="true" dir="${project.basedir}">
+          <arg value="ls"/>
+        </exec>
+        <exec executable="docker-machine" failonerror="true" dir="${project.basedir}">
+          <arg value="env"/>
+        </exec>
+        <exec executable="docker-machine" failonerror="true" dir="${project.basedir}">
+          <arg value="inspect"/>
+          <arg value="${env.DOCKER_MACHINE_NAME}"/>
+        </exec>
+        <exec executable="docker" failonerror="true" dir="${project.basedir}">
+          <arg value="run"/>
+          <arg value="--rm"/>
+          <arg value="-i"/>
+          <arg value="-t"/>
+          <arg value="-v"/>
+          <arg value="/c/Users/${env.USERNAME}/build:/build"/>
+          <arg value="-e"/>
+          <arg value="TARGETS=windows/386 windows/amd64 linux/386 linux/amd64 darwin/386 darwin/amd64"/>
+          <arg value="-e"/>
+          <arg value="FLAG_LDFLAGS=${ldflags}"/>
+          <arg value="karalabe/xgo-latest"/>
+          <arg value="."/>
+        </exec>
+      </then>
+      <else>
+        <xc platform="windows" arch="386"/>
+        <xc platform="windows" arch="amd64"/>
+        <!--xc platform="darwin" arch="386"/>
+        <xc platform="darwin" arch="amd64"/>
+        <xc platform="linux" arch="386"/>
+        <xc platform="linux" arch="amd64"/>
+        <xc platform="linux" arch="arm"/>
+        <xc platform="linux" arch="arm64"/-->
+      </else>
+    </if>
   </target>
 
 </project>

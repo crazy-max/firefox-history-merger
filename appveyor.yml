@@ -1,4 +1,5 @@
 version: '{build}'
+image: Visual Studio 2017
 
 clone_folder: C:\gopath\src\github.com\crazy-max\firefox-history-merger
 
@@ -6,7 +7,7 @@ environment:
   JAVA_HOME: C:\Program Files (x86)\Java\jdk1.8.0
   GOPATH: C:\gopath
   GOROOT: C:\go\
-  GOVERSION: 1.9.2
+  GOVERSION: 1.8.3
 
 install:
   - ps: choco install ant
