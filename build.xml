@@ -191,11 +191,14 @@
       <isset property="env.APPVEYOR"/>
       <then>
         <exec executable="docker" failonerror="true" dir="${project.basedir}">
+          <arg value="info"/>
+        </exec>
+        <exec executable="docker" failonerror="true" dir="${project.basedir}">
           <arg value="run"/>
           <arg value="--rm"/>
           <arg value="-i"/>
           <arg value="-v"/>
-          <arg value="/c/Users/${env.USERNAME}/build:/build"/>
+          <arg value="C:/build:/build"/>
           <arg value="-e"/>
           <arg value="TARGETS=windows/386 windows/amd64 linux/386 linux/amd64 darwin/386 darwin/amd64"/>
           <arg value="-e"/>
