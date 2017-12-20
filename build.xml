@@ -190,16 +190,6 @@
     <if>
       <isset property="env.APPVEYOR"/>
       <then>
-        <exec executable="docker-machine" failonerror="true" dir="${project.basedir}">
-          <arg value="ls"/>
-        </exec>
-        <exec executable="docker-machine" failonerror="true" dir="${project.basedir}">
-          <arg value="env"/>
-        </exec>
-        <exec executable="docker-machine" failonerror="true" dir="${project.basedir}">
-          <arg value="inspect"/>
-          <arg value="${env.DOCKER_MACHINE_NAME}"/>
-        </exec>
         <exec executable="docker" failonerror="true" dir="${project.basedir}">
           <arg value="run"/>
           <arg value="--rm"/>
