@@ -27,6 +27,7 @@ deploy:
   file_glob: true
   file: bin/release/*
   skip_cleanup: true
+  draft: true
   on:
     repo: crazy-max/firefox-history-merger
     tags: false
