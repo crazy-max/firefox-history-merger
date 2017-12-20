@@ -194,7 +194,6 @@
           <arg value="run"/>
           <arg value="--rm"/>
           <arg value="-i"/>
-          <arg value="-t"/>
           <arg value="-v"/>
           <arg value="/c/Users/${env.USERNAME}/build:/build"/>
           <arg value="-e"/>
