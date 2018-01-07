@@ -37,6 +37,17 @@
 Schema used by firefox-history-merger is based on **Firefox 57** (places v39). If you use an older schema, database schema will be merged to this version. So be careful with your working `places.sqlite` you want to merge.<br />
 You can check current version of your working `places.sqlite` with `info` command.
 
+## Download
+
+| File name                                                                                                                                                                    | OS      | Arch    |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | ------- |
+| **[firefox-history-merger-darwin-10.6-amd64](https://github.com/crazy-max/firefox-history-merger/releases/download/0.1.1/firefox-history-merger-darwin-10.6-amd64)**         | macOS   | x86-64  |
+| [firefox-history-merger-darwin-10.6-386](https://github.com/crazy-max/firefox-history-merger/releases/download/0.1.1/firefox-history-merger-darwin-10.6-386)                 | macOS   | x86     |
+| **[firefox-history-merger-linux-amd64](https://github.com/crazy-max/firefox-history-merger/releases/download/0.1.1/firefox-history-merger-linux-amd64)**                     | Linux   | x86-64  |
+| [firefox-history-merger-linux-386](https://github.com/crazy-max/firefox-history-merger/releases/download/0.1.1/firefox-history-merger-linux-386)                             | Linux   | x86     |
+| **[firefox-history-merger-windows-4.0-amd64.exe](https://github.com/crazy-max/firefox-history-merger/releases/download/0.1.1/firefox-history-merger-windows-4.0-amd64.exe)** | Windows | x86-64  |
+| [firefox-history-merger-windows-4.0-386.exe](https://github.com/crazy-max/firefox-history-merger/releases/download/0.1.1/firefox-history-merger-windows-4.0-386.exe)         | Windows | x86     |
+
 ## Usage
 
 First close Firefox and copy your `places.sqlite` from [your Firefox profile folder](https://support.mozilla.org/en-US/kb/profiles-where-firefox-stores-user-data) somewhere. 
