@@ -56,7 +56,7 @@ type (
 )
 
 var (
-	SchemaVersion   = 39
+	SchemaVersion   = 41
 	SchemaFFVersion = getFirefoxVersion(SchemaVersion)
 )
 

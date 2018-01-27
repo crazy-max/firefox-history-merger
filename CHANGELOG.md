@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.58.0 (2018/01/27)
+
+* Add implementation for Firefox 58 (schema version v41)
+
 ## 1.57.2 (2018/01/27)
 
 * Mozilla has moved the old `moz_favicons` table to the `favicons.sqlite` db

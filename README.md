@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://github.com/crazy-max/firefox-history-merger/releases/latest"><img src="https://img.shields.io/github/release/crazy-max/firefox-history-merger.svg?style=flat-square" alt="GitHub release"></a>
-  <a href="#database-schema"><img src="https://img.shields.io/badge/firefox-57%20--%20v39-ea7015.svg?style=flat-square" alt="Say Thanks"></a>
+  <a href="#database-schema"><img src="https://img.shields.io/badge/firefox-58%20--%20v41-ea7015.svg?style=flat-square" alt="Say Thanks"></a>
   <a href="https://github.com/crazy-max/firefox-history-merger/releases/latest"><img src="https://img.shields.io/github/downloads/crazy-max/firefox-history-merger/total.svg?style=flat-square" alt="Total downloads"></a>
   <a href="https://travis-ci.org/crazy-max/firefox-history-merger"><img src="https://img.shields.io/travis/crazy-max/firefox-history-merger/master.svg?style=flat-square" alt="Build Status"></a>
   <a href="https://goreportcard.com/report/github.com/crazy-max/firefox-history-merger"><img src="https://goreportcard.com/badge/github.com/crazy-max/firefox-history-merger?style=flat-square" alt="Go Report"></a>
@@ -35,12 +35,12 @@
 
 | File name                                                                                                                                                             | OS      | Arch    |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | ------- |
-| **[firefox-history-merger-darwin-amd64](https://github.com/crazy-max/firefox-history-merger/releases/download/1.57.2/firefox-history-merger-darwin-amd64)**           | macOS   | x86-64  |
-| [firefox-history-merger-darwin-386](https://github.com/crazy-max/firefox-history-merger/releases/download/1.57.2/firefox-history-merger-darwin-386)                   | macOS   | x86     |
-| **[firefox-history-merger-linux-amd64](https://github.com/crazy-max/firefox-history-merger/releases/download/1.57.2/firefox-history-merger-linux-amd64)**             | Linux   | x86-64  |
-| [firefox-history-merger-linux-386](https://github.com/crazy-max/firefox-history-merger/releases/download/1.57.2/firefox-history-merger-linux-386)                     | Linux   | x86     |
-| **[firefox-history-merger-windows-amd64.exe](https://github.com/crazy-max/firefox-history-merger/releases/download/1.57.2/firefox-history-merger-windows-amd64.exe)** | Windows | x86-64  |
-| [firefox-history-merger-windows-386.exe](https://github.com/crazy-max/firefox-history-merger/releases/download/1.57.2/firefox-history-merger-windows-386.exe)         | Windows | x86     |
+| **[firefox-history-merger-darwin-amd64](https://github.com/crazy-max/firefox-history-merger/releases/download/1.58.0/firefox-history-merger-darwin-amd64)**           | macOS   | x86-64  |
+| [firefox-history-merger-darwin-386](https://github.com/crazy-max/firefox-history-merger/releases/download/1.58.0/firefox-history-merger-darwin-386)                   | macOS   | x86     |
+| **[firefox-history-merger-linux-amd64](https://github.com/crazy-max/firefox-history-merger/releases/download/1.58.0/firefox-history-merger-linux-amd64)**             | Linux   | x86-64  |
+| [firefox-history-merger-linux-386](https://github.com/crazy-max/firefox-history-merger/releases/download/1.58.0/firefox-history-merger-linux-386)                     | Linux   | x86     |
+| **[firefox-history-merger-windows-amd64.exe](https://github.com/crazy-max/firefox-history-merger/releases/download/1.58.0/firefox-history-merger-windows-amd64.exe)** | Windows | x86-64  |
+| [firefox-history-merger-windows-386.exe](https://github.com/crazy-max/firefox-history-merger/releases/download/1.58.0/firefox-history-merger-windows-386.exe)         | Windows | x86     |
 
 ## Usage
 
@@ -141,8 +141,8 @@ Once you create it and set it, check the value of `places.history.expiration.tra
 
 Database schema version is stored in `user_version` [pragma statement](https://sqlite.org/pragma.html). Linked Firefox version to database schema can be found in [Database.cpp](https://dxr.mozilla.org/mozilla-central/source/toolkit/components/places/Database.cpp#993).
 
-![Firefox v39 database schema](.res/schemas/v39.png)
-> [Edit this diagram](https://www.draw.io/?title=firefox_v39.png&url=https%3A%2F%2Fraw.githubusercontent.com%2Fcrazy-max%2Ffirefox-history-merger%2Fmaster%2F.res%2Fschemas%2Fv39.png%3Ft%3D0) in your browser. 
+![Firefox v41 database schema](.res/schemas/v41.png)
+> [Edit this diagram](https://www.draw.io/?title=firefox_v41.png&url=https%3A%2F%2Fraw.githubusercontent.com%2Fcrazy-max%2Ffirefox-history-merger%2Fmaster%2F.res%2Fschemas%2Fv41.png%3Ft%3D0) in your browser. 
 
 ## How can i help ?
 
