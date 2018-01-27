@@ -159,7 +159,7 @@
       <arg value="TARGETS=windows/386 windows/amd64 linux/386 linux/amd64 darwin/386 darwin/amd64"/>
       <arg value="-e"/>
       <arg value="FLAG_LDFLAGS=${ldflags}"/>
-      <arg value="karalabe/xgo-latest"/>
+      <arg value="karalabe/xgo-1.9.2"/>
       <arg value="${app.package}"/>
     </exec>
   </target>
