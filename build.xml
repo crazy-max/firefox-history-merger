@@ -166,8 +166,8 @@
     <move file="${release.path}/${app.name}-darwin-10.6-amd64" tofile="${release.path}/${app.name}-${app.version}-darwin-amd64"/>
     <move file="${release.path}/${app.name}-linux-386" tofile="${release.path}/${app.name}-${app.version}-linux-386"/>
     <move file="${release.path}/${app.name}-linux-amd64" tofile="${release.path}/${app.name}-${app.version}-linux-amd64"/>
-    <move file="${release.path}/${app.name}-windows-4.0-386" tofile="${release.path}/${app.name}-${app.version}-windows-386"/>
-    <move file="${release.path}/${app.name}-windows-4.0-amd64" tofile="${release.path}/${app.name}-${app.version}-windows-amd64"/>
+    <move file="${release.path}/${app.name}-windows-4.0-386.exe" tofile="${release.path}/${app.name}-${app.version}-windows-386.exe"/>
+    <move file="${release.path}/${app.name}-windows-4.0-amd64.exe" tofile="${release.path}/${app.name}-${app.version}-windows-amd64.exe"/>
   </target>
 
   <target name="build.xc">
