@@ -35,12 +35,12 @@
 
 | File name                                                                                                                                                             | OS      | Arch    |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | ------- |
-| **[firefox-history-merger-darwin-amd64](https://github.com/crazy-max/firefox-history-merger/releases/download/1.58.0/firefox-history-merger-darwin-amd64)**           | macOS   | x86-64  |
-| [firefox-history-merger-darwin-386](https://github.com/crazy-max/firefox-history-merger/releases/download/1.58.0/firefox-history-merger-darwin-386)                   | macOS   | x86     |
-| **[firefox-history-merger-linux-amd64](https://github.com/crazy-max/firefox-history-merger/releases/download/1.58.0/firefox-history-merger-linux-amd64)**             | Linux   | x86-64  |
-| [firefox-history-merger-linux-386](https://github.com/crazy-max/firefox-history-merger/releases/download/1.58.0/firefox-history-merger-linux-386)                     | Linux   | x86     |
-| **[firefox-history-merger-windows-amd64.exe](https://github.com/crazy-max/firefox-history-merger/releases/download/1.58.0/firefox-history-merger-windows-amd64.exe)** | Windows | x86-64  |
-| [firefox-history-merger-windows-386.exe](https://github.com/crazy-max/firefox-history-merger/releases/download/1.58.0/firefox-history-merger-windows-386.exe)         | Windows | x86     |
+| **[firefox-history-merger-1.58.0-darwin-amd64](https://github.com/crazy-max/firefox-history-merger/releases/download/1.58.0/firefox-history-merger-1.58.0-darwin-amd64)**           | macOS   | x86-64  |
+| [firefox-history-merger-1.58.0-darwin-386](https://github.com/crazy-max/firefox-history-merger/releases/download/1.58.0/firefox-history-merger-1.58.0-darwin-386)                   | macOS   | x86     |
+| **[firefox-history-merger-1.58.0-linux-amd64](https://github.com/crazy-max/firefox-history-merger/releases/download/1.58.0/firefox-history-merger-1.58.0-linux-amd64)**             | Linux   | x86-64  |
+| [firefox-history-merger-1.58.0-linux-386](https://github.com/crazy-max/firefox-history-merger/releases/download/1.58.0/firefox-history-merger-1.58.0-linux-386)                     | Linux   | x86     |
+| **[firefox-history-merger-1.58.0-windows-amd64.exe](https://github.com/crazy-max/firefox-history-merger/releases/download/1.58.0/firefox-history-merger-1.58.0-windows-amd64.exe)** | Windows | x86-64  |
+| [firefox-history-merger-1.58.0-windows-386.exe](https://github.com/crazy-max/firefox-history-merger/releases/download/1.58.0/firefox-history-merger-1.58.0-windows-386.exe)         | Windows | x86     |
 
 ## Usage
 
