@@ -162,6 +162,12 @@
       <arg value="karalabe/xgo-1.9.2"/>
       <arg value="${app.package}"/>
     </exec>
+    <move file="${release.path}/${app.name}-darwin-10.6-386" tofile="${release.path}/${app.name}-${app.version}-darwin-386"/>
+    <move file="${release.path}/${app.name}-darwin-10.6-amd64" tofile="${release.path}/${app.name}-${app.version}-darwin-amd64"/>
+    <move file="${release.path}/${app.name}-linux-386" tofile="${release.path}/${app.name}-${app.version}-linux-386"/>
+    <move file="${release.path}/${app.name}-linux-amd64" tofile="${release.path}/${app.name}-${app.version}-linux-amd64"/>
+    <move file="${release.path}/${app.name}-windows-4.0-386" tofile="${release.path}/${app.name}-${app.version}-windows-386"/>
+    <move file="${release.path}/${app.name}-windows-4.0-amd64" tofile="${release.path}/${app.name}-${app.version}-windows-amd64"/>
   </target>
 
   <target name="build.xc">
