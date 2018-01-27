@@ -4,6 +4,7 @@
 
 # App
 /.dev
+/.firefox
 /bin
 /vendor
 /*.exe

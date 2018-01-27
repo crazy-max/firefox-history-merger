@@ -19,7 +19,7 @@ func GetFavicon(url string) (ico besticon.Icon, err error) {
 	}
 
 	for _, ico := range icons {
-		if ico.Width == 32 || ico.Width == 16 {
+		if ico.Width <= 256 {
 			result = ico
 			break
 		}

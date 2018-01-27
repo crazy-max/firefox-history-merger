@@ -4,8 +4,8 @@
 [[projects]]
   name = "github.com/PuerkitoBio/goquery"
   packages = ["."]
-  revision = "e1271ee34c6a305e38566ecd27ae374944907ee9"
-  version = "v1.1.0"
+  revision = "a41cf096e64e3752d7683898d5746bc0b98ee213"
+  version = "v1.2.0"
 
 [[projects]]
   branch = "master"
@@ -23,7 +23,7 @@
   branch = "master"
   name = "github.com/golang/protobuf"
   packages = ["proto"]
-  revision = "1e59b77b52bf8e4b449a57e6f79f21226d571845"
+  revision = "925541529c1fa6821df4e44ce2723319eb2be768"
 
 [[projects]]
   name = "github.com/inconshreveable/mousetrap"
@@ -44,6 +44,18 @@
   revision = "1c35d901db3da928c72a72d8458480cc9ade058f"
 
 [[projects]]
+  branch = "master"
+  name = "github.com/kr/pretty"
+  packages = ["."]
+  revision = "cfb55aafdaf3ec08f0db22699ab822c50091b1c4"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/kr/text"
+  packages = ["."]
+  revision = "7cafcd837844e784b526369c9bce262804aebc60"
+
+[[projects]]
   name = "github.com/mat/besticon"
   packages = ["besticon","colorfinder","ico"]
   revision = "3cf21b01002edaf94bcd7b00f6110fe1f3ed0181"
@@ -58,8 +70,8 @@
 [[projects]]
   name = "github.com/mattn/go-sqlite3"
   packages = ["."]
-  revision = "ed69081a91fd053f17672236b0dd52ba7485e1a3"
-  version = "v1.4.0"
+  revision = "6c771bb9887719704b210e87e934f08be014bdb1"
+  version = "v1.6.0"
 
 [[projects]]
   name = "github.com/spf13/cobra"
@@ -77,29 +89,35 @@
   branch = "master"
   name = "golang.org/x/image"
   packages = ["bmp"]
-  revision = "e5db4c466346ada62f27934dab20e4b6f6bda285"
+  revision = "12117c17ca67ffa1ce22e9409f3b0b0a93ac08c7"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/net"
-  packages = ["context","html","html/atom","html/charset","idna","publicsuffix"]
-  revision = "dc871a5d77e227f5bbf6545176ef3eeebf87e76e"
+  packages = ["html","html/atom","html/charset","idna","publicsuffix"]
+  revision = "0ed95abb35c445290478a5348a7b38bb154135fd"
+
+[[projects]]
+  branch = "master"
+  name = "golang.org/x/sys"
+  packages = ["unix"]
+  revision = "ff2a66f350cefa5c93a634eadb5d25bb60c85a9c"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/text"
   packages = ["collate","collate/build","encoding","encoding/charmap","encoding/htmlindex","encoding/internal","encoding/internal/identifier","encoding/japanese","encoding/korean","encoding/simplifiedchinese","encoding/traditionalchinese","encoding/unicode","internal/colltab","internal/gen","internal/tag","internal/triegen","internal/ucd","internal/utf8internal","language","runes","secure/bidirule","transform","unicode/bidi","unicode/cldr","unicode/norm","unicode/rangetable"]
-  revision = "3b24cac7bc3a458991ab409aa2a339ac9e0d60d6"
+  revision = "e19ae1496984b1c655b8044a65c0300a3c878dd3"
 
 [[projects]]
   name = "gopkg.in/cheggaaa/pb.v1"
   packages = ["."]
-  revision = "657164d0228d6bebe316fdf725c69f131a50fb10"
-  version = "v1.0.18"
+  revision = "5119518d88fbf604cab04dafd667dc7022e3b5ac"
+  version = "v1.0.21"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "8377513af99fc99a201d58bd5fe40106a83e6c58a52b0c6e98d26c25438e0001"
+  inputs-digest = "5ceea718f97d0ec1cb024bf8126147f2dff86839e15b1c10e4d5d192dcccba2f"
   solver-name = "gps-cdcl"
   solver-version = 1

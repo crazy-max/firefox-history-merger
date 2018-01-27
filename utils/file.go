@@ -60,8 +60,9 @@ func GetHash(file string) (hash string, err error) {
 	return fmt.Sprintf("%x", sha256.Sum256(data)), nil
 }
 
-func CheckFileExists(file string) {
+func FileExists(file string) bool {
 	if _, err := os.Stat(file); os.IsNotExist(err) {
-		ErrorExit("%s does not exist", file)
+		return false
 	}
+	return true
 }

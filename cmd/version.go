@@ -10,11 +10,13 @@ import (
 var versionCmd = &cobra.Command{
 	Use:   "version",
 	Short: "Show " + AppName + " version",
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Printf(RootCmd.Use + " " + AppVersion + "\n" + AppUrl + "\n")
-	},
+	Run:   versionRun,
 }
 
 func init() {
 	RootCmd.AddCommand(versionCmd)
+}
+
+func versionRun(cmd *cobra.Command, args []string) {
+	fmt.Printf("%s %s\n%s\n", AppName, AppVersion, AppUrl)
 }

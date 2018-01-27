@@ -1,4 +1,4 @@
-package table
+package places
 
 import (
 	. "github.com/crazy-max/firefox-history-merger/utils"

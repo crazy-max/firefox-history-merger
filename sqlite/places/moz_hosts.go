@@ -1,4 +1,4 @@
-package table
+package places
 
 import "github.com/jinzhu/gorm"
 

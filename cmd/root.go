@@ -1,11 +1,15 @@
 package cmd
 
 import (
-	"fmt"
-	"os"
-
+	"github.com/crazy-max/firefox-history-merger/sqlite"
 	. "github.com/crazy-max/firefox-history-merger/utils"
 	"github.com/spf13/cobra"
+)
+
+var (
+	debugEnabled bool
+	placesDb     sqlite.PlacesDb
+	faviconsDb   sqlite.FaviconsDb
 )
 
 var RootCmd = &cobra.Command{
@@ -15,17 +19,11 @@ var RootCmd = &cobra.Command{
 More info on ` + AppUrl,
 }
 
-var Dir string
-var DebugEnabled bool
-
-// Execute adds all child commands to the root command and sets flags appropriately.
-func Execute() {
-	if err := RootCmd.Execute(); err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
+func init() {
+	cobra.OnInitialize(initRoot)
+	RootCmd.PersistentFlags().BoolVarP(&debugEnabled, "debug", "x", false, "Debug")
 }
 
-func init() {
-	RootCmd.PersistentFlags().BoolVarP(&DebugEnabled, "debug", "x", false, "Debug")
+func initRoot() {
+	InitLogger(debugEnabled)
 }

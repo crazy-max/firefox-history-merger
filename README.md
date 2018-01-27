@@ -2,40 +2,35 @@
 
 <p align="center">
   <a href="https://github.com/crazy-max/firefox-history-merger/releases/latest"><img src="https://img.shields.io/github/release/crazy-max/firefox-history-merger.svg?style=flat-square" alt="GitHub release"></a>
+  <a href="#database-schema"><img src="https://img.shields.io/badge/firefox-57%20--%20v39-ea7015.svg?style=flat-square" alt="Say Thanks"></a>
   <a href="https://github.com/crazy-max/firefox-history-merger/releases/latest"><img src="https://img.shields.io/github/downloads/crazy-max/firefox-history-merger/total.svg?style=flat-square" alt="Total downloads"></a>
   <a href="https://travis-ci.org/crazy-max/firefox-history-merger"><img src="https://img.shields.io/travis/crazy-max/firefox-history-merger/master.svg?style=flat-square" alt="Build Status"></a>
   <a href="https://goreportcard.com/report/github.com/crazy-max/firefox-history-merger"><img src="https://goreportcard.com/badge/github.com/crazy-max/firefox-history-merger?style=flat-square" alt="Go Report"></a>
   <a href="https://www.codacy.com/app/crazy-max/firefox-history-merger"><img src="https://img.shields.io/codacy/grade/85a6dc4ddaf14aeba2c4f1876126d785.svg?style=flat-square" alt="Code Quality"></a>
+  <a href="https://saythanks.io/to/crazymax"><img src="https://img.shields.io/badge/thank-crazymax-426aa5.svg?style=flat-square" alt="Say Thanks"></a>
   <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ZMSMB3MERGPE8"><img src="https://img.shields.io/badge/donate-paypal-7057ff.svg?style=flat-square" alt="Donate Paypal"></a>
 </p>
 
 ## About
 
-**firefox-history-merger** is a CLI application written in [Go](https://golang.org/) to merge history of 🦊 [Firefox](https://www.mozilla.org/en-US/firefox/) from a list of `places.sqlite` file into one with ease.
+**firefox-history-merger** is a CLI application written in [Go](https://golang.org/) to merge history of 🦊 [Firefox](https://www.mozilla.org/en-US/firefox/) from a list of `places.sqlite` files and repair missing favicons with ease.
 
-![](.res/screenshot-20171210.png)
+![](.res/screenshot.png)
 > Screenshot of firefox-history-merger
 
 ## Features
 
-* Merge history (`moz_places`) from `places.sqlite` files
-* `moz_hosts`, `moz_favicons`, `moz_historyvisits` are also merged
-* Auto migration of `places.sqlite` schema database to the last one used by firefox-history-merger
+* Merge history (`moz_places`) from `places.sqlite` file
+* `moz_hosts`, `moz_historyvisits` are also merged
 * [Frecency](https://developer.mozilla.org/en-US/docs/Mozilla/Tech/Places/Frecency_algorithm) is recalculated during the merge
 * Repair favicons
-* Display info about a `places.sqlite`
-
-## TODO
-
-* [ ] Add support for Firefox 56
-* [ ] Merge `moz_annos` and `moz_inputhistory`
-* [ ] Merge ancestors of `moz_historyvisits`
-* [ ] Use goroutines to parallelize merge process
+* Display info about `places.sqlite` and `favicons.sqlite`
+* Optimize the databases into a minimal amount of disk space
 
 ## Requirements
 
-Schema used by firefox-history-merger is based on **Firefox 57** (places v39). If you use an older schema, database schema will be merged to this version. So be careful with your working `places.sqlite` you want to merge.<br />
-You can check current version of your working `places.sqlite` with `info` command.
+**firefox-history-merger** uses a particular format for its versioning: **major.minor.patchlevel**. Minor marks the compatible Firefox version, like 57, 58, etc...<br />
+So before using this application, check if your `places.sqlite` is compatible with firefox-history-merger with the `info` command.
 
 ## Download
 
@@ -50,58 +45,88 @@ You can check current version of your working `places.sqlite` with `info` comman
 
 ## Usage
 
-First close Firefox and copy your `places.sqlite` from [your Firefox profile folder](https://support.mozilla.org/en-US/kb/profiles-where-firefox-stores-user-data) somewhere. 
+First close Firefox and copy `places.sqlite` and `favicons.sqlite` files from [your Firefox profile folder](https://support.mozilla.org/en-US/kb/profiles-where-firefox-stores-user-data) somewhere.
 
-You probably want to have more info about your `places.sqlite` file you have before merging history with others :
-
-```
-$ firefox-history-merger info places.sqlite
-
-Filename:         places.sqlite
-Hash:             4ec4303f706cd6895f85dcde338a97d23b849918e959c70dc22b21df15f6f810
-Schema version:   v39 (Firefox >= 57)
-History entries:  293176
-Places entries:   129947
-Last used on:     2017-12-09 18:26:56
-```
-
-Here is the folder structure that will be used in this example :
+In the following examples, this folder structure will be used :
 
 ```
 [-] other_places_folder
- | places_20160821.sqlite
- | places_20170720.sqlite
+  | places_20160821.sqlite
+  | places_20170720.sqlite
 firefox-history-merger.exe
 places.sqlite
+favicons.sqlite
 ```
 
-Now execute this command to merge the `*.sqlite` files in `./other_places_folder/` with your working `places.sqlite` :
+### Info
+
+You probably want to have more info about your `places.sqlite` and `favicons.sqlite` files you have before merging history with others. Just type the command below (`favicons.sqlite` is optionnal).
 
 ```
-$ firefox-history-merger merge places.sqlite ./other_places_folder/ --merge-full
+$ firefox-history-merger info "places.sqlite" "favicons.sqlite"
+Checking and opening DBs...
+
+Schema version:   v39 (Firefox >= 57)
+Compatible:       YES
+History entries:  293176
+Places entries:   129947
+Icons entries:    6538
+Last used on:     2017-12-09 18:26:56
+```
+
+### Merge
+
+Now execute this command to merge the `*.sqlite` files in `other_places_folder/` with your working `places.sqlite` :
+
+```
+$ firefox-history-merger merge "places.sqlite" "other_places_folder/" --merge-full
+Checking and opening DBs...
 
 Working DB is 'places.sqlite'
-Backing up working DB to 'places.sqlite.20171209183822'...
+Backing up 'places.sqlite' to 'places.sqlite.20171209183822'...
 
 The following tables will be merged:
 - moz_places
-- moz_favicons (inc. in moz_places)
-- moz_historyvisits (inc. in moz_places)
+- moz_historyvisits (inc. in moz_places process)
 - moz_hosts
 
-Looking for *.sqlite DBs in './other_places_folder/'
+Looking for *.sqlite DBs in 'other_places_folder/'
 2 valid DB(s) found:
 - places_20170720.sqlite (57093 entries ; last used on 2017-07-20 18:31:11)
 - places_20160821.sqlite (101208 entries ; last used on 2016-08-21 19:27:34)
 
 ## Merging DB 'places_20170720.sqlite'...
 moz_places 57093 / 57093 [=============================================================================] 100.00%
-moz_hosts 4422 / 4422 [=======================================================================================]  100.00%
+moz_hosts 4422 / 4422 [=======================================================================================] 100.00%
 
 ## Merging DB 'places_20160821.sqlite'...
 moz_places 101208 / 101208 [=============================================================================] 100.00%
-moz_hosts 5893 / 5893 [=======================================================================================]  100.00%
+moz_hosts 5893 / 5893 [=======================================================================================] 100.00%
 ```
+
+### Repair favicons
+
+If you want you can also repair missing favicons. It can take a long time depending on the number of entries in your history, since the favicon will be recovered for each entry if there is no attached favicon.
+
+```
+$ firefox-history-merger repair-favicons "places.sqlite" "favicons.sqlite"
+Checking and opening DBs...
+Backing up 'places.sqlite' to 'places.sqlite.20180127163723'
+Backing up 'favicons.sqlite' to 'favicons.sqlite.20180127163725'
+
+Places to check:           311629
+Last moz_icons.id:         7309
+Last moz_pages_w_icons.id: 62284
+
+## Repairing favicons...
+moz_icons 311629 / 311629 [=======================================================================================] 100.00%
+```
+
+## TODO
+
+* [ ] Merge `moz_annos` and `moz_inputhistory`
+* [ ] Merge ancestors of `moz_historyvisits`
+* [ ] Optimize the repair of favicons 
 
 ## About Firefox places
 
@@ -113,12 +138,12 @@ So if you want to retain all history ('infinite' history), you could set `places
 
 Once you create it and set it, check the value of `places.history.expiration.transient_current_max_pages`. It should automatically adjust itself to match your `max_pages` setting. 
 
-### Database schema
+### Databases schema
 
 Database schema version is stored in `user_version` [pragma statement](https://sqlite.org/pragma.html). Linked Firefox version to database schema can be found in [Database.cpp](https://dxr.mozilla.org/mozilla-central/source/toolkit/components/places/Database.cpp#993).
 
-![places v39 database schema](https://raw.githubusercontent.com/crazy-max/firefox-history-merger/master/.res/schemas/places_v39.png)
-> [Edit this diagram](https://www.draw.io/?title=places_v39.png&url=https%3A%2F%2Fraw.githubusercontent.com%2Fcrazy-max%2Ffirefox-history-merger%2Fmaster%2F.res%2Fschemas%2Fplaces_v39.png%3Ft%3D0) in your browser. 
+![Firefox v39 database schema](.res/schemas/v39.png)
+> [Edit this diagram](https://www.draw.io/?title=firefox_v39.png&url=https%3A%2F%2Fraw.githubusercontent.com%2Fcrazy-max%2Ffirefox-history-merger%2Fmaster%2F.res%2Fschemas%2Fv39.png%3Ft%3D0) in your browser. 
 
 ## How can i help ?
 
@@ -126,7 +151,7 @@ We welcome all kinds of contributions :raised_hands:!<br />
 The most basic way to show your support is to star :star2: the project, or to raise issues :speech_balloon:<br />
 Any funds donated will be used to help further development on this project! :gift_heart:
 
-[![Donate Paypal](https://raw.githubusercontent.com/crazy-max/firefox-history-merger/master/.res/paypal.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ZMSMB3MERGPE8)
+[![Donate Paypal](.res/paypal.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ZMSMB3MERGPE8)
 
 ## License
 

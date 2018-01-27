@@ -1,38 +1,69 @@
 package cmd
 
 import (
-	"fmt"
-
 	"github.com/crazy-max/firefox-history-merger/sqlite"
 	. "github.com/crazy-max/firefox-history-merger/utils"
 	"github.com/spf13/cobra"
 )
 
-var infoCmd = &cobra.Command{
-	Use:     "info",
-	Short:   "Display info about places.sqlite file",
-	Example: AppName + ` info "places.sqlite"`,
-	Args:    cobra.ExactArgs(1),
-	Run:     infoRun,
-}
+var (
+	infoCmd = &cobra.Command{
+		Use:     "info",
+		Short:   "Display info about places.sqlite and favicons.sqlite (optional) files",
+		Example: AppName + ` info "/home/user/places.sqlite" "/home/user/favicons.sqlite"`,
+		Run:     infoRun,
+	}
+)
 
 func init() {
 	RootCmd.AddCommand(infoCmd)
 }
 
 func infoRun(cmd *cobra.Command, args []string) {
-	sqliteDB := sqlite.OpenFile(args[0])
-	fmt.Printf("\nFilename:         %s", sqliteDB.Info.Filename)
-	fmt.Printf("\nHash:             %s", sqliteDB.Info.Filehash)
-	fmt.Printf("\nSchema version:   v%d (Firefox >= %d)", sqliteDB.Info.Version, sqliteDB.Info.FirefoxVersion)
-	fmt.Printf("\nHistory entries:  %d", sqliteDB.Info.HistoryCount)
-	fmt.Printf("\nPlaces entries:   %d", sqliteDB.Info.PlacesCount)
-	fmt.Printf("\nLast used on:     %s", sqliteDB.Info.LastUsedTime.Format("2006-01-02 15:04:05"))
+	var err error
 
-	if DebugEnabled {
-		fmt.Printf("\n\n")
-		PrintPretty(sqliteDB.Info)
+	// check args
+	if len(args) < 1 {
+		Logger.Crit("info requires at least places.sqlite file")
+	}
+	if len(args) > 2 {
+		Logger.Crit("has too many arguments")
+	}
+	if !FileExists(args[0]) {
+		Logger.Critf("%s not found", args[0])
+	}
+	faviconsFile := ""
+	if len(args) == 2 {
+		if !FileExists(args[1]) {
+			Logger.Critf("%s not found", args[1])
+		} else {
+			faviconsFile = args[1]
+		}
 	}
 
-	sqliteDB.Link.Close()
+	// check and open dbs
+	Logger.Printf("Checking and opening DBs...")
+	placesDb, faviconsDb, err = sqlite.OpenDbs(sqlite.SqliteFiles{
+		Places: args[0], Favicons: faviconsFile,
+	}, false)
+	if err != nil {
+		Logger.Crit(err)
+	}
+
+	Logger.Printf("\nSchema version:   v%d (Firefox >= %d)", placesDb.Info.Version, placesDb.Info.FirefoxVersion)
+	Logger.Printf("Compatible:       %s", placesDb.Info.CompatibleStr)
+	Logger.Printf("History entries:  %d", placesDb.Info.HistoryCount)
+	Logger.Printf("Places entries:   %d", placesDb.Info.PlacesCount)
+	if faviconsFile != "" {
+		Logger.Printf("Icons entries:    %d", faviconsDb.Info.IconsCount)
+	}
+	Logger.Printf("Last used on:     %s", placesDb.Info.LastUsedTime.Format("2006-01-02 15:04:05"))
+
+	Logger.Debug(placesDb.Info)
+	Logger.Debug(faviconsDb.Info)
+
+	placesDb.Link.Close()
+	if faviconsFile != "" {
+		faviconsDb.Link.Close()
+	}
 }
