@@ -56,7 +56,7 @@ type (
 )
 
 var (
-	SchemaVersion   = 41
+	SchemaVersion   = 43
 	SchemaFFVersion = getFirefoxVersion(SchemaVersion)
 )
 
@@ -266,8 +266,14 @@ func getFirefoxVersion(dbVersion int) int {
 	if dbVersion < 41 {
 		return 57
 	}
-	if dbVersion == 41 {
+	if dbVersion < 42 {
 		return 58
+	}
+	if dbVersion < 43 {
+		return 59
+	}
+	if dbVersion == 43 {
+		return 60
 	}
 	return -1
 }
