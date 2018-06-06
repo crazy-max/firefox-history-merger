@@ -7,7 +7,6 @@
   <a href="https://travis-ci.org/crazy-max/firefox-history-merger"><img src="https://img.shields.io/travis/crazy-max/firefox-history-merger/master.svg?style=flat-square" alt="Build Status"></a>
   <a href="https://goreportcard.com/report/github.com/crazy-max/firefox-history-merger"><img src="https://goreportcard.com/badge/github.com/crazy-max/firefox-history-merger?style=flat-square" alt="Go Report"></a>
   <a href="https://www.codacy.com/app/crazy-max/firefox-history-merger"><img src="https://img.shields.io/codacy/grade/85a6dc4ddaf14aeba2c4f1876126d785.svg?style=flat-square" alt="Code Quality"></a>
-  <a href="https://beerpay.io/crazy-max/firefox-history-merger"><img src="https://img.shields.io/beerpay/crazy-max/firefox-history-merger.svg?style=flat-square" alt="Beerpay"></a>
   <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ZMSMB3MERGPE8"><img src="https://img.shields.io/badge/donate-paypal-7057ff.svg?style=flat-square" alt="Paypal"></a>
 </p>
 
@@ -150,8 +149,7 @@ All kinds of contributions are welcomed :raised_hands:!<br />
 The most basic way to show your support is to star :star2: the project, or to raise issues :speech_balloon:<br />
 But we're not gonna lie to each other, I'd rather you buy me a beer or two :beers:!
 
-[![Beerpay](https://beerpay.io/crazy-max/firefox-history-merger/badge.svg?style=beer-square)](https://beerpay.io/crazy-max/firefox-history-merger)
- or [![Paypal](.res/paypal.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ZMSMB3MERGPE8)
+[![Paypal](.res/paypal-donate.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ZMSMB3MERGPE8)
 
 ## License
 
