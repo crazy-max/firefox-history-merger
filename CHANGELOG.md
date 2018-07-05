@@ -1,8 +1,12 @@
 # Changelog
 
+## 1.61.0 (2018/07/05)
+
+* Add implementation for Firefox 61 schema version v47 (Issue #6)
+
 ## 1.60.0 (2018/05/11)
 
-* Add implementation for Firefox 60 (schema version v43)
+* Add implementation for Firefox 60 schema version v43
 
 ## 1.59.0 (2018/03/15)
 
@@ -10,7 +14,7 @@
 
 ## 1.58.0 (2018/01/27)
 
-* Add implementation for Firefox 58 (schema version v41)
+* Add implementation for Firefox 58 schema version v41
 
 ## 1.57.2 (2018/01/27)
 
