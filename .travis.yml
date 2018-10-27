@@ -1,6 +1,5 @@
 language: go
-go: 1.9.2
-sudo: required
+go: 1.11
 
 before_install:
   - sudo apt-get update
@@ -10,7 +9,7 @@ before_install:
   - go env
 
 script:
-  - ant release.xgo
+  - ant release
 
 after_success:
   - export APP_VERSION=`cat bin/tmp/version.dat`

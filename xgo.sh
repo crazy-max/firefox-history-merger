@@ -1,0 +1,23 @@
+#!/bin/bash
+
+PROJECT_BASEDIR=$1
+TMP_PATH=$2
+RELEASE_PATH=$3
+TARGETS=$4
+LDFLAGS=$5
+PACKAGE=$6
+
+echo "PROJECT_BASEDIR=$PROJECT_BASEDIR"
+echo "TMP_PATH=$TMP_PATH"
+echo "RELEASE_PATH=$RELEASE_PATH"
+echo "TARGETS=$TARGETS"
+echo "LDFLAGS=$LDFLAGS"
+echo "PACKAGE=$PACKAGE"
+
+docker run --rm -i \
+  -v "${RELEASE_PATH}:/build" \
+  -e "TARGETS=${TARGETS}" \
+  -e "FLAG_LDFLAGS=${LDFLAGS}" \
+  -e "FLAG_V=true" \
+  -e "FLAG_X=true" \
+  karalabe/xgo-1.11 ${PACKAGE}
