@@ -124,7 +124,8 @@ moz_icons 311629 / 311629 [=====================================================
 
 * [ ] Merge `moz_annos` and `moz_inputhistory`
 * [ ] Merge ancestors of `moz_historyvisits`
-* [ ] Optimize the repair of favicons 
+* [ ] Optimize favicons repairing
+* [ ] Check if places are filled with an `origin_id`
 
 ## About Firefox places
 
