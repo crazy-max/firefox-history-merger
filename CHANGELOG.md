@@ -1,6 +1,10 @@
 # Changelog
 
-## 1.62.0 (2018/09/05)
+## 1.63.0 (2018/10/27)
+
+* Same schema (v52) for Firefox 63 (Issue #9)
+
+## 1.62.0 (2018/10/27)
 
 * Add implementation for Firefox 62 schema version v52 (Issue #8)
   * `moz_hosts` renamed `moz_origins` and column `typed` removed
