@@ -64,7 +64,7 @@ func repairFavicons(cmd *cobra.Command, args []string) {
 
 	// check and open dbs
 	Logger.Printf("Checking and opening DBs...")
-	placesDb, faviconsDb, err = sqlite.OpenDbs(sqlite.SqliteFiles{
+	masterPlacesDb, masterFaviconsDb, err = sqlite.OpenDbs(sqlite.SqliteFiles{
 		Places: args[0], Favicons: args[1],
 	}, true)
 	if err != nil {
@@ -81,24 +81,24 @@ func repairFavicons(cmd *cobra.Command, args []string) {
 	log.SetOutput(ioutil.Discard)
 
 	// backup dbs
-	sqlite.BackupDb(placesDb.Info)
-	sqlite.BackupDb(faviconsDb.Info)
+	sqlite.BackupDb(masterPlacesDb.Info)
+	sqlite.BackupDb(masterFaviconsDb.Info)
 
 	// get moz_places count
 	var mozPlacesCount int
-	placesDb.Link.Model(places.MozPlaces{}).Count(&mozPlacesCount)
+	masterPlacesDb.Link.Model(places.MozPlaces{}).Count(&mozPlacesCount)
 	Logger.Printf("\nPlaces to check:           %d", mozPlacesCount)
 
 	// get last moz_icons.id
-	result.lastIconsID = favicons.MozIcons{}.GetLastID(faviconsDb.Link)
+	result.lastIconsID = favicons.MozIcons{}.GetLastID(masterFaviconsDb.Link)
 	Logger.Printf("Last moz_icons.id:         %d", result.lastIconsID)
 
 	// get last moz_pages_w_icons.id
-	result.lastPagesWIconsID = favicons.MozPagesWIcons{}.GetLastID(faviconsDb.Link)
+	result.lastPagesWIconsID = favicons.MozPagesWIcons{}.GetLastID(masterFaviconsDb.Link)
 	Logger.Printf("Last moz_pages_w_icons.id: %d", result.lastPagesWIconsID)
 
 	// get first moz_places.id
-	firstPlacesID := places.MozPlaces{}.GetFirstID(placesDb.Link)
+	firstPlacesID := places.MozPlaces{}.GetFirstID(masterPlacesDb.Link)
 
 	// start repair
 	pageSize := int(math.Ceil(float64(mozPlacesCount / repairIconsPages)))
@@ -117,9 +117,9 @@ func repairFavicons(cmd *cobra.Command, args []string) {
 	for i := 0; i <= repairIconsPages; i++ {
 		var mozPlaces []places.MozPlaces
 		if lastPlacesID == 0 {
-			placesDb.Link.Order("id ASC").Limit(pageSize).Find(&mozPlaces)
+			masterPlacesDb.Link.Order("id ASC").Limit(pageSize).Find(&mozPlaces)
 		} else {
-			placesDb.Link.Where("id > ?", lastPlacesID).Order("id ASC").Limit(pageSize).Find(&mozPlaces)
+			masterPlacesDb.Link.Where("id > ?", lastPlacesID).Order("id ASC").Limit(pageSize).Find(&mozPlaces)
 		}
 		if len(mozPlaces) == 0 {
 			continue
@@ -135,7 +135,7 @@ func repairFavicons(cmd *cobra.Command, args []string) {
 			)
 
 			// seek icon
-			faviconsDb.Link.First(&mozIcon, mozPlace.FaviconId)
+			masterFaviconsDb.Link.First(&mozIcon, mozPlace.FaviconId)
 
 			// valid
 			if mozIcon.IconUrl != "" {
@@ -144,7 +144,7 @@ func repairFavicons(cmd *cobra.Command, args []string) {
 				continue
 			}
 
-			// skip unvalid URL
+			// skip invalid URL
 			host, _, err := sqlite.FixupUrl(mozPlace.Url)
 			if err != nil || Contains([]string{"localhost", "127.0.0.1"}, host) || strings.HasPrefix(mozPlace.Url, "moz-extension://") || !strings.HasPrefix(mozPlace.Url, "http://") && !strings.HasPrefix(mozPlace.Url, "https://") {
 				result.countSkipped++
@@ -168,14 +168,14 @@ func repairFavicons(cmd *cobra.Command, args []string) {
 			mozIcon.Data = ico.ImageData
 
 			// check if found existing favicon
-			faviconsDb.Link.Where("icon_url = ?", mozIcon.IconUrl).First(&foundExistingMozIcon)
+			masterFaviconsDb.Link.Where("icon_url = ?", mozIcon.IconUrl).First(&foundExistingMozIcon)
 			if foundExistingMozIcon.IconUrl != "" {
 				mozPlace.FaviconId = foundExistingMozIcon.ID
 				result.countExist++
 			} else {
 				result.lastIconsID++
 				mozIcon.ID = result.lastIconsID
-				if err := faviconsDb.Link.Create(&mozIcon).Error; err != nil {
+				if err := masterFaviconsDb.Link.Create(&mozIcon).Error; err != nil {
 					Logger.Errorf("Creating moz_icons row with id=%d : %s", mozIcon.ID, err)
 					result.countErrors++
 					progBar.Increment()
@@ -184,7 +184,7 @@ func repairFavicons(cmd *cobra.Command, args []string) {
 
 				mozIconToPage.PageId = mozPlace.ID
 				mozIconToPage.IconId = mozIcon.ID
-				if err := faviconsDb.Link.Create(&mozIconToPage).Error; err != nil {
+				if err := masterFaviconsDb.Link.Create(&mozIconToPage).Error; err != nil {
 					Logger.Errorf("Creating moz_icons_to_pages row with page_id=%d and icon_id=%d : %s", mozIconToPage.PageId, mozIconToPage.IconId, err)
 					result.countErrors++
 					progBar.Increment()
@@ -195,7 +195,7 @@ func repairFavicons(cmd *cobra.Command, args []string) {
 				mozPageWIcon.ID = result.lastPagesWIconsID
 				mozPageWIcon.PageUrl = mozPlace.Url
 				mozPageWIcon.PageUrlHash = 0 //TODO: Fills with 0 temporarily
-				if err := faviconsDb.Link.Create(&mozPageWIcon).Error; err != nil {
+				if err := masterFaviconsDb.Link.Create(&mozPageWIcon).Error; err != nil {
 					Logger.Errorf("Creating moz_pages_w_icons row with id=%d : %s", mozPageWIcon.ID, err)
 					result.countErrors++
 					progBar.Increment()
@@ -207,7 +207,7 @@ func repairFavicons(cmd *cobra.Command, args []string) {
 			}
 
 			// update places
-			if err := placesDb.Link.Save(&mozPlace).Error; err != nil {
+			if err := masterPlacesDb.Link.Save(&mozPlace).Error; err != nil {
 				result.countRepaired++
 				Logger.Errorf("Updating moz_places row with id=%d : %s", mozPlace.ID, err)
 			}
@@ -225,16 +225,16 @@ func repairFavicons(cmd *cobra.Command, args []string) {
 	Logger.Printf("  exist    = %d", result.countExist)
 	Logger.Printf("  errors   = %d", result.countErrors)
 
-	Logger.Printf("\nOptimizing %s database...", placesDb.Info.Filename)
-	if err = sqlite.Vacuum(placesDb.Link); err != nil {
+	Logger.Printf("\nOptimizing %s database...", masterPlacesDb.Info.Filename)
+	if err = sqlite.Vacuum(masterPlacesDb.Link); err != nil {
 		Logger.Warn(err)
 	}
 
-	Logger.Printf("Optimizing %s database...", faviconsDb.Info.Filename)
-	if err = sqlite.Vacuum(faviconsDb.Link); err != nil {
+	Logger.Printf("Optimizing %s database...", masterFaviconsDb.Info.Filename)
+	if err = sqlite.Vacuum(masterFaviconsDb.Link); err != nil {
 		Logger.Warn(err)
 	}
 
-	placesDb.Link.Close()
-	faviconsDb.Link.Close()
+	masterPlacesDb.Link.Close()
+	masterFaviconsDb.Link.Close()
 }

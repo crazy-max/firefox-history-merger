@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.62.0 (2018/09/05)
+
+* Add implementation for Firefox 62 schema version v52 (Issue #8)
+  * `moz_hosts` renamed `moz_origins` and column `typed` removed
+  * Index `origin_id` added to `moz_places`
+* Wrong last used date
+* More intuitive variables names
+* Upgrade to Go 1.11
+* Use [go mod](https://golang.org/cmd/go/#hdr-Module_maintenance) instead of `dep`
+
 ## 1.61.0 (2018/07/05)
 
 * Add implementation for Firefox 61 schema version v47 (Issue #6)

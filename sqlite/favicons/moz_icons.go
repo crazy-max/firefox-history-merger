@@ -5,7 +5,7 @@ import (
 )
 
 /**
- * moz_icons schema v39
+ * moz_icons schema >= v39
  */
 type MozIcons struct {
 	ID               int    `gorm:"primary_key"`

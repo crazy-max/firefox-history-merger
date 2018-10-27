@@ -5,7 +5,7 @@ import (
 )
 
 /**
- * moz_historyvisits schema v39
+ * moz_historyvisits schema >= v39
  */
 type MozHistoryvisits struct {
 	ID        int   `gorm:"primary_key"`

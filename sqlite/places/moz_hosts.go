@@ -1,9 +1,11 @@
 package places
 
-import "github.com/jinzhu/gorm"
+import (
+	"github.com/jinzhu/gorm"
+)
 
 /**
- * moz_hosts schema v39
+ * moz_hosts schema < v52
  */
 type MozHosts struct {
 	ID       int    `gorm:"primary_key"`

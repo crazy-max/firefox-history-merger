@@ -1,7 +1,6 @@
 package sqlite
 
 import (
-	"database/sql"
 	"errors"
 	"fmt"
 	"io/ioutil"
@@ -56,7 +55,7 @@ type (
 )
 
 var (
-	SchemaVersion   = 47
+	SchemaVersion   = 52
 	SchemaFFVersion = getFirefoxVersion(SchemaVersion)
 )
 
@@ -104,7 +103,6 @@ func Open(file string) (db *gorm.DB, err error) {
 func OpenDbs(sqliteFiles SqliteFiles, checkCompat bool) (placesDb PlacesDb, faviconsDb FaviconsDb, err error) {
 	var (
 		placesFileInfo   os.FileInfo
-		placesHvRow      *sql.Row
 		faviconsFileInfo os.FileInfo
 	)
 
@@ -123,6 +121,7 @@ func OpenDbs(sqliteFiles SqliteFiles, checkCompat bool) (placesDb PlacesDb, favi
 	}
 
 	placesDb.Link, err = gorm.Open("sqlite3", sqliteFiles.Places)
+	placesDb.Link.LogMode(false)
 	if err != nil {
 		return placesDb, faviconsDb, err
 	}
@@ -142,10 +141,15 @@ func OpenDbs(sqliteFiles SqliteFiles, checkCompat bool) (placesDb PlacesDb, favi
 	}
 
 	placesDb.Link.Model(&places.MozPlaces{}).Count(&placesDb.Info.PlacesCount)
-	placesHvRow = placesDb.Link.Model(&places.MozHistoryvisits{}).Select("count(id), visit_date").Order("visit_date desc").Row()
 
-	if placesHvRow != nil {
-		placesHvRow.Scan(&placesDb.Info.HistoryCount, &placesDb.Info.LastUsedUnix)
+	placesHistoryVisitsRow := placesDb.Link.Model(&places.MozHistoryvisits{}).Select("count(id)").Row()
+	if placesHistoryVisitsRow != nil {
+		placesHistoryVisitsRow.Scan(&placesDb.Info.HistoryCount)
+	}
+
+	placesLastVisitDateRow := placesDb.Link.Model(&places.MozPlaces{}).Select("last_visit_date").Order("last_visit_date desc").Row()
+	if placesLastVisitDateRow != nil {
+		placesLastVisitDateRow.Scan(&placesDb.Info.LastUsedUnix)
 		placesDb.Info.LastUsedTime = time.Unix(int64(math.Ceil(float64(placesDb.Info.LastUsedUnix/1000000))), 0)
 	}
 
@@ -165,6 +169,7 @@ func OpenDbs(sqliteFiles SqliteFiles, checkCompat bool) (placesDb PlacesDb, favi
 	}
 
 	faviconsDb.Link, err = gorm.Open("sqlite3", sqliteFiles.Favicons)
+	faviconsDb.Link.LogMode(false)
 	if err != nil {
 		return placesDb, faviconsDb, nil
 	}
@@ -275,7 +280,10 @@ func getFirefoxVersion(dbVersion int) int {
 	if dbVersion < 47 {
 		return 60
 	}
-	return 61
+	if dbVersion < 52 {
+		return 61
+	}
+	return 62
 }
 
 func BackupDb(dbInfo Info) error {

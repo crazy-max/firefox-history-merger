@@ -43,27 +43,27 @@ func infoRun(cmd *cobra.Command, args []string) {
 
 	// check and open dbs
 	Logger.Printf("Checking and opening DBs...")
-	placesDb, faviconsDb, err = sqlite.OpenDbs(sqlite.SqliteFiles{
+	masterPlacesDb, masterFaviconsDb, err = sqlite.OpenDbs(sqlite.SqliteFiles{
 		Places: args[0], Favicons: faviconsFile,
 	}, false)
 	if err != nil {
 		Logger.Crit(err)
 	}
 
-	Logger.Printf("\nSchema version:   v%d (Firefox >= %d)", placesDb.Info.Version, placesDb.Info.FirefoxVersion)
-	Logger.Printf("Compatible:       %s", placesDb.Info.CompatibleStr)
-	Logger.Printf("History entries:  %d", placesDb.Info.HistoryCount)
-	Logger.Printf("Places entries:   %d", placesDb.Info.PlacesCount)
+	Logger.Printf("\nSchema version:   v%d (Firefox >= %d)", masterPlacesDb.Info.Version, masterPlacesDb.Info.FirefoxVersion)
+	Logger.Printf("Compatible:       %s", masterPlacesDb.Info.CompatibleStr)
+	Logger.Printf("History entries:  %d", masterPlacesDb.Info.HistoryCount)
+	Logger.Printf("Places entries:   %d", masterPlacesDb.Info.PlacesCount)
 	if faviconsFile != "" {
-		Logger.Printf("Icons entries:    %d", faviconsDb.Info.IconsCount)
+		Logger.Printf("Icons entries:    %d", masterFaviconsDb.Info.IconsCount)
 	}
-	Logger.Printf("Last used on:     %s", placesDb.Info.LastUsedTime.Format("2006-01-02 15:04:05"))
+	Logger.Printf("Last used on:     %s", masterPlacesDb.Info.LastUsedTime.Format("2006-01-02 15:04:05"))
 
-	Logger.Debug(placesDb.Info)
-	Logger.Debug(faviconsDb.Info)
+	Logger.Debug(masterPlacesDb.Info)
+	Logger.Debug(masterFaviconsDb.Info)
 
-	placesDb.Link.Close()
+	masterPlacesDb.Link.Close()
 	if faviconsFile != "" {
-		faviconsDb.Link.Close()
+		masterFaviconsDb.Link.Close()
 	}
 }

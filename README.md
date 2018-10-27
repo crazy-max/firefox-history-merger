@@ -20,7 +20,7 @@
 ## Features
 
 * Merge history (`moz_places`) from `places.sqlite` file
-* `moz_hosts`, `moz_historyvisits` are also merged
+* `moz_origins`, `moz_historyvisits` are also merged
 * [Frecency](https://developer.mozilla.org/en-US/docs/Mozilla/Tech/Places/Frecency_algorithm) is recalculated during the merge
 * Repair favicons
 * Display info about `places.sqlite` and `favicons.sqlite`
@@ -34,12 +34,12 @@
 
 | File name                                                                                                                                                             | OS      | Arch    |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | ------- |
-| **[firefox-history-merger-1.61.0-darwin-amd64](https://github.com/crazy-max/firefox-history-merger/releases/download/1.61.0/firefox-history-merger-1.61.0-darwin-amd64)**           | macOS   | x86-64  |
-| [firefox-history-merger-1.61.0-darwin-386](https://github.com/crazy-max/firefox-history-merger/releases/download/1.61.0/firefox-history-merger-1.61.0-darwin-386)                   | macOS   | x86     |
-| **[firefox-history-merger-1.61.0-linux-amd64](https://github.com/crazy-max/firefox-history-merger/releases/download/1.61.0/firefox-history-merger-1.61.0-linux-amd64)**             | Linux   | x86-64  |
-| [firefox-history-merger-1.61.0-linux-386](https://github.com/crazy-max/firefox-history-merger/releases/download/1.61.0/firefox-history-merger-1.61.0-linux-386)                     | Linux   | x86     |
-| **[firefox-history-merger-1.61.0-windows-amd64.exe](https://github.com/crazy-max/firefox-history-merger/releases/download/1.61.0/firefox-history-merger-1.61.0-windows-amd64.exe)** | Windows | x86-64  |
-| [firefox-history-merger-1.61.0-windows-386.exe](https://github.com/crazy-max/firefox-history-merger/releases/download/1.61.0/firefox-history-merger-1.61.0-windows-386.exe)         | Windows | x86     |
+| **[firefox-history-merger-1.62.0-darwin-amd64](https://github.com/crazy-max/firefox-history-merger/releases/download/1.62.0/firefox-history-merger-1.62.0-darwin-amd64)**           | macOS   | x86-64  |
+| [firefox-history-merger-1.62.0-darwin-386](https://github.com/crazy-max/firefox-history-merger/releases/download/1.62.0/firefox-history-merger-1.62.0-darwin-386)                   | macOS   | x86     |
+| **[firefox-history-merger-1.62.0-linux-amd64](https://github.com/crazy-max/firefox-history-merger/releases/download/1.62.0/firefox-history-merger-1.62.0-linux-amd64)**             | Linux   | x86-64  |
+| [firefox-history-merger-1.62.0-linux-386](https://github.com/crazy-max/firefox-history-merger/releases/download/1.62.0/firefox-history-merger-1.62.0-linux-386)                     | Linux   | x86     |
+| **[firefox-history-merger-1.62.0-windows-amd64.exe](https://github.com/crazy-max/firefox-history-merger/releases/download/1.62.0/firefox-history-merger-1.62.0-windows-amd64.exe)** | Windows | x86-64  |
+| [firefox-history-merger-1.62.0-windows-386.exe](https://github.com/crazy-max/firefox-history-merger/releases/download/1.62.0/firefox-history-merger-1.62.0-windows-386.exe)         | Windows | x86     |
 
 ## Usage
 
@@ -86,7 +86,7 @@ Backing up 'places.sqlite' to 'places.sqlite.20171209183822'...
 The following tables will be merged:
 - moz_places
 - moz_historyvisits (inc. in moz_places process)
-- moz_hosts
+- moz_origins
 
 Looking for *.sqlite DBs in 'other_places_folder/'
 2 valid DB(s) found:
@@ -95,11 +95,11 @@ Looking for *.sqlite DBs in 'other_places_folder/'
 
 ## Merging DB 'places_20170720.sqlite'...
 moz_places 57093 / 57093 [=============================================================================] 100.00%
-moz_hosts 4422 / 4422 [=======================================================================================] 100.00%
+moz_origins 4422 / 4422 [=======================================================================================] 100.00%
 
 ## Merging DB 'places_20160821.sqlite'...
 moz_places 101208 / 101208 [=============================================================================] 100.00%
-moz_hosts 5893 / 5893 [=======================================================================================] 100.00%
+moz_origins 5893 / 5893 [=======================================================================================] 100.00%
 ```
 
 ### Repair favicons
@@ -140,8 +140,8 @@ Once you create it and set it, check the value of `places.history.expiration.tra
 
 Database schema version is stored in `user_version` [pragma statement](https://sqlite.org/pragma.html). Linked Firefox version to database schema can be found in [Database.cpp](https://dxr.mozilla.org/mozilla-central/source/toolkit/components/places/Database.cpp#993).
 
-![Firefox v47 database schema](.res/schemas/v47.png)
-> [Edit this diagram](https://www.draw.io/?title=firefox_v47.png&url=https%3A%2F%2Fraw.githubusercontent.com%2Fcrazy-max%2Ffirefox-history-merger%2Fmaster%2F.res%2Fschemas%2Fv47.png%3Ft%3D0) in your browser. 
+![Firefox v52 database schema](.res/schemas/v52.png)
+> [Edit this diagram](https://www.draw.io/?title=firefox_v52.png&url=https%3A%2F%2Fraw.githubusercontent.com%2Fcrazy-max%2Ffirefox-history-merger%2Fmaster%2F.res%2Fschemas%2Fv52.png%3Ft%3D0) in your browser. 
 
 ## How can i help ?
 

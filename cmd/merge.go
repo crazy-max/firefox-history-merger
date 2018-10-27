@@ -8,8 +8,9 @@ import (
 	"github.com/crazy-max/firefox-history-merger/sqlite"
 	"github.com/crazy-max/firefox-history-merger/sqlite/places"
 	. "github.com/crazy-max/firefox-history-merger/utils"
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
-	pb "gopkg.in/cheggaaa/pb.v1"
+	"gopkg.in/cheggaaa/pb.v1"
 )
 
 type MergeResult struct {
@@ -28,21 +29,24 @@ var (
 
 	doMergeFull             bool
 	doMergeMinimal          bool
-	doMergeAddHosts         bool
+	doMergeAddOrigins       bool
 	doMergeAddHistoryvisits bool
 
 	lastID struct {
 		MozPlaces        int
 		MozHistoryvisits int
-		MozHosts         int
+		MozOrigins       int
 	}
+
+	mergeLogFile *os.File
+	mergeLog     = logrus.New()
 )
 
 func init() {
 	mergeCmd.PersistentFlags().BoolVar(&doMergeMinimal, "merge-minimal", true, "Merge moz_places")
-	mergeCmd.PersistentFlags().BoolVar(&doMergeFull, "merge-full", false, "Merge moz_places, moz_hosts and moz_historyvisits")
+	mergeCmd.PersistentFlags().BoolVar(&doMergeFull, "merge-full", false, "Merge moz_places, moz_origins and moz_historyvisits")
 	mergeCmd.PersistentFlags().BoolVar(&doMergeAddHistoryvisits, "merge-add-historyvisits", false, "Add moz_historyvisits to merge")
-	mergeCmd.PersistentFlags().BoolVar(&doMergeAddHosts, "merge-add-hosts", false, "Add moz_hosts to merge")
+	mergeCmd.PersistentFlags().BoolVar(&doMergeAddOrigins, "merge-add-origins", false, "Add moz_origins to merge (formerly moz_hosts)")
 	RootCmd.AddCommand(mergeCmd)
 }
 
@@ -52,7 +56,7 @@ func mergeRun(cmd *cobra.Command, args []string) {
 		Logger.Crit("merge has too many arguments")
 	}
 	if len(args) != 2 {
-		Logger.Crit("merge requires your current places.sqlite and folder with places.sqlite files to merge")
+		Logger.Crit("merge requires your master places.sqlite and folder with places.sqlite files to merge")
 	}
 	if !FileExists(args[0]) {
 		Logger.Critf("%s not found", args[0])
@@ -67,7 +71,7 @@ func mergeRun(cmd *cobra.Command, args []string) {
 
 	// check and open db
 	Logger.Printf("Checking and opening DBs...")
-	placesDb, _, err = sqlite.OpenDbs(sqlite.SqliteFiles{
+	masterPlacesDb, _, err = sqlite.OpenDbs(sqlite.SqliteFiles{
 		Places: args[0], Favicons: "",
 	}, true)
 	if err != nil {
@@ -75,73 +79,86 @@ func mergeRun(cmd *cobra.Command, args []string) {
 	}
 
 	// working db infos
-	Logger.Printf("\nWorking DB is '%s'", placesDb.Info.Filename)
-	Logger.Debugf("Hash: %s:", placesDb.Info.Filehash)
+	Logger.Printf("\nMaster DB is '%s'", masterPlacesDb.Info.Filename)
+	Logger.Debugf("Hash: %s:", masterPlacesDb.Info.Filehash)
 
 	// backup db
-	sqlite.BackupDb(placesDb.Info)
+	sqlite.BackupDb(masterPlacesDb.Info)
+
+	// log
+	mergeLogFile, err = os.OpenFile(PathJoin(appPath, "merge.log"), os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
+	if err != nil {
+		Logger.Errorf("Merge log file: %s", err)
+	}
+	defer mergeLogFile.Close()
+	mergeLog.Out = mergeLogFile
+	mergeLog.Info("Starting merge...")
 
 	// check merge flags
 	mergeList := []string{"moz_places"}
 	if doMergeFull {
-		mergeList = append(mergeList, "moz_historyvisits (inc. in moz_places)", "moz_hosts")
+		mergeList = append(mergeList, "moz_historyvisits (inc. in moz_places)", "moz_origins")
 	} else {
 		if doMergeAddHistoryvisits {
 			mergeList = append(mergeList, "moz_historyvisits (inc. in moz_places)")
 		}
-		if doMergeAddHosts {
-			mergeList = append(mergeList, "moz_hosts")
+		if doMergeAddOrigins {
+			mergeList = append(mergeList, "moz_origins")
 		}
 	}
 	Logger.Printf("\nThe following tables will be merged:\n- %s", strings.Join(mergeList, "\n- "))
 
 	// open folder of places files to merge
 	Logger.Printf("\nLooking for *.sqlite DBs in '%s'", args[1])
-	sqliteDBs := sqlite.OpenPlacesDir(args[1], placesDb)
-	Logger.Printf("%s valid DB(s) found:", strconv.Itoa(len(sqliteDBs)))
-	for _, sqliteDB := range sqliteDBs {
+	slavePlacesDbs := sqlite.OpenPlacesDir(args[1], masterPlacesDb)
+	Logger.Printf("%s valid DB(s) found:", strconv.Itoa(len(slavePlacesDbs)))
+	for _, slavePlacesDb := range slavePlacesDbs {
 		Logger.Printf("- %s (%d entries ; last used on %s)",
-			sqliteDB.Info.Filename,
-			sqliteDB.Info.PlacesCount,
-			sqliteDB.Info.LastUsedTime.Format("2006-01-02 15:04:05"),
+			slavePlacesDb.Info.Filename,
+			slavePlacesDb.Info.PlacesCount,
+			slavePlacesDb.Info.LastUsedTime.Format("2006-01-02 15:04:05"),
 		)
 	}
 
-	// find max moz_places, moz_hosts and moz_historyvisits ids
-	lastID.MozPlaces = places.MozPlaces{}.GetLastID(placesDb.Link)
-	lastID.MozHosts = places.MozHosts{}.GetLastID(placesDb.Link)
-	lastID.MozHistoryvisits = places.MozHistoryvisits{}.GetLastID(placesDb.Link)
+	// find max moz_places, moz_origins and moz_historyvisits ids
+	lastID.MozPlaces = places.MozPlaces{}.GetLastID(masterPlacesDb.Link)
+	lastID.MozOrigins = places.MozOrigins{}.GetLastID(masterPlacesDb.Link)
+	lastID.MozHistoryvisits = places.MozHistoryvisits{}.GetLastID(masterPlacesDb.Link)
 	Logger.Debugf("\nLast IDs found in working DB:")
 	Logger.Debugf("- moz_places.id:        %d", lastID.MozPlaces)
-	Logger.Debugf("- moz_hosts.id:         %d", lastID.MozHosts)
+	Logger.Debugf("- moz_origins.id:       %d", lastID.MozOrigins)
 	Logger.Debugf("- moz_historyvisits.id: %d", lastID.MozHistoryvisits)
 
 	// merge dbs to working db
-	for _, currentPlacesDb := range sqliteDBs {
-		Logger.Printf("\n## Merging DB '%s'...", currentPlacesDb.Info.Filename)
-		merge(currentPlacesDb)
-		currentPlacesDb.Link.Close()
+	for _, slavePlacesDb := range slavePlacesDbs {
+		Logger.Printf("\n## Merging DB '%s'...", slavePlacesDb.Info.Filename)
+		merge(slavePlacesDb)
+		slavePlacesDb.Link.Close()
 	}
 
-	Logger.Printf("\nOptimizing %s database...", placesDb.Info.Filename)
-	if err = sqlite.Vacuum(placesDb.Link); err != nil {
+	Logger.Printf("\nOptimizing %s database...", masterPlacesDb.Info.Filename)
+	if err = sqlite.Vacuum(masterPlacesDb.Link); err != nil {
 		Logger.Warn(err)
 	}
 
-	placesDb.Link.Close()
+	masterPlacesDb.Link.Close()
 }
 
-func merge(currentPlacesDb sqlite.PlacesDb) {
+func merge(slavePlacesDb sqlite.PlacesDb) {
 	var placesResult MergeResult
 	var historyvisitsResult MergeResult
+	var originsResult MergeResult
 	var hostsResult MergeResult
 
 	// moz_places
-	placesResult, historyvisitsResult = mergePlaces(currentPlacesDb)
+	placesResult, historyvisitsResult = mergePlaces(slavePlacesDb)
 
-	// moz_hosts
-	if doMergeFull || doMergeAddHosts {
-		hostsResult = mergeHosts(currentPlacesDb)
+	// moz_hosts or moz_origins
+	if slavePlacesDb.Info.Version < 52 {
+		hostsResult = mergeHosts(slavePlacesDb)
+	} else {
+		// TODO: check if places repaired with right origin_id
+		originsResult = mergeOrigins(slavePlacesDb)
 	}
 
 	Logger.Debugf("\n[moz_places]")
@@ -149,61 +166,73 @@ func merge(currentPlacesDb sqlite.PlacesDb) {
 	Logger.Debugf("  updated = %d", placesResult.Updated)
 	Logger.Debugf("  errors  = %d", placesResult.Errors)
 
-	if doMergeFull || doMergeAddHistoryvisits {
+	if historyvisitsResult.Created > 0 || historyvisitsResult.Errors > 0 {
 		Logger.Debugf("\n[moz_historyvisits]")
 		Logger.Debugf("  created = %d", historyvisitsResult.Created)
 		Logger.Debugf("  errors  = %d", historyvisitsResult.Errors)
 	}
 
-	if doMergeFull || doMergeAddHosts {
-		Logger.Debugf("\n[moz_hosts]")
+	if originsResult.Created > 0 || originsResult.Updated > 0 || originsResult.Errors > 0 {
+		Logger.Debugf("\n[moz_origins]")
+		Logger.Debugf("  created = %d", originsResult.Created)
+		Logger.Debugf("  updated = %d", originsResult.Updated)
+		Logger.Debugf("  errors  = %d", originsResult.Errors)
+	}
+
+	if hostsResult.Created > 0 || hostsResult.Updated > 0 || hostsResult.Errors > 0 {
+		Logger.Debugf("\n[moz_origins] from moz_hosts")
 		Logger.Debugf("  created = %d", hostsResult.Created)
 		Logger.Debugf("  updated = %d", hostsResult.Updated)
 		Logger.Debugf("  errors  = %d", hostsResult.Errors)
 	}
+
+	if placesResult.Errors > 0 || historyvisitsResult.Errors > 0 || originsResult.Errors > 0 || hostsResult.Errors > 0 {
+		cntErrors := placesResult.Errors + historyvisitsResult.Errors + originsResult.Errors + hostsResult.Errors
+		Logger.Printf("\n%d error(s) occurred. Check your merge.log file", cntErrors)
+	}
 }
 
-func mergePlaces(currentPlacesDb sqlite.PlacesDb) (placesResult MergeResult, historyvisitsResult MergeResult) {
-	var currentMozPlaces []places.MozPlaces
-	currentPlacesDb.Link.Find(&currentMozPlaces)
-	//currentPlacesDb.Link.Limit(500).Find(&currentMozPlaces)
+func mergePlaces(slavePlacesDb sqlite.PlacesDb) (placesResult MergeResult, historyvisitsResult MergeResult) {
+	var slaveMozPlaces []places.MozPlaces
+	//slavePlacesDb.Link.Find(&slaveMozPlaces)
+	slavePlacesDb.Link.Limit(1000).Find(&slaveMozPlaces)
 
-	progBar := pb.StartNew(len(currentMozPlaces))
+	progBar := pb.StartNew(len(slaveMozPlaces))
 	progBar.Prefix("moz_places")
-	for _, currentMozPlace := range currentMozPlaces {
+	for _, slaveMozPlace := range slaveMozPlaces {
 		var (
-			workingMozPlace places.MozPlaces
-			newMozPlace     places.MozPlaces
-			updateMozPlace  places.MozPlaces
+			masterMozPlace places.MozPlaces
+			newMozPlace    places.MozPlaces
+			updateMozPlace places.MozPlaces
 		)
-		placesDb.Link.Where("url = ?", currentMozPlace.Url).Find(&workingMozPlace)
-		if workingMozPlace.ID == 0 {
+		masterPlacesDb.Link.Where("url = ?", slaveMozPlace.Url).Find(&masterMozPlace)
+
+		// New moz_place entry
+		if masterMozPlace.ID == 0 {
 			lastID.MozPlaces++
-			newMozPlace = currentMozPlace
+			newMozPlace = slaveMozPlace
 			newMozPlace.ID = lastID.MozPlaces
-			newMozPlace.Guid = places.MozPlaces{}.GenerateGUID(currentPlacesDb.Link)
-			if err := placesDb.Link.Create(&newMozPlace).Error; err != nil {
-				Logger.Errorf("Creating moz_places row with id=%d : %s", newMozPlace.ID, err)
+			newMozPlace.Guid = places.MozPlaces{}.GenerateGUID(slavePlacesDb.Link)
+			if err := masterPlacesDb.Link.Create(&newMozPlace).Error; err != nil {
+				mergeLog.Errorf("Creating moz_places row with id=%d : %s", newMozPlace.ID, err)
 				placesResult.Errors++
 			} else {
 				placesResult.Created++
-				if doMergeFull || doMergeAddHistoryvisits {
-					mergeHistoryvisits(newMozPlace, currentMozPlace, currentPlacesDb, &historyvisitsResult)
-				}
+				mergeHistoryvisits(newMozPlace, slaveMozPlace, slavePlacesDb, &historyvisitsResult)
 			}
+
+			// Update moz_place entry
 		} else {
-			updateMozPlace = workingMozPlace
-			updateMozPlace.VisitCount += currentMozPlace.VisitCount
-			updateMozPlace.LastVisitDate = MaxInt64(updateMozPlace.LastVisitDate, currentMozPlace.LastVisitDate)
-			updateMozPlace.Frecency = (updateMozPlace.Frecency + currentMozPlace.Frecency) / 2
-			if err := placesDb.Link.Save(&updateMozPlace).Error; err != nil {
-				Logger.Errorf("Updating moz_places row with id=%d : %s", updateMozPlace.ID, err)
+			updateMozPlace = masterMozPlace
+			updateMozPlace.VisitCount += slaveMozPlace.VisitCount
+			updateMozPlace.LastVisitDate = MaxInt64(updateMozPlace.LastVisitDate, slaveMozPlace.LastVisitDate)
+			updateMozPlace.Frecency = (updateMozPlace.Frecency + slaveMozPlace.Frecency) / 2
+			if err := masterPlacesDb.Link.Save(&updateMozPlace).Error; err != nil {
+				mergeLog.Errorf("Updating moz_places row with id=%d : %s", updateMozPlace.ID, err)
 				placesResult.Errors++
 			} else {
 				placesResult.Updated++
-				if doMergeFull || doMergeAddHistoryvisits {
-					mergeHistoryvisits(updateMozPlace, currentMozPlace, currentPlacesDb, &historyvisitsResult)
-				}
+				mergeHistoryvisits(updateMozPlace, slaveMozPlace, slavePlacesDb, &historyvisitsResult)
 			}
 		}
 		progBar.Increment()
@@ -213,33 +242,37 @@ func mergePlaces(currentPlacesDb sqlite.PlacesDb) (placesResult MergeResult, his
 	return placesResult, historyvisitsResult
 }
 
-func mergeHistoryvisits(workingMozPlaces places.MozPlaces, currentMozPlaces places.MozPlaces, currentPlacesDb sqlite.PlacesDb, result *MergeResult) {
-	var currentMozHistoryvisits []places.MozHistoryvisits
-	currentPlacesDb.Link.Where("place_id = ?", currentMozPlaces.ID).Find(&currentMozHistoryvisits)
-	for _, currentMozHistoryvisit := range currentMozHistoryvisits {
-		// Places already exists
-		if workingMozPlaces.ID != lastID.MozPlaces {
-			// Check history visit collisions before create
-			var workingMozHistoryvisits places.MozHistoryvisits
-			//FIXME: No unique columns so fingerprint with from_visit, place_id and visit_date
-			placesDb.Link.Where("from_visit = ? AND place_id = ? AND visit_date = ?",
-				currentMozHistoryvisit.FromVisit,
-				workingMozPlaces.ID,
-				currentMozHistoryvisit.VisitDate,
-			).First(&workingMozHistoryvisits)
+func mergeHistoryvisits(masterMozPlaces places.MozPlaces, slaveMozPlaces places.MozPlaces, slavePlacesDb sqlite.PlacesDb, result *MergeResult) {
+	if !doMergeFull && !doMergeAddHistoryvisits {
+		return
+	}
 
-			if workingMozHistoryvisits.ID > 0 {
+	var slaveMozHistoryvisits []places.MozHistoryvisits
+	slavePlacesDb.Link.Where("place_id = ?", slaveMozPlaces.ID).Find(&slaveMozHistoryvisits)
+	for _, slaveMozHistoryvisit := range slaveMozHistoryvisits {
+		// Places already exists
+		if masterMozPlaces.ID != lastID.MozPlaces {
+			// Check history visit collisions before create
+			var masterMozHistoryvisits places.MozHistoryvisits
+			//FIXME: No unique columns so fingerprint with from_visit, place_id and visit_date
+			masterPlacesDb.Link.Where("from_visit = ? AND place_id = ? AND visit_date = ?",
+				slaveMozHistoryvisit.FromVisit,
+				masterMozPlaces.ID,
+				slaveMozHistoryvisit.VisitDate,
+			).First(&masterMozHistoryvisits)
+
+			if masterMozHistoryvisits.ID > 0 {
 				return
 			}
 		}
 
 		lastID.MozHistoryvisits++
-		currentMozHistoryvisit.ID = lastID.MozHistoryvisits
-		currentMozHistoryvisit.PlaceId = workingMozPlaces.ID
-		currentMozHistoryvisit.FromVisit = 0 //TODO: Find a way to retrieve ancestors. Fills from_visit with 0 temporarily.
+		slaveMozHistoryvisit.ID = lastID.MozHistoryvisits
+		slaveMozHistoryvisit.PlaceId = masterMozPlaces.ID
+		slaveMozHistoryvisit.FromVisit = 0 //TODO: Find a way to retrieve ancestors. Fills from_visit with 0 temporarily.
 
-		if err := placesDb.Link.Create(&currentMozHistoryvisit).Error; err != nil {
-			Logger.Errorf("Creating moz_historyvisits row with id=%d : %s", currentMozHistoryvisit.ID, err)
+		if err := masterPlacesDb.Link.Create(&slaveMozHistoryvisit).Error; err != nil {
+			mergeLog.Errorf("Creating moz_historyvisits row with id=%d : %s", slaveMozHistoryvisit.ID, err)
 			result.Errors++
 		} else {
 			result.Created++
@@ -247,30 +280,77 @@ func mergeHistoryvisits(workingMozPlaces places.MozPlaces, currentMozPlaces plac
 	}
 }
 
-func mergeHosts(currentPlacesDb sqlite.PlacesDb) MergeResult {
+func mergeHosts(slavePlacesDb sqlite.PlacesDb) MergeResult {
 	var result MergeResult
 
-	var currentMozHosts []places.MozHosts
-	currentPlacesDb.Link.Find(&currentMozHosts)
+	if !doMergeFull && !doMergeAddOrigins {
+		return result
+	}
 
-	progBar := pb.StartNew(len(currentMozHosts))
+	var slaveMozHosts []places.MozHosts
+	slavePlacesDb.Link.Find(&slaveMozHosts)
+
+	progBar := pb.StartNew(len(slaveMozHosts))
 	progBar.Prefix("moz_hosts")
-	for _, currentMozHost := range currentMozHosts {
-		var workingMozHost places.MozHosts
-		placesDb.Link.Where("host = ?", currentMozHost.Host).First(&workingMozHost)
-		if workingMozHost.Host == "" {
-			lastID.MozHosts++
-			currentMozHost.ID = lastID.MozHosts
-			if err := placesDb.Link.Create(&currentMozHost).Error; err != nil {
-				Logger.Errorf("Creating moz_hosts row with id=%d : %s", currentMozHost.ID, err)
+	for _, slaveMozHost := range slaveMozHosts {
+		var masterMozOrigin places.MozOrigins
+		masterPlacesDb.Link.Where("host = ?", slaveMozHost.Host).First(&masterMozOrigin)
+		if masterMozOrigin.Host == "" {
+			lastID.MozOrigins++
+			masterMozOrigin.ID = lastID.MozOrigins
+			masterMozOrigin.Prefix = slaveMozHost.Prefix
+			masterMozOrigin.Host = slaveMozHost.Host
+			masterMozOrigin.Frecency = slaveMozHost.Frecency
+			if err := masterPlacesDb.Link.Create(&masterMozOrigin).Error; err != nil {
+				mergeLog.Errorf("Creating moz_origins row with id=%d : %s", masterMozOrigin.ID, err)
 				result.Errors++
 			} else {
 				result.Created++
 			}
 		} else {
-			workingMozHost.Frecency = (workingMozHost.Frecency + currentMozHost.Frecency) / 2
-			if err := placesDb.Link.Save(&workingMozHost).Error; err != nil {
-				Logger.Errorf("Updating moz_hosts row with id=%d : %s", workingMozHost.ID, err)
+			masterMozOrigin.Frecency = (masterMozOrigin.Frecency + slaveMozHost.Frecency) / 2
+			if err := masterPlacesDb.Link.Save(&masterMozOrigin).Error; err != nil {
+				mergeLog.Errorf("Updating moz_origins row with id=%d : %s", masterMozOrigin.ID, err)
+				result.Errors++
+			} else {
+				result.Updated++
+			}
+		}
+		progBar.Increment()
+	}
+	progBar.Finish()
+
+	return result
+}
+
+func mergeOrigins(slavePlacesDb sqlite.PlacesDb) MergeResult {
+	var result MergeResult
+
+	if !doMergeFull && !doMergeAddOrigins {
+		return result
+	}
+
+	var slaveMozOrigins []places.MozOrigins
+	slavePlacesDb.Link.Find(&slaveMozOrigins)
+
+	progBar := pb.StartNew(len(slaveMozOrigins))
+	progBar.Prefix("moz_origins")
+	for _, slaveMozOrigin := range slaveMozOrigins {
+		var masterMozOrigin places.MozOrigins
+		masterPlacesDb.Link.Where("host = ?", slaveMozOrigin.Host).First(&masterMozOrigin)
+		if masterMozOrigin.Host == "" {
+			lastID.MozOrigins++
+			slaveMozOrigin.ID = lastID.MozOrigins
+			if err := masterPlacesDb.Link.Create(&slaveMozOrigin).Error; err != nil {
+				mergeLog.Errorf("Creating moz_origins row with id=%d : %s", slaveMozOrigin.ID, err)
+				result.Errors++
+			} else {
+				result.Created++
+			}
+		} else {
+			masterMozOrigin.Frecency = (masterMozOrigin.Frecency + slaveMozOrigin.Frecency) / 2
+			if err := masterPlacesDb.Link.Save(&masterMozOrigin).Error; err != nil {
+				mergeLog.Errorf("Updating moz_origins row with id=%d : %s", masterMozOrigin.ID, err)
 				result.Errors++
 			} else {
 				result.Updated++

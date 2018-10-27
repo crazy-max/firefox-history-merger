@@ -5,7 +5,7 @@ import (
 )
 
 /**
- * moz_pages_w_icons schema v39
+ * moz_pages_w_icons schema >= v39
  */
 type MozPagesWIcons struct {
 	ID          int    `gorm:"primary_key"`

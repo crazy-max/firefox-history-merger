@@ -6,7 +6,7 @@ import (
 )
 
 /**
- * moz_places schema v39
+ * moz_places schema >= v52
  */
 type MozPlaces struct {
 	ID              int    `gorm:"primary_key"`
@@ -24,6 +24,7 @@ type MozPlaces struct {
 	UrlHash         int64  `gorm:"not null;default:0;index:moz_places_url_hashindex"`
 	Description     string `gorm:"size:-1"`
 	PreviewImageUrl string `gorm:"size:-1"`
+	OriginId        int    `gorm:"index:moz_places_originidindex"`
 }
 
 func (table MozPlaces) GetFirstID(db *gorm.DB) (maxID int) {
