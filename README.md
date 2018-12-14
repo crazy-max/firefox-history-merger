@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://github.com/crazy-max/firefox-history-merger/releases/latest"><img src="https://img.shields.io/github/release/crazy-max/firefox-history-merger.svg?style=flat-square" alt="GitHub release"></a>
-  <a href="#databases-schema"><img src="https://img.shields.io/badge/firefox-63%20--%20v52-ea7015.svg?style=flat-square" alt="Database Schema"></a>
+  <a href="#databases-schema"><img src="https://img.shields.io/badge/firefox-64%20--%20v52-ea7015.svg?style=flat-square" alt="Database Schema"></a>
   <a href="https://github.com/crazy-max/firefox-history-merger/releases/latest"><img src="https://img.shields.io/github/downloads/crazy-max/firefox-history-merger/total.svg?style=flat-square" alt="Total downloads"></a>
   <a href="https://travis-ci.org/crazy-max/firefox-history-merger"><img src="https://img.shields.io/travis/crazy-max/firefox-history-merger/master.svg?style=flat-square" alt="Build Status"></a>
   <a href="https://goreportcard.com/report/github.com/crazy-max/firefox-history-merger"><img src="https://goreportcard.com/badge/github.com/crazy-max/firefox-history-merger?style=flat-square" alt="Go Report"></a>
@@ -34,12 +34,12 @@
 
 | File name                                                                                                                                                             | OS      | Arch    |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | ------- |
-| **[firefox-history-merger-1.63.0-darwin-amd64](https://github.com/crazy-max/firefox-history-merger/releases/download/1.63.0/firefox-history-merger-1.63.0-darwin-amd64)**           | macOS   | x86-64  |
-| [firefox-history-merger-1.63.0-darwin-386](https://github.com/crazy-max/firefox-history-merger/releases/download/1.63.0/firefox-history-merger-1.63.0-darwin-386)                   | macOS   | x86     |
-| **[firefox-history-merger-1.63.0-linux-amd64](https://github.com/crazy-max/firefox-history-merger/releases/download/1.63.0/firefox-history-merger-1.63.0-linux-amd64)**             | Linux   | x86-64  |
-| [firefox-history-merger-1.63.0-linux-386](https://github.com/crazy-max/firefox-history-merger/releases/download/1.63.0/firefox-history-merger-1.63.0-linux-386)                     | Linux   | x86     |
-| **[firefox-history-merger-1.63.0-windows-amd64.exe](https://github.com/crazy-max/firefox-history-merger/releases/download/1.63.0/firefox-history-merger-1.63.0-windows-amd64.exe)** | Windows | x86-64  |
-| [firefox-history-merger-1.63.0-windows-386.exe](https://github.com/crazy-max/firefox-history-merger/releases/download/1.63.0/firefox-history-merger-1.63.0-windows-386.exe)         | Windows | x86     |
+| **[firefox-history-merger-1.64.0-darwin-amd64](https://github.com/crazy-max/firefox-history-merger/releases/download/1.64.0/firefox-history-merger-1.64.0-darwin-amd64)**           | macOS   | x86-64  |
+| [firefox-history-merger-1.64.0-darwin-386](https://github.com/crazy-max/firefox-history-merger/releases/download/1.64.0/firefox-history-merger-1.64.0-darwin-386)                   | macOS   | x86     |
+| **[firefox-history-merger-1.64.0-linux-amd64](https://github.com/crazy-max/firefox-history-merger/releases/download/1.64.0/firefox-history-merger-1.64.0-linux-amd64)**             | Linux   | x86-64  |
+| [firefox-history-merger-1.64.0-linux-386](https://github.com/crazy-max/firefox-history-merger/releases/download/1.64.0/firefox-history-merger-1.64.0-linux-386)                     | Linux   | x86     |
+| **[firefox-history-merger-1.64.0-windows-amd64.exe](https://github.com/crazy-max/firefox-history-merger/releases/download/1.64.0/firefox-history-merger-1.64.0-windows-amd64.exe)** | Windows | x86-64  |
+| [firefox-history-merger-1.64.0-windows-386.exe](https://github.com/crazy-max/firefox-history-merger/releases/download/1.64.0/firefox-history-merger-1.64.0-windows-386.exe)         | Windows | x86     |
 
 ## Usage
 
@@ -144,9 +144,9 @@ Database schema version is stored in `user_version` [pragma statement](https://s
 ![Firefox v52 database schema](.res/schemas/v52.png)
 > [Edit this diagram](https://www.draw.io/?title=firefox_v52.png&url=https%3A%2F%2Fraw.githubusercontent.com%2Fcrazy-max%2Ffirefox-history-merger%2Fmaster%2F.res%2Fschemas%2Fv52.png%3Ft%3D0) in your browser. 
 
-## How can i help ?
+## How can I help ?
 
-All kinds of contributions are welcomed :raised_hands:!<br />
+All kinds of contributions are welcome :raised_hands:!<br />
 The most basic way to show your support is to star :star2: the project, or to raise issues :speech_balloon:<br />
 But we're not gonna lie to each other, I'd rather you buy me a beer or two :beers:!
 

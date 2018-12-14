@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.64.0 (2018/12/14)
+
+* Same schema (v52) for Firefox 64
+
 ## 1.63.0 (2018/10/27)
 
 * Same schema (v52) for Firefox 63 (Issue #9)
