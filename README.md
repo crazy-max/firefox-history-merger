@@ -34,12 +34,12 @@
 
 | File name                                                                                                                                                             | OS      | Arch    |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | ------- |
-| **[firefox-history-merger-1.64.0-darwin-amd64](https://github.com/crazy-max/firefox-history-merger/releases/download/1.64.0/firefox-history-merger-1.64.0-darwin-amd64)**           | macOS   | x86-64  |
-| [firefox-history-merger-1.64.0-darwin-386](https://github.com/crazy-max/firefox-history-merger/releases/download/1.64.0/firefox-history-merger-1.64.0-darwin-386)                   | macOS   | x86     |
-| **[firefox-history-merger-1.64.0-linux-amd64](https://github.com/crazy-max/firefox-history-merger/releases/download/1.64.0/firefox-history-merger-1.64.0-linux-amd64)**             | Linux   | x86-64  |
-| [firefox-history-merger-1.64.0-linux-386](https://github.com/crazy-max/firefox-history-merger/releases/download/1.64.0/firefox-history-merger-1.64.0-linux-386)                     | Linux   | x86     |
-| **[firefox-history-merger-1.64.0-windows-amd64.exe](https://github.com/crazy-max/firefox-history-merger/releases/download/1.64.0/firefox-history-merger-1.64.0-windows-amd64.exe)** | Windows | x86-64  |
-| [firefox-history-merger-1.64.0-windows-386.exe](https://github.com/crazy-max/firefox-history-merger/releases/download/1.64.0/firefox-history-merger-1.64.0-windows-386.exe)         | Windows | x86     |
+| **[firefox-history-merger-1.64.1-darwin-amd64](https://github.com/crazy-max/firefox-history-merger/releases/download/1.64.1/firefox-history-merger-1.64.1-darwin-amd64)**           | macOS   | x86-64  |
+| [firefox-history-merger-1.64.1-darwin-386](https://github.com/crazy-max/firefox-history-merger/releases/download/1.64.1/firefox-history-merger-1.64.1-darwin-386)                   | macOS   | x86     |
+| **[firefox-history-merger-1.64.1-linux-amd64](https://github.com/crazy-max/firefox-history-merger/releases/download/1.64.1/firefox-history-merger-1.64.1-linux-amd64)**             | Linux   | x86-64  |
+| [firefox-history-merger-1.64.1-linux-386](https://github.com/crazy-max/firefox-history-merger/releases/download/1.64.1/firefox-history-merger-1.64.1-linux-386)                     | Linux   | x86     |
+| **[firefox-history-merger-1.64.1-windows-amd64.exe](https://github.com/crazy-max/firefox-history-merger/releases/download/1.64.1/firefox-history-merger-1.64.1-windows-amd64.exe)** | Windows | x86-64  |
+| [firefox-history-merger-1.64.1-windows-386.exe](https://github.com/crazy-max/firefox-history-merger/releases/download/1.64.1/firefox-history-merger-1.64.1-windows-386.exe)         | Windows | x86     |
 
 ## Usage
 

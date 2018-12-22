@@ -31,6 +31,7 @@ var (
 	doMergeMinimal          bool
 	doMergeAddOrigins       bool
 	doMergeAddHistoryvisits bool
+	limit                   int
 
 	lastID struct {
 		MozPlaces        int
@@ -47,6 +48,7 @@ func init() {
 	mergeCmd.PersistentFlags().BoolVar(&doMergeFull, "merge-full", false, "Merge moz_places, moz_origins and moz_historyvisits")
 	mergeCmd.PersistentFlags().BoolVar(&doMergeAddHistoryvisits, "merge-add-historyvisits", false, "Add moz_historyvisits to merge")
 	mergeCmd.PersistentFlags().BoolVar(&doMergeAddOrigins, "merge-add-origins", false, "Add moz_origins to merge (formerly moz_hosts)")
+	mergeCmd.PersistentFlags().IntVar(&limit, "limit", 0, "Limit the number of entries")
 	RootCmd.AddCommand(mergeCmd)
 }
 
@@ -113,8 +115,10 @@ func mergeRun(cmd *cobra.Command, args []string) {
 	slavePlacesDbs := sqlite.OpenPlacesDir(args[1], masterPlacesDb)
 	Logger.Printf("%s valid DB(s) found:", strconv.Itoa(len(slavePlacesDbs)))
 	for _, slavePlacesDb := range slavePlacesDbs {
-		Logger.Printf("- %s (%d entries ; last used on %s)",
+		Logger.Printf("- %s (firefox %d v%d ; %d entries ; last used on %s)",
 			slavePlacesDb.Info.Filename,
+			slavePlacesDb.Info.FirefoxVersion,
+			slavePlacesDb.Info.Version,
 			slavePlacesDb.Info.PlacesCount,
 			slavePlacesDb.Info.LastUsedTime.Format("2006-01-02 15:04:05"),
 		)
@@ -194,8 +198,11 @@ func merge(slavePlacesDb sqlite.PlacesDb) {
 
 func mergePlaces(slavePlacesDb sqlite.PlacesDb) (placesResult MergeResult, historyvisitsResult MergeResult) {
 	var slaveMozPlaces []places.MozPlaces
-	//slavePlacesDb.Link.Find(&slaveMozPlaces)
-	slavePlacesDb.Link.Limit(1000).Find(&slaveMozPlaces)
+	if limit > 0 {
+		slavePlacesDb.Link.Limit(limit).Find(&slaveMozPlaces)
+	} else {
+		slavePlacesDb.Link.Find(&slaveMozPlaces)
+	}
 
 	progBar := pb.StartNew(len(slaveMozPlaces))
 	progBar.Prefix("moz_places")

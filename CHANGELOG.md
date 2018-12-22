@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.64.1 (2018/12/22)
+
+* Add `--limit` flag
+* Add infos about places databases found
+
 ## 1.64.0 (2018/12/14)
 
 * Same schema (v52) for Firefox 64
