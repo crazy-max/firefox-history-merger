@@ -90,8 +90,8 @@ The following tables will be merged:
 
 Looking for *.sqlite DBs in 'other_places_folder/'
 2 valid DB(s) found:
-- places_20170720.sqlite (57093 entries ; last used on 2017-07-20 18:31:11)
-- places_20160821.sqlite (101208 entries ; last used on 2016-08-21 19:27:34)
+- places_20170720.sqlite (firefox 57 v39 ; 57093 entries ; last used on 2017-07-20 18:31:11)
+- places_20160821.sqlite (firefox 56 v38 ; 101208 entries ; last used on 2016-08-21 19:27:34)
 
 ## Merging DB 'places_20170720.sqlite'...
 moz_places 57093 / 57093 [=============================================================================] 100.00%
