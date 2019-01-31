@@ -18,7 +18,7 @@ require (
 	github.com/kr/pretty v0.0.0-20160823170715-cfb55aafdaf3
 	github.com/kr/text v0.0.0-20160504234017-7cafcd837844 // indirect
 	github.com/lib/pq v1.0.0 // indirect
-	github.com/mat/besticon v3.5.0+incompatible
+	github.com/mat/besticon v3.9.0+incompatible
 	github.com/mattn/go-colorable v0.0.9 // indirect
 	github.com/mattn/go-isatty v0.0.4 // indirect
 	github.com/mattn/go-runewidth v0.0.2 // indirect
