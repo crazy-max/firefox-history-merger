@@ -15,7 +15,7 @@ require (
 	github.com/jinzhu/gorm v1.9.1
 	github.com/jinzhu/inflection v0.0.0-20170102125226-1c35d901db3d // indirect
 	github.com/jinzhu/now v0.0.0-20180511015916-ed742868f2ae // indirect
-	github.com/kr/pretty v0.0.0-20160823170715-cfb55aafdaf3
+	github.com/kr/pretty v0.1.0
 	github.com/kr/text v0.0.0-20160504234017-7cafcd837844 // indirect
 	github.com/lib/pq v1.0.0 // indirect
 	github.com/mat/besticon v3.5.0+incompatible
