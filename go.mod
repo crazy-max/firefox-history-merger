@@ -12,7 +12,7 @@ require (
 	github.com/golang/protobuf v1.0.0 // indirect
 	github.com/google/go-cmp v0.2.0 // indirect
 	github.com/inconshreveable/mousetrap v1.0.0 // indirect
-	github.com/jinzhu/gorm v1.9.1
+	github.com/jinzhu/gorm v1.9.2
 	github.com/jinzhu/inflection v0.0.0-20170102125226-1c35d901db3d // indirect
 	github.com/jinzhu/now v0.0.0-20180511015916-ed742868f2ae // indirect
 	github.com/kr/pretty v0.0.0-20160823170715-cfb55aafdaf3
