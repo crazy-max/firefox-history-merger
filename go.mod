@@ -32,5 +32,5 @@ require (
 	golang.org/x/sync v0.0.0-20180314180146-1d60e4601c6f // indirect
 	golang.org/x/text v0.0.0-20171227012246-e19ae1496984 // indirect
 	google.golang.org/appengine v1.1.0 // indirect
-	gopkg.in/cheggaaa/pb.v1 v1.0.21
+	gopkg.in/cheggaaa/pb.v1 v1.0.27
 )
