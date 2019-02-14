@@ -4,7 +4,7 @@
   <a href="https://github.com/crazy-max/firefox-history-merger/releases/latest"><img src="https://img.shields.io/github/release/crazy-max/firefox-history-merger.svg?style=flat-square" alt="GitHub release"></a>
   <a href="#databases-schema"><img src="https://img.shields.io/badge/firefox-64%20--%20v52-ea7015.svg?style=flat-square" alt="Database Schema"></a>
   <a href="https://github.com/crazy-max/firefox-history-merger/releases/latest"><img src="https://img.shields.io/github/downloads/crazy-max/firefox-history-merger/total.svg?style=flat-square" alt="Total downloads"></a>
-  <a href="https://travis-ci.org/crazy-max/firefox-history-merger"><img src="https://img.shields.io/travis/crazy-max/firefox-history-merger/master.svg?style=flat-square" alt="Build Status"></a>
+  <a href="https://travis-ci.com/crazy-max/firefox-history-merger"><img src="https://img.shields.io/travis/com/crazy-max/firefox-history-merger/master.svg?style=flat-square" alt="Build Status"></a>
   <a href="https://goreportcard.com/report/github.com/crazy-max/firefox-history-merger"><img src="https://goreportcard.com/badge/github.com/crazy-max/firefox-history-merger?style=flat-square" alt="Go Report"></a>
   <a href="https://www.codacy.com/app/crazy-max/firefox-history-merger"><img src="https://img.shields.io/codacy/grade/85a6dc4ddaf14aeba2c4f1876126d785.svg?style=flat-square" alt="Code Quality"></a>
   <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ZMSMB3MERGPE8"><img src="https://img.shields.io/badge/donate-paypal-7057ff.svg?style=flat-square" alt="Paypal"></a>
@@ -34,12 +34,12 @@
 
 | File name                                                                                                                                                             | OS      | Arch    |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | ------- |
-| **[firefox-history-merger-1.64.1-darwin-amd64](https://github.com/crazy-max/firefox-history-merger/releases/download/1.64.1/firefox-history-merger-1.64.1-darwin-amd64)**           | macOS   | x86-64  |
-| [firefox-history-merger-1.64.1-darwin-386](https://github.com/crazy-max/firefox-history-merger/releases/download/1.64.1/firefox-history-merger-1.64.1-darwin-386)                   | macOS   | x86     |
-| **[firefox-history-merger-1.64.1-linux-amd64](https://github.com/crazy-max/firefox-history-merger/releases/download/1.64.1/firefox-history-merger-1.64.1-linux-amd64)**             | Linux   | x86-64  |
-| [firefox-history-merger-1.64.1-linux-386](https://github.com/crazy-max/firefox-history-merger/releases/download/1.64.1/firefox-history-merger-1.64.1-linux-386)                     | Linux   | x86     |
-| **[firefox-history-merger-1.64.1-windows-amd64.exe](https://github.com/crazy-max/firefox-history-merger/releases/download/1.64.1/firefox-history-merger-1.64.1-windows-amd64.exe)** | Windows | x86-64  |
-| [firefox-history-merger-1.64.1-windows-386.exe](https://github.com/crazy-max/firefox-history-merger/releases/download/1.64.1/firefox-history-merger-1.64.1-windows-386.exe)         | Windows | x86     |
+| **[firefox-history-merger-1.65.0-darwin-amd64](https://github.com/crazy-max/firefox-history-merger/releases/download/1.65.0/firefox-history-merger-1.65.0-darwin-amd64)**           | macOS   | x86-64  |
+| [firefox-history-merger-1.65.0-darwin-386](https://github.com/crazy-max/firefox-history-merger/releases/download/1.65.0/firefox-history-merger-1.65.0-darwin-386)                   | macOS   | x86     |
+| **[firefox-history-merger-1.65.0-linux-amd64](https://github.com/crazy-max/firefox-history-merger/releases/download/1.65.0/firefox-history-merger-1.65.0-linux-amd64)**             | Linux   | x86-64  |
+| [firefox-history-merger-1.65.0-linux-386](https://github.com/crazy-max/firefox-history-merger/releases/download/1.65.0/firefox-history-merger-1.65.0-linux-386)                     | Linux   | x86     |
+| **[firefox-history-merger-1.65.0-windows-amd64.exe](https://github.com/crazy-max/firefox-history-merger/releases/download/1.65.0/firefox-history-merger-1.65.0-windows-amd64.exe)** | Windows | x86-64  |
+| [firefox-history-merger-1.65.0-windows-386.exe](https://github.com/crazy-max/firefox-history-merger/releases/download/1.65.0/firefox-history-merger-1.65.0-windows-386.exe)         | Windows | x86     |
 
 ## Usage
 

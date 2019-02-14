@@ -283,7 +283,7 @@ func getFirefoxVersion(dbVersion int) int {
 	if dbVersion < 52 {
 		return 61
 	}
-	return 64
+	return 65
 }
 
 func BackupDb(dbInfo Info) error {
