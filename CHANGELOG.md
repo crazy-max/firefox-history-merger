@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.65.0 (2019/02/15)
+
+* Same schema (v52) for Firefox 65
+* Review build process
+* Switch to TravisCI (com)
+
 ## 1.64.1 (2018/12/22)
 
 * Add `--limit` flag

@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://github.com/crazy-max/firefox-history-merger/releases/latest"><img src="https://img.shields.io/github/release/crazy-max/firefox-history-merger.svg?style=flat-square" alt="GitHub release"></a>
-  <a href="#databases-schema"><img src="https://img.shields.io/badge/firefox-64%20--%20v52-ea7015.svg?style=flat-square" alt="Database Schema"></a>
+  <a href="#databases-schema"><img src="https://img.shields.io/badge/firefox%20schema-v52-ea7015.svg?style=flat-square" alt="Database Schema"></a>
   <a href="https://github.com/crazy-max/firefox-history-merger/releases/latest"><img src="https://img.shields.io/github/downloads/crazy-max/firefox-history-merger/total.svg?style=flat-square" alt="Total downloads"></a>
   <a href="https://travis-ci.com/crazy-max/firefox-history-merger"><img src="https://img.shields.io/travis/com/crazy-max/firefox-history-merger/master.svg?style=flat-square" alt="Build Status"></a>
   <a href="https://goreportcard.com/report/github.com/crazy-max/firefox-history-merger"><img src="https://goreportcard.com/badge/github.com/crazy-max/firefox-history-merger?style=flat-square" alt="Go Report"></a>
@@ -32,7 +32,7 @@
 
 ## Download
 
-You can download the binary matching your platform on the [**releases page**](https://github.com/crazy-max/firefox-history-merger/releases/latest).
+You can download the application matching your platform on the [**releases page**](https://github.com/crazy-max/firefox-history-merger/releases/latest).
 
 ## Usage
 
