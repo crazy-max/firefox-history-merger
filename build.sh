@@ -1,5 +1,6 @@
 #!/bin/bash
 
+GO_VERSION=${TRAVIS_GO_VERSION:-1.11.x}
 VERSION=${1:-dev}
 SRC_PATH=${2:-$(pwd)}
 RELEASE_PATH=${3:-$(pwd)/release}
@@ -27,7 +28,7 @@ docker run --rm -i \
   -e "FLAG_V=false" \
   -e "FLAG_X=false" \
   -e "GO111MODULE=on" \
-  crazymax/xgo:1.11.5
+  crazymax/xgo:${GO_VERSION}
 
 mv ${RELEASE_PATH}/${NAME}-darwin-10.6-386 ${RELEASE_PATH}/${NAME}-${VERSION}-darwin-10.6-386
 mv ${RELEASE_PATH}/${NAME}-darwin-10.6-amd64 ${RELEASE_PATH}/${NAME}-${VERSION}-darwin-10.6-amd64
