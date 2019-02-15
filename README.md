@@ -32,14 +32,7 @@
 
 ## Download
 
-| File name                                                                                                                                                             | OS      | Arch    |
-| --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | ------- |
-| **[firefox-history-merger-1.65.0-darwin-amd64](https://github.com/crazy-max/firefox-history-merger/releases/download/1.65.0/firefox-history-merger-1.65.0-darwin-amd64)**           | macOS   | x86-64  |
-| [firefox-history-merger-1.65.0-darwin-386](https://github.com/crazy-max/firefox-history-merger/releases/download/1.65.0/firefox-history-merger-1.65.0-darwin-386)                   | macOS   | x86     |
-| **[firefox-history-merger-1.65.0-linux-amd64](https://github.com/crazy-max/firefox-history-merger/releases/download/1.65.0/firefox-history-merger-1.65.0-linux-amd64)**             | Linux   | x86-64  |
-| [firefox-history-merger-1.65.0-linux-386](https://github.com/crazy-max/firefox-history-merger/releases/download/1.65.0/firefox-history-merger-1.65.0-linux-386)                     | Linux   | x86     |
-| **[firefox-history-merger-1.65.0-windows-amd64.exe](https://github.com/crazy-max/firefox-history-merger/releases/download/1.65.0/firefox-history-merger-1.65.0-windows-amd64.exe)** | Windows | x86-64  |
-| [firefox-history-merger-1.65.0-windows-386.exe](https://github.com/crazy-max/firefox-history-merger/releases/download/1.65.0/firefox-history-merger-1.65.0-windows-386.exe)         | Windows | x86     |
+You can download the binary matching your platform on the [**releases page**](https://github.com/crazy-max/firefox-history-merger/releases/latest).
 
 ## Usage
 
