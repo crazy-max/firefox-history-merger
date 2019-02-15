@@ -1,21 +1,20 @@
 #!/bin/bash
 
 GO_VERSION=${TRAVIS_GO_VERSION:-1.11.x}
-VERSION=${VERSION:-dev}
+VERSION=${TRAVIS_TAG:-dev}
 
 SRC_PATH=${1:-$(pwd)}
 RELEASE_PATH=${2:-$(pwd)/release}
 
 NAME="firefox-history-merger"
-PACKAGE="github.com/crazy-max/firefox-history-merger"
 TARGETS="windows/386 windows/amd64 linux/386 linux/amd64 darwin/386 darwin/amd64"
-LDFLAGS="-s -w -X '$PACKAGE/utils.AppVersion=$VERSION'"
+LDFLAGS="-s -w -X 'github.com/crazy-max/firefox-history-merger/utils.AppVersion=$VERSION'"
 
+echo "GO_VERSION=$GO_VERSION"
 echo "VERSION=$VERSION"
 echo "SRC_PATH=$SRC_PATH"
 echo "RELEASE_PATH=$RELEASE_PATH"
 echo "NAME=$NAME"
-echo "PACKAGE=$PACKAGE"
 echo "TARGETS=$TARGETS"
 echo "LDFLAGS=$LDFLAGS"
 echo

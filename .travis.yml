@@ -4,10 +4,9 @@ go:
 
 env:
   global:
-    - VERSION=1.65.0
     - GO111MODULE=on
 
-before_install:
+install:
   - sudo apt-get update
 
 script:
