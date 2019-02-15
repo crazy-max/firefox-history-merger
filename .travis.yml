@@ -1,40 +1,28 @@
 language: go
 go:
-  - 1.11
+  - 1.11.x
 
 env:
   global:
+    - VERSION=1.65.0
     - GO111MODULE=on
 
 before_install:
   - sudo apt-get update
-  - java -version
-  - ant -version
-  - go version
-  - go env
 
 script:
-  - ant release
-
-after_success:
-  - export APP_VERSION=`cat bin/tmp/version.dat`
-  - echo $APP_VERSION
-  - git config --global user.email "builds@travis-ci.com"
-  - git config --global user.name "Travis CI"
-  - git tag $APP_VERSION -a -m "Generated tag from TravisCI for $APP_VERSION"
-  - ls -al bin/release
+  - ./build.sh
 
 deploy:
   provider: releases
   api_key:
     secure: sWHtOPjMy+fImk/dc1HjlJp5eGPiwn2eZ3lYJoTf8qM2hJ1eXOax9O0DnUxlDDMh5/uC37aSIb3HP4+MqQwn/FGrwnBgnhUBx+xtrtVXIgvKWqXw3499kTCiPnQeALK9LKNnW86PrKwi2pGCegpDvNAkBwmr1YQnszN390qJ1vawabJsR0gaVsZ4N2VbukfT4IbXgvxRuJ6bziO8yGYO/8hAvjLpVDvbEw9nLAI84k9oaJWQ9HVX0ziknu3epgobuIEkk1k/Zp+n+CoEJKAD2OlWvbhBattxvGw0NUYaiqGJ1GAhIgTf53Du6qTWWKWyZb8gLZ2hA6/rbNBuJhslgj/n7wBedoCqQEWSoVCN964Ou864MEBEJCQoXflv8X+BMl2OstCOic6ntEB/Qkc/68fjZfV4gTS7cOs1WVMfZpj0tnMgQ8C33fX0ncdqlMonEMwd9LhX8p0ztoQhmOZBLj7I/bfFr3fekU0Ax8HLeXbrzJMHNJBLs+HUh4wSAA8/E1qJo9k8eHwrKF12ZJh4lT2MveDIdUXUIpHt3BvYLdwVbE6VS/66f1GkUVd66C2oVnPnr2n1XF/J5XL/CzPmfJixqE34GYjhwCN00IbILTIC59BrytZQ/Z2SbZAiZOt2V1KTGU2L7icbbf+3pGgcgE3Q16A21bYjts/uiOMNLz4=
   file_glob: true
-  file: bin/release/*
+  file: release/*
   skip_cleanup: true
   draft: true
   on:
-    repo: crazy-max/firefox-history-merger
-    tags: false
+    tags: true
 
 notifications:
   webhooks:
