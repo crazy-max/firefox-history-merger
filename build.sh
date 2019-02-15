@@ -1,9 +1,10 @@
 #!/bin/bash
 
 GO_VERSION=${TRAVIS_GO_VERSION:-1.11.x}
-VERSION=${1:-dev}
-SRC_PATH=${2:-$(pwd)}
-RELEASE_PATH=${3:-$(pwd)/release}
+VERSION=${VERSION:-dev}
+
+SRC_PATH=${1:-$(pwd)}
+RELEASE_PATH=${2:-$(pwd)/release}
 
 NAME="firefox-history-merger"
 PACKAGE="github.com/crazy-max/firefox-history-merger"
