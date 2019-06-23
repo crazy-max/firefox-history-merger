@@ -23,7 +23,8 @@ rm -rf ${RELEASE_PATH}/*
 docker run --rm -i \
   -v "$SRC_PATH:/source" \
   -v "$RELEASE_PATH:/build/github.com/crazy-max" \
-  -e "PACK=github.com/crazy-max/firefox-history-merger/cmd" \
+  -e "PACK=cmd" \
+  -e "OUT=firefox-history-merger" \
   -e "TARGETS=${TARGETS}" \
   -e "FLAG_LDFLAGS=${LDFLAGS}" \
   -e "FLAG_V=false" \
