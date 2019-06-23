@@ -12,12 +12,14 @@ type MozHistoryvisits struct {
 	Session   int64
 }
 
+// HistoryvisitsFirstID returns first moz_historyvisits ID
 func (c *Client) HistoryvisitsFirstID() (maxID int) {
 	var table MozHistoryvisits
 	c.Db.Model(table).First(&table)
 	return table.ID
 }
 
+// HistoryvisitsLastID returns last moz_historyvisits ID
 func (c *Client) HistoryvisitsLastID() (maxID int) {
 	var table MozHistoryvisits
 	c.Db.Model(table).Last(&table)

@@ -6,6 +6,7 @@ import (
 	"strings"
 )
 
+// Contains checks if a slice contains a string
 func Contains(s []string, e string) bool {
 	for _, a := range s {
 		if a == e {
@@ -15,6 +16,7 @@ func Contains(s []string, e string) bool {
 	return false
 }
 
+// GenerateGUID generates a new GUID
 // https://dxr.mozilla.org/mozilla-central/source/toolkit/components/places/Helpers.cpp#243
 func GenerateGUID() string {
 	var length = 12
@@ -28,6 +30,7 @@ func GenerateGUID() string {
 	return string(b)
 }
 
+// FixupUrl repairs malformed URL
 // https://dxr.mozilla.org/mozilla-central/source/toolkit/components/places/SQLFunctions.cpp#868
 func FixupUrl(ustr string) (host string, prefix string, err error) {
 	u, err := url.Parse(ustr)

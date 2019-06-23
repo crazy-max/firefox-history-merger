@@ -22,12 +22,14 @@ type MozPlaces struct {
 	OriginId        int    `gorm:"index:moz_places_originidindex"`
 }
 
+// PlacesFirstID returns first moz_places ID
 func (c *Client) PlacesFirstID() (maxID int) {
 	var table MozPlaces
 	c.Db.Model(table).First(&table)
 	return table.ID
 }
 
+// PlacesLastID returns last moz_places ID
 func (c *Client) PlacesLastID() (maxID int) {
 	var table MozPlaces
 	c.Db.Model(table).Last(&table)

@@ -14,12 +14,14 @@ type MozIcons struct {
 	Data             []byte `gorm:"size:-1"`
 }
 
+// IconsFirstID returns first moz_icons ID
 func (c *Client) IconsFirstID() (maxID int) {
 	var table MozIcons
 	c.Db.Model(table).First(&table)
 	return table.ID
 }
 
+// IconsLastID returns last moz_icons ID
 func (c *Client) IconsLastID() (maxID int) {
 	var table MozIcons
 	c.Db.Model(table).Last(&table)

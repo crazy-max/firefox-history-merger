@@ -9,12 +9,14 @@ type MozPagesWIcons struct {
 	PageUrlHash int64  `gorm:"not null;index:moz_pages_w_icons_urlhashindex"`
 }
 
+// PagesWIconsFirstID returns first moz_pages_w_icons ID
 func (c *Client) PagesWIconsFirstID() (maxID int) {
 	var table MozPagesWIcons
 	c.Db.Model(table).First(&table)
 	return table.ID
 }
 
+// PagesWIconsLastID returns last moz_pages_w_icons ID
 func (c *Client) PagesWIconsLastID() (maxID int) {
 	var table MozPagesWIcons
 	c.Db.Model(table).Last(&table)

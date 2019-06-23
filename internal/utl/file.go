@@ -2,7 +2,6 @@ package utl
 
 import (
 	"crypto/sha256"
-	"errors"
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -16,7 +15,7 @@ func CopyFile(src, dst string) (err error) {
 		return
 	}
 	if !srcStats.Mode().IsRegular() {
-		return errors.New(fmt.Sprintf("%s is not a regular file", src))
+		return fmt.Errorf("%s is not a regular file", src)
 	}
 	dstStats, err := os.Stat(dst)
 	if err != nil {
@@ -26,7 +25,7 @@ func CopyFile(src, dst string) (err error) {
 	} else {
 		// The file already exists
 		if !dstStats.Mode().IsRegular() {
-			return errors.New(fmt.Sprintf("%s already exists", dst))
+			return fmt.Errorf("%s already exists", dst)
 		}
 	}
 	return copyFileContents(src, dst)

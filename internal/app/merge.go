@@ -71,7 +71,7 @@ func (fhm *FirefoxHistoryMerger) Merge() {
 			mc.mergeHistoryvisits(pPlaces, ptmPlaces, tx)
 		}
 		tx.Commit()
-		log.Debug().Msg("Transaction commited")
+		log.Debug().Msg("Transaction committed")
 
 		if !ptmPlacesPage.HasNext() {
 			break

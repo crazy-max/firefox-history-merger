@@ -8,6 +8,7 @@ import (
 	"github.com/crazy-max/firefox-history-merger/internal/app"
 	"github.com/crazy-max/firefox-history-merger/internal/logging"
 	"github.com/crazy-max/firefox-history-merger/internal/model"
+	_ "github.com/jinzhu/gorm/dialects/sqlite"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"gopkg.in/alecthomas/kingpin.v2"
