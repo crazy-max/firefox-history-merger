@@ -27,7 +27,7 @@ docker run --rm -i \
   -e "OUT=firefox-history-merger" \
   -e "TARGETS=${TARGETS}" \
   -e "FLAG_LDFLAGS=${LDFLAGS}" \
-  -e "FLAG_V=false" \
-  -e "FLAG_X=false" \
+  -e "FLAG_V=true" \
+  -e "FLAG_X=true" \
   -e "GO111MODULE=on" \
   crazymax/xgo:${GO_VERSION}
