@@ -1,4 +1,4 @@
-package utils
+package utl
 
 import (
 	"crypto/sha256"
@@ -9,7 +9,7 @@ import (
 	"os"
 )
 
-// CopyFile : copies src file to dst file
+// CopyFile copies src file to dst file
 func CopyFile(src, dst string) (err error) {
 	srcStats, err := os.Stat(src)
 	if err != nil {
@@ -52,14 +52,16 @@ func copyFileContents(src, dst string) (err error) {
 	return
 }
 
-func GetHash(file string) (hash string, err error) {
-	data, err := ioutil.ReadFile(file)
+// FileHash returns hash of a file
+func FileHash(filename string) (hash string, err error) {
+	data, err := ioutil.ReadFile(filename)
 	if err != nil {
 		return "", err
 	}
 	return fmt.Sprintf("%x", sha256.Sum256(data)), nil
 }
 
+// FileExists checks if given file exists
 func FileExists(file string) bool {
 	if _, err := os.Stat(file); os.IsNotExist(err) {
 		return false

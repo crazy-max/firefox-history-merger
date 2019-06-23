@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.0.0 (2019/06/23)
+
+* Minimal schema version v39 (Firefox 57) required
+* Paginate and use transactions while merging places to improve performance
+* Improve favicons repairing performance
+* Handle os signals
+* Better error handling
+* Switch to zerolog as logger
+* Remove unecessary modules
+* Review project structure
+* Go 1.12
+
 ## 1.65.0 (2019/02/15)
 
 * Same schema (v52) for Firefox 65

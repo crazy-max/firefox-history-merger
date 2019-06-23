@@ -1,9 +1,5 @@
 package favicons
 
-import (
-	"github.com/jinzhu/gorm"
-)
-
 /**
  * moz_icons schema >= v39
  */
@@ -18,12 +14,14 @@ type MozIcons struct {
 	Data             []byte `gorm:"size:-1"`
 }
 
-func (table MozIcons) GetFirstID(db *gorm.DB) (maxID int) {
-	db.Model(table).First(&table)
+func (c *Client) IconsFirstID() (maxID int) {
+	var table MozIcons
+	c.Db.Model(table).First(&table)
 	return table.ID
 }
 
-func (table MozIcons) GetLastID(db *gorm.DB) (maxID int) {
-	db.Model(table).Last(&table)
+func (c *Client) IconsLastID() (maxID int) {
+	var table MozIcons
+	c.Db.Model(table).Last(&table)
 	return table.ID
 }

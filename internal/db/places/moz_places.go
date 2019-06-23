@@ -1,10 +1,5 @@
 package places
 
-import (
-	. "github.com/crazy-max/firefox-history-merger/utils"
-	"github.com/jinzhu/gorm"
-)
-
 /**
  * moz_places schema >= v52
  */
@@ -27,22 +22,14 @@ type MozPlaces struct {
 	OriginId        int    `gorm:"index:moz_places_originidindex"`
 }
 
-func (table MozPlaces) GetFirstID(db *gorm.DB) (maxID int) {
-	db.Model(table).First(&table)
+func (c *Client) PlacesFirstID() (maxID int) {
+	var table MozPlaces
+	c.Db.Model(table).First(&table)
 	return table.ID
 }
 
-func (table MozPlaces) GetLastID(db *gorm.DB) (maxID int) {
-	db.Model(table).Last(&table)
+func (c *Client) PlacesLastID() (maxID int) {
+	var table MozPlaces
+	c.Db.Model(table).Last(&table)
 	return table.ID
-}
-
-func (table MozPlaces) GenerateGUID(db *gorm.DB) string {
-	var found int
-	guid := GenerateGUID()
-	db.Model(table).Where("guid = ?", guid).Count(&found)
-	if found > 0 {
-		guid = table.GenerateGUID(db)
-	}
-	return guid
 }

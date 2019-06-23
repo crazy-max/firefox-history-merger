@@ -2,7 +2,6 @@
 
 <p align="center">
   <a href="https://github.com/crazy-max/firefox-history-merger/releases/latest"><img src="https://img.shields.io/github/release/crazy-max/firefox-history-merger.svg?style=flat-square" alt="GitHub release"></a>
-  <a href="#databases-schema"><img src="https://img.shields.io/badge/firefox%20schema-v52-ea7015.svg?style=flat-square" alt="Database Schema"></a>
   <a href="https://github.com/crazy-max/firefox-history-merger/releases/latest"><img src="https://img.shields.io/github/downloads/crazy-max/firefox-history-merger/total.svg?style=flat-square" alt="Total downloads"></a>
   <a href="https://travis-ci.com/crazy-max/firefox-history-merger"><img src="https://img.shields.io/travis/com/crazy-max/firefox-history-merger/master.svg?style=flat-square" alt="Build Status"></a>
   <a href="https://goreportcard.com/report/github.com/crazy-max/firefox-history-merger"><img src="https://goreportcard.com/badge/github.com/crazy-max/firefox-history-merger?style=flat-square" alt="Go Report"></a>
@@ -12,7 +11,7 @@
 
 ## About
 
-**firefox-history-merger** is a CLI application written in [Go](https://golang.org/) to merge history of 🦊 [Firefox](https://www.mozilla.org/en-US/firefox/) from a list of `places.sqlite` files and repair missing favicons with ease.
+**firefox-history-merger** is a CLI application written in [Go](https://golang.org/) to merge history of 🦊 [Firefox](https://www.mozilla.org/en-US/firefox/) and repair missing favicons with ease.
 
 ![](.res/screenshot.png)
 > Screenshot of firefox-history-merger
@@ -20,15 +19,17 @@
 ## Features
 
 * Merge history (`moz_places`) from `places.sqlite` file
-* `moz_origins`, `moz_historyvisits` are also merged
+* `moz_historyvisits` are also merged
 * [Frecency](https://developer.mozilla.org/en-US/docs/Mozilla/Tech/Places/Frecency_algorithm) is recalculated during the merge
 * Repair favicons
-* Display info about `places.sqlite` and `favicons.sqlite`
-* Optimize the databases into a minimal amount of disk space
+* Display info about `places.sqlite`
+* Optimize database into a minimal amount of disk space
 
 ## Requirements
 
-**firefox-history-merger** uses a particular format for its versioning: **major.minor.patchlevel**. Minor marks the compatible Firefox version, like 57, 58, etc... So before using this application, check if your `places.sqlite` is compatible with firefox-history-merger with the `info` command.
+Schema minimal version that can be used is **v39 (Firefox 57)**. Check if your `places.sqlite` is compatible with `info` command.
+
+If your database is not compatible, you can copy your `places.sqlite` in a Firefox 57 or higher [profile folder](https://support.mozilla.org/en-US/kb/profiles-where-firefox-stores-user-data), then launch/close Firefox and your `places.sqlite` should now be compatible. 
 
 ## Download
 
@@ -41,58 +42,40 @@ First close Firefox and copy `places.sqlite` and `favicons.sqlite` files from [y
 In the following examples, this folder structure will be used :
 
 ```
-[-] other_places_folder
-  | places_20160821.sqlite
-  | places_20170720.sqlite
+favicons.sqlite
 firefox-history-merger.exe
 places.sqlite
-favicons.sqlite
+places_to_merge.sqlite
 ```
 
 ### Info
 
-You probably want to have more info about your `places.sqlite` and `favicons.sqlite` files you have before merging history with others. Just type the command below (`favicons.sqlite` is optionnal).
+You probably want to have more info about your `places.sqlite` database you have before merging history:
 
 ```
-$ firefox-history-merger info "places.sqlite" "favicons.sqlite"
-Checking and opening DBs...
-
-Schema version:   v39 (Firefox >= 57)
-Compatible:       YES
-History entries:  293176
-Places entries:   129947
-Icons entries:    6538
-Last used on:     2017-12-09 18:26:56
+$ firefox-history-merger info places.sqlite
+Sun, 23 Jun 2019 03:43:47 CEST INF Schema version:         v52 (Firefox >= 65)
+Sun, 23 Jun 2019 03:43:48 CEST INF Compatible:             true
+Sun, 23 Jun 2019 03:43:48 CEST INF Places entries:         1934
+Sun, 23 Jun 2019 03:43:48 CEST INF Historyvisits entries:  1678
+Sun, 23 Jun 2019 03:43:48 CEST INF Last used on:           2019-06-21 02:31:46
 ```
 
 ### Merge
 
-Now execute this command to merge the `*.sqlite` files in `other_places_folder/` with your working `places.sqlite` :
+Now execute this command to merge `places_to_merge.sqlite` with your working `places.sqlite` :
 
 ```
-$ firefox-history-merger merge "places.sqlite" "other_places_folder/" --merge-full
-Checking and opening DBs...
-
-Working DB is 'places.sqlite'
-Backing up 'places.sqlite' to 'places.sqlite.20171209183822'...
-
-The following tables will be merged:
-- moz_places
-- moz_historyvisits (inc. in moz_places process)
-- moz_origins
-
-Looking for *.sqlite DBs in 'other_places_folder/'
-2 valid DB(s) found:
-- places_20170720.sqlite (firefox 57 v39 ; 57093 entries ; last used on 2017-07-20 18:31:11)
-- places_20160821.sqlite (firefox 56 v38 ; 101208 entries ; last used on 2016-08-21 19:27:34)
-
-## Merging DB 'places_20170720.sqlite'...
-moz_places 57093 / 57093 [=============================================================================] 100.00%
-moz_origins 4422 / 4422 [=======================================================================================] 100.00%
-
-## Merging DB 'places_20160821.sqlite'...
-moz_places 101208 / 101208 [=============================================================================] 100.00%
-moz_origins 5893 / 5893 [=======================================================================================] 100.00%
+$ firefox-history-merger merge places.sqlite places_to_merge.sqlite
+Sun, 23 Jun 2019 04:33:58 CEST INF 5199 places will be merged
+Sun, 23 Jun 2019 04:33:58 CEST INF Merging 1000 places (1/6)...
+Sun, 23 Jun 2019 04:33:59 CEST INF Merging 1000 places (2/6)...
+Sun, 23 Jun 2019 04:34:01 CEST INF Merging 1000 places (3/6)...
+Sun, 23 Jun 2019 04:34:03 CEST INF Merging 1000 places (4/6)...
+Sun, 23 Jun 2019 04:34:05 CEST INF Merging 1000 places (5/6)...
+Sun, 23 Jun 2019 04:34:07 CEST INF Merging 199 places (6/6)...
+Sun, 23 Jun 2019 04:34:09 CEST INF Optimizing database...
+Sun, 23 Jun 2019 04:34:09 CEST INF Finished created=4478 errors=0 total=5199 updated=721
 ```
 
 ### Repair favicons
@@ -100,25 +83,14 @@ moz_origins 5893 / 5893 [=======================================================
 If you want you can also repair missing favicons. It can take a long time depending on the number of entries in your history, since the favicon will be recovered for each entry if there is no attached favicon.
 
 ```
-$ firefox-history-merger repair-favicons "places.sqlite" "favicons.sqlite"
-Checking and opening DBs...
-Backing up 'places.sqlite' to 'places.sqlite.20180127163723'
-Backing up 'favicons.sqlite' to 'favicons.sqlite.20180127163725'
-
-Places to check:           311629
-Last moz_icons.id:         7309
-Last moz_pages_w_icons.id: 62284
-
-## Repairing favicons...
-moz_icons 311629 / 311629 [=======================================================================================] 100.00%
+$ firefox-history-merger repair-favicons places.sqlite favicons.sqlite
+Sun, 23 Jun 2019 04:29:02 CEST INF Checking 1948 places...
+Sun, 23 Jun 2019 04:29:02 CEST INF Favicon repaired favicon_id=18575 left=1938 places_id=33864 url=https://github.com/
+Sun, 23 Jun 2019 04:29:05 CEST ERR Cannot get favicon error="no favicon found" favicon_id=0 left=1845 places_id=200497 url=http://www.videojs.com/
+...
+Sun, 23 Jun 2019 04:32:54 CEST ERR Cannot get favicon error="no favicon found" favicon_id=0 left=1 places_id=1955773 url=https://docs.docker.com/v17.09/engine/admin/logging/view_container_logs/
+Sun, 23 Jun 2019 04:32:54 CEST INF Finished errors=618 linked=873 repaired=402 skipped=23 total=1948 valid=32
 ```
-
-## TODO
-
-* [ ] Merge `moz_annos` and `moz_inputhistory`
-* [ ] Merge ancestors of `moz_historyvisits`
-* [ ] Optimize favicons repairing
-* [ ] Check if places are filled with an `origin_id`
 
 ## About Firefox places
 

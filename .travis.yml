@@ -1,6 +1,14 @@
 language: go
 go:
-  - 1.11.x
+  - 1.12.4
+
+services:
+  - docker
+
+addons:
+  apt:
+    packages:
+      - docker-ce
 
 env:
   global:
@@ -22,7 +30,3 @@ deploy:
   draft: true
   on:
     tags: true
-
-notifications:
-  webhooks:
-    secure: 3dU7HxlJ28+ynPZqU/fi8QpAuDXS/qW6uLozz0pUEAIkGGWFiAcutwW0fxhTJngxbrOpOQxpmM/1QGICvm6pmTwSKRvHq7M0QgkcLklM/g+r0qRCBnP9Xe9iqNdBydH7rx7eie+s9WFoOC04r6BckVB6U3eIAQZfSHg1S84/MReHgKau61ZHilkPXMRG5dvieRQ6A/uXEzsP1Bs384xZfX+GJiI5PuAfLEqgngWVl0Siq0tp32+HY4vWCVXJbekZQeNt0GWPR79fYMjXYxqoykt2hLtqI1hY9D0sB+7DVnsT+obHoKuz2xrc+LSstIqz+ScepduSKoDxxvyypMGd71T1umiMqpN8z+Uinrhk/MM4eluUm7HBodx5JzlQ41LBJmcXIAlAeVvwiekH2/0RbYRMCStYZhpmNGGd+2jJHZ5FgzH+885GJ8jOtUa7SzOOy5hfDsUONEDbtOc70+RaQJZezH/AIANmpggVHcEkugjzpDAgp6FBAu7dWuac/+7oQyBj61g7XhDKyww84nRtfTJcDSmDHBjlBdrf2Y9aCBs7p3xywksF4PxZTmx5oSDiNkr3n80/CeLTpGGlCGjIo3jDXzKNhTstTvN8CSlure+4FsAkuNv+pixDq6CZiuKicNi4dsNwykC+dqKQ+t4MXlHc10csqw96RX6Ms1kASi0=

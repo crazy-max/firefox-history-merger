@@ -1,9 +1,5 @@
 package places
 
-import (
-	"github.com/jinzhu/gorm"
-)
-
 /**
  * moz_historyvisits schema >= v39
  */
@@ -16,12 +12,14 @@ type MozHistoryvisits struct {
 	Session   int64
 }
 
-func (table MozHistoryvisits) GetFirstID(db *gorm.DB) (maxID int) {
-	db.Model(table).First(&table)
+func (c *Client) HistoryvisitsFirstID() (maxID int) {
+	var table MozHistoryvisits
+	c.Db.Model(table).First(&table)
 	return table.ID
 }
 
-func (table MozHistoryvisits) GetLastID(db *gorm.DB) (maxID int) {
-	db.Model(table).Last(&table)
+func (c *Client) HistoryvisitsLastID() (maxID int) {
+	var table MozHistoryvisits
+	c.Db.Model(table).Last(&table)
 	return table.ID
 }

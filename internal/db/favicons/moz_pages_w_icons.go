@@ -1,9 +1,5 @@
 package favicons
 
-import (
-	"github.com/jinzhu/gorm"
-)
-
 /**
  * moz_pages_w_icons schema >= v39
  */
@@ -13,12 +9,14 @@ type MozPagesWIcons struct {
 	PageUrlHash int64  `gorm:"not null;index:moz_pages_w_icons_urlhashindex"`
 }
 
-func (table MozPagesWIcons) GetFirstID(db *gorm.DB) (maxID int) {
-	db.Model(table).First(&table)
+func (c *Client) PagesWIconsFirstID() (maxID int) {
+	var table MozPagesWIcons
+	c.Db.Model(table).First(&table)
 	return table.ID
 }
 
-func (table MozPagesWIcons) GetLastID(db *gorm.DB) (maxID int) {
-	db.Model(table).Last(&table)
+func (c *Client) PagesWIconsLastID() (maxID int) {
+	var table MozPagesWIcons
+	c.Db.Model(table).Last(&table)
 	return table.ID
 }
