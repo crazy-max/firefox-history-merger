@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.1 (2019/06/23)
+
+* Same schema (v52) for Firefox 66 and 67
+
 ## 2.0.0 (2019/06/23)
 
 * Minimal schema version v39 (Firefox 57) required
