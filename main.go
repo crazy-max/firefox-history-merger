@@ -28,7 +28,7 @@ const (
 func main() {
 	var err error
 
-	cmd := kingpin.New("firefox-history-merger", "Merge Firefox history from a list of places.sqlite files and repair missing favicons with ease.")
+	cmd := kingpin.New("firefox-history-merger", "Merge Firefox history and repair missing favicons with ease.")
 	cmd.Flag("log-level", "Set log level.").Default(zerolog.InfoLevel.String()).StringVar(&flags.LogLevel)
 	cmd.Flag("log-caller", "Enable to add file:line of the caller.").Envar("LOG_CALLER").Default("false").BoolVar(&flags.LogCaller)
 	cmd.UsageTemplate(kingpin.CompactUsageTemplate).Version(version).Author("CrazyMax")
