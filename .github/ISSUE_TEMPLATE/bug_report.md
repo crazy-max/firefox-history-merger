@@ -21,8 +21,12 @@ about: Create a report to help us improve
 
 ### Configuration
 
-**Firefox version / arch (ex. 62.0 64bits)** :
+* Firefox version / arch (ex. 62.0 64bits) :
+* Operating system (ex. Windows 10 Pro 64 bits) :
+* firefox-history-merger version (ex. 2.0.0) :
 
-**Operating system (ex. Windows 10 Pro 64 bits)** :
+### Logs
 
-**firefox-history-merger version (ex. 1.62.0)** :
+```
+# paste logs here (set log-level to debug and enable log-caller)
+```
