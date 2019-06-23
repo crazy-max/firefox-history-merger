@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.0.2 (2019/06/23)
+
+* Small typo
+* Coding style
+
 ## 2.0.1 (2019/06/23)
 
 * Same schema (v52) for Firefox 66 and 67
