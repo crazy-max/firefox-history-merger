@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.1.0 (2019/07/09)
+
+* Same schema (v52) for Firefox 68
+* Fix `favicon_id` column does not exist (Issue #10 #17 #18)
+
 ## 2.0.2 (2019/06/23)
 
 * Small typo
