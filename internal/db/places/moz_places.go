@@ -11,7 +11,6 @@ type MozPlaces struct {
 	VisitCount      int64  `gorm:"default:0;index:moz_places_visitcount"`
 	Hidden          int64  `gorm:"not null;default:0"`
 	Typed           int64  `gorm:"not null;default:0"`
-	FaviconId       int    `gorm:"index:moz_places_faviconindex"`
 	Frecency        int64  `gorm:"not null;default:-1;index:moz_places_frecencyindex"`
 	LastVisitDate   int64  `gorm:"index:moz_places_lastvisitdateindex"`
 	Guid            string `gorm:"size:-1;unique_index:moz_places_guid_uniqueindex"`

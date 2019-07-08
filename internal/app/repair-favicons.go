@@ -16,7 +16,6 @@ import (
 
 type repairFaviconsResult struct {
 	countValid    int
-	countLinked   int
 	countRepaired int
 	countSkipped  int
 	countErrors   int
@@ -46,9 +45,6 @@ func (fhm *FirefoxHistoryMerger) RepairFavicons() {
 	}
 	fhm.dbs = append(fhm.dbs, placesCli.Db)
 	defer placesCli.Db.Close()
-	if err := placesCli.Db.Backup(); err != nil {
-		log.Warn().Err(err).Msgf("Cannot backup database %s", placesCli.Db.Filename)
-	}
 
 	log.Debug().Msgf("Opening %s favicons database...", fhm.fl.FaviconsFile)
 	faviconsCli, err := favicons.New(fhm.fl.FaviconsFile)
@@ -92,7 +88,6 @@ func (fhm *FirefoxHistoryMerger) RepairFavicons() {
 	log.Info().
 		Int("total", len(placesl)).
 		Int("valid", result.countValid).
-		Int("linked", result.countLinked).
 		Int("repaired", result.countRepaired).
 		Int("skipped", result.countSkipped).
 		Int("errors", result.countErrors).
@@ -106,20 +101,6 @@ func (fhm *FirefoxHistoryMerger) jobRepairFavicons(i interface{}) {
 		*job.left--
 	}()
 
-	// Seek icon
-	job.faviconsCli.Db.First(&icon, job.places.FaviconId)
-
-	// Valid favicon
-	if icon.IconUrl != "" {
-		log.Debug().
-			Int("places_id", job.places.ID).
-			Int("favicon_id", icon.ID).
-			Int("left", *job.left).
-			Msg("Favicon valid")
-		job.result.countValid++
-		return
-	}
-
 	// Skip invalid URL
 	host, _, err := utl.FixupUrl(job.places.Url)
 	if err != nil || utl.Contains([]string{"localhost", "127.0.0.1"}, host) ||
@@ -129,10 +110,26 @@ func (fhm *FirefoxHistoryMerger) jobRepairFavicons(i interface{}) {
 		job.result.countSkipped++
 		log.Debug().
 			Int("places_id", job.places.ID).
-			Int("favicon_id", icon.ID).
 			Int("left", *job.left).
 			Str("url", job.places.Url).
 			Msg("Favicon skipped due to invalid places url")
+		return
+	}
+
+	// Seek icon
+	job.faviconsCli.Db.Table("moz_icons").
+		Joins("JOIN moz_icons_to_pages ON moz_icons_to_pages.icon_id = moz_icons.id").
+		Where("moz_icons_to_pages.page_id = ?", job.places.ID).
+		First(&icon)
+
+	// Valid favicon
+	if icon.IconUrl != "" {
+		log.Debug().
+			Int("places_id", job.places.ID).
+			Int("favicon_id", icon.ID).
+			Int("left", *job.left).
+			Msg("Favicon valid")
+		job.result.countValid++
 		return
 	}
 
@@ -155,30 +152,6 @@ func (fhm *FirefoxHistoryMerger) jobRepairFavicons(i interface{}) {
 	icon.Root = 0 //TODO: Fills with 0 temporarily
 	icon.ExpireMs = 0
 	icon.Data = ico.ImageData
-
-	// Check if found existing favicon
-	var foundIcon favicons.MozIcons
-	job.faviconsCli.Db.Where("icon_url = ?", icon.IconUrl).First(&foundIcon)
-	if foundIcon.IconUrl != "" {
-		job.places.FaviconId = foundIcon.ID
-		if err := job.placesCli.Db.Save(&job.places).Error; err != nil {
-			job.result.countErrors++
-			log.Error().Err(err).
-				Int("places_id", job.places.ID).
-				Int("favicon_id", foundIcon.ID).
-				Int("left", *job.left).
-				Str("url", job.places.Url).
-				Msg("Updating moz_places row")
-		}
-		log.Debug().
-			Int("places_id", job.places.ID).
-			Int("favicon_id", foundIcon.ID).
-			Int("left", *job.left).
-			Str("url", job.places.Url).
-			Msg("Linked existing moz_icons to moz_places succeeded")
-		job.result.countLinked++
-		return
-	}
 
 	// Otherwise create favicon entry
 	job.faviconsCli.Db.NewRecord(icon)
@@ -220,18 +193,6 @@ func (fhm *FirefoxHistoryMerger) jobRepairFavicons(i interface{}) {
 			Int("left", *job.left).
 			Str("url", job.places.Url).
 			Msg("Creating moz_pages_w_icon row")
-		return
-	}
-
-	job.places.FaviconId = icon.ID
-	if err := job.placesCli.Db.Save(&job.places).Error; err != nil {
-		job.result.countErrors++
-		log.Error().Err(err).
-			Int("places_id", job.places.ID).
-			Int("favicon_id", icon.ID).
-			Int("left", *job.left).
-			Str("url", job.places.Url).
-			Msg("Updating moz_places row")
 		return
 	}
 
