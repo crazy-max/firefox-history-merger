@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.1 (2019/07/09)
+
+* Do not set origin id.
+
 ## 2.1.0 (2019/07/09)
 
 * Same schema (v52) for Firefox 68

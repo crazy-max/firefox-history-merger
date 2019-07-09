@@ -112,6 +112,7 @@ func (mc *mergeClient) mergePlaces(ptmPlaces places.MozPlaces, pTx *gorm.DB) pla
 		pPlaces = ptmPlaces
 		pPlaces.ID = 0
 		pPlaces.Guid = placesNewGUID(pTx)
+		pPlaces.OriginId = 0
 		pTx.NewRecord(pPlaces)
 		if err := pTx.Create(&pPlaces).Error; err != nil {
 			mc.countErrors++
