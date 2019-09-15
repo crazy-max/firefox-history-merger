@@ -39,11 +39,12 @@ jobs:
             -e "FLAG_V=false" \
             -e "FLAG_X=false" \
             crazymax/xgo:${GO_VERSION}
+          ls -al release/
+          file release/*
       -
         name: Check
         if: success()
         run: |
-          file release/*
           ./release/firefox-history-merger-linux-amd64 --version
       -
         name: GitHub Release
