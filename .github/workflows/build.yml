@@ -1,0 +1,66 @@
+name: build
+
+on:
+  pull_request:
+    branches:
+      - 'master'
+  push:
+    branches:
+      - 'master'
+    tags:
+      - '*.*.*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Dump GitHub env
+        run: |
+          env
+      -
+        name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: |
+          echo "$GITHUB_CONTEXT"
+      -
+        name: Set TAG_NAME
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          echo "##[set-env name=TAG_NAME;]${GITHUB_REF#refs/tags/}"
+      -
+        # https://github.com/actions/checkout
+        name: Checkout
+        uses: actions/checkout@v1
+      -
+        name: Build
+        env:
+          GO_VERSION: 1.12.4
+          TARGETS: windows/386 windows/amd64 linux/386 linux/amd64 darwin/386 darwin/amd64
+        run: |
+          docker run --rm -i \
+            -v "$(pwd):/source" \
+            -v "$(pwd)/release:/build/github.com/${{ github.event.repository.owner.login }}" \
+            -e "GOPROXY=https://goproxy.io" \
+            -e "GO111MODULE=on" \
+            -e "TARGETS=${TARGETS}" \
+            -e "FLAG_LDFLAGS=-s -w -X main.version=${TAG_NAME:-dev}" \
+            -e "FLAG_V=false" \
+            -e "FLAG_X=false" \
+            crazymax/xgo:${GO_VERSION}
+          file release/*
+      -
+        name: Check
+        if: success()
+        run: |
+          ./release/firefox-history-merger-linux-amd64 --version
+      -
+        name: GitHub Release
+        if: success() && startsWith(github.ref, 'refs/tags/')
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          go get -u github.com/tcnksm/ghr
+          ghr --version
+          ghr -n ${TAG_NAME} -draft ${TAG_NAME} release/
