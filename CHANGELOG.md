@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.2.0 (2019/09/15)
+
+* Add implementation for Firefox 69 schema version v53
+* Switch To GitHub Actions
+
 ## 2.1.1 (2019/07/09)
 
 * Do not set origin id

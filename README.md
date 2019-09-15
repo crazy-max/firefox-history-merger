@@ -3,11 +3,11 @@
 <p align="center">
   <a href="https://github.com/crazy-max/firefox-history-merger/releases/latest"><img src="https://img.shields.io/github/release/crazy-max/firefox-history-merger.svg?style=flat-square" alt="GitHub release"></a>
   <a href="https://github.com/crazy-max/firefox-history-merger/releases/latest"><img src="https://img.shields.io/github/downloads/crazy-max/firefox-history-merger/total.svg?style=flat-square" alt="Total downloads"></a>
-  <a href="https://travis-ci.com/crazy-max/firefox-history-merger"><img src="https://img.shields.io/travis/com/crazy-max/firefox-history-merger/master.svg?style=flat-square" alt="Build Status"></a>
+  <a href="https://github.com/crazy-max/firefox-history-merger/actions"><img src="https://github.com/crazy-max/firefox-history-merger/workflows/build/badge.svg" alt="Build Status"></a>
   <a href="https://goreportcard.com/report/github.com/crazy-max/firefox-history-merger"><img src="https://goreportcard.com/badge/github.com/crazy-max/firefox-history-merger?style=flat-square" alt="Go Report"></a>
   <a href="https://www.codacy.com/app/crazy-max/firefox-history-merger"><img src="https://img.shields.io/codacy/grade/85a6dc4ddaf14aeba2c4f1876126d785.svg?style=flat-square" alt="Code Quality"></a>
-  <br /><a href="https://www.patreon.com/crazymax"><img src="https://img.shields.io/badge/donate-patreon-fb664e.svg?style=flat-square" alt="Support me on Patreon"></a>
-  <a href="https://www.paypal.me/crazyws"><img src="https://img.shields.io/badge/donate-paypal-7057ff.svg?style=flat-square" alt="Paypal"></a>
+  <a href="https://www.patreon.com/crazymax"><img src="https://img.shields.io/badge/donate-patreon-f96854.svg?logo=patreon&style=flat-square" alt="Support me on Patreon"></a>
+  <a href="https://www.paypal.me/crazyws"><img src="https://img.shields.io/badge/donate-paypal-00457c.svg?logo=paypal&style=flat-square" alt="Donate Paypal"></a>
 </p>
 
 ## About
@@ -28,7 +28,7 @@
 
 ## Requirements
 
-Schema version that can be used is **v39 (Firefox 57)** to **v52 (Firefox 68)**. Check if your `places.sqlite` is compatible with `info` command.
+Schema version that can be used is **v39 (Firefox 57)** to **v53 (Firefox 69)**. Check if your `places.sqlite` is compatible with `info` command.
 
 If your database is not compatible, you can copy your `places.sqlite` in a compatible Firefox [profile folder](https://support.mozilla.org/en-US/kb/profiles-where-firefox-stores-user-data), then launch/close Firefox and your `places.sqlite` should now be compatible. 
 
@@ -107,8 +107,8 @@ Once you create it and set it, check the value of `places.history.expiration.tra
 
 Database schema version is stored in `user_version` [pragma statement](https://sqlite.org/pragma.html). Linked Firefox version to database schema can be found in [Database.cpp](https://dxr.mozilla.org/mozilla-central/source/toolkit/components/places/Database.cpp#993).
 
-![Firefox v52 database schema](.res/schemas/v52.png)
-> [Edit this diagram](https://www.draw.io/?title=firefox_v52.png&url=https%3A%2F%2Fraw.githubusercontent.com%2Fcrazy-max%2Ffirefox-history-merger%2Fmaster%2F.res%2Fschemas%2Fv52.png%3Ft%3D0) in your browser. 
+![Firefox v53 database schema](.res/schemas/v53.png)
+> [Edit this diagram](https://www.draw.io/?title=firefox_v53.png&url=https%3A%2F%2Fraw.githubusercontent.com%2Fcrazy-max%2Ffirefox-history-merger%2Fmaster%2F.res%2Fschemas%2Fv53.png%3Ft%3D0) in your browser. 
 
 ## How can I help ?
 
@@ -117,7 +117,7 @@ The most basic way to show your support is to star :star2: the project, or to ra
 But we're not gonna lie to each other, I'd rather you buy me a beer or two :beers:!
 
 [![Support me on Patreon](.res/patreon.png)](https://www.patreon.com/crazymax) 
-[![Paypal](.res/paypal-donate.png)](https://www.paypal.me/crazyws)
+[![Paypal](.res/paypal.png)](https://www.paypal.me/crazyws)
 
 ## License
 

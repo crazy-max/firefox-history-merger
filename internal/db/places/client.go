@@ -180,5 +180,8 @@ func (c *Client) firefoxVersion() int {
 	if c.DbVersion < 52 {
 		return 61
 	}
-	return 68
+	if c.DbVersion < 53 {
+		return 62
+	}
+	return 69
 }
