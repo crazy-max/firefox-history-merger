@@ -39,8 +39,8 @@ jobs:
             -e "FLAG_V=false" \
             -e "FLAG_X=false" \
             crazymax/xgo:${GO_VERSION}
-          ls -al release/
-          file release/*
+          ls -al release/crazy-max
+          tree release/
       -
         name: Check
         if: success()
