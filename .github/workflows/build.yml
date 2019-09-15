@@ -50,7 +50,7 @@ jobs:
           GO_VERSION: 1.12.4
           TARGETS: windows/386 windows/amd64 linux/386 linux/amd64 darwin/386 darwin/amd64
         run: |
-          docker run --rm -i --user $(id -u):$(id -g) \
+          docker run --rm -i \
             -v "$(pwd):/source" \
             -v "$(pwd)/release:/build/github.com/${{ github.event.repository.owner.login }}" \
             -e "GOPROXY=https://goproxy.io" \
@@ -60,6 +60,7 @@ jobs:
             -e "FLAG_V=false" \
             -e "FLAG_X=false" \
             crazymax/xgo:${GO_VERSION}
+          sudo chmod -R $(id -u):$(id -g) *
           ls -al
           file release/*
       -
