@@ -39,10 +39,9 @@ jobs:
           GO_VERSION: 1.12.4
           TARGETS: windows/386 windows/amd64 linux/386 linux/amd64 darwin/386 darwin/amd64
         run: |
-          echo ownerlogin: '${{ github.event.repository.owner.login }}'
           docker run --rm -i \
             -v "$(pwd):/source" \
-            -v "$(pwd)/release:/build/github.com/${{ github.event.repository.owner.name }}" \
+            -v "$(pwd)/release:/build/github.com/${{ github.event.repository.owner.login }}" \
             -e "GOPROXY=https://goproxy.io" \
             -e "GO111MODULE=on" \
             -e "TARGETS=${TARGETS}" \
@@ -50,8 +49,7 @@ jobs:
             -e "FLAG_V=false" \
             -e "FLAG_X=false" \
             crazymax/xgo:${GO_VERSION}
-          ls -al release/crazy-max
-          tree release/
+          file release/*
       -
         name: Check
         if: success()
