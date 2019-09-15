@@ -15,6 +15,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       -
+        name: Dump GitHub env
+        run: |
+          env
+      -
+        name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: |
+          echo "$GITHUB_CONTEXT"
+      -
         name: Set TAG_NAME
         if: startsWith(github.ref, 'refs/tags/')
         run: |
