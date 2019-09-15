@@ -45,7 +45,7 @@ jobs:
             -e "GOPROXY=https://goproxy.io" \
             -e "GO111MODULE=on" \
             -e "TARGETS=${TARGETS}" \
-            -e "FLAG_LDFLAGS=-s -w -X main.version=${TAG_NAME}" \
+            -e "FLAG_LDFLAGS=-s -w -X main.version=${TAG_NAME:-dev}" \
             -e "FLAG_V=false" \
             -e "FLAG_X=false" \
             crazymax/xgo:${GO_VERSION}
