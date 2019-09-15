@@ -60,7 +60,7 @@ jobs:
             -e "FLAG_V=false" \
             -e "FLAG_X=false" \
             crazymax/xgo:${GO_VERSION}
-          sudo chmod -R $(id -u):$(id -g) *
+          sudo chown -R $(id -u):$(id -g) *
           ls -al
           file release/*
       -
