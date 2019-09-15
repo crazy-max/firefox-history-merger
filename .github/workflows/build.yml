@@ -36,6 +36,6 @@ jobs:
             for GOARCH in 386 amd64; do
               export GOOS GOARCH
               if [[ "$GOOS" == "windows" ]]; then EXT=.exe; else EXT=; fi
-              go build -v -s -w -X main.version=${TAG_NAME} -o firefox-history-merger-$GOOS-$GOARCH$EXT
+              go build -v -ldflags "-s -w -X main.version=${TAG_NAME}" -o firefox-history-merger-$GOOS-$GOARCH$EXT
             done
           done
