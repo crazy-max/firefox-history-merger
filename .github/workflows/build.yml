@@ -30,6 +30,11 @@ jobs:
         run: |
           echo "##[set-env name=TAG_NAME;]${GITHUB_REF#refs/tags/}"
       -
+        name: Set up Go
+        uses: actions/setup-go@master
+        with:
+          go-version: 1.12.4
+      -
         name: Set GOPATH
         # temporary fix (see https://github.com/actions/setup-go/issues/14)
         run: |
