@@ -45,28 +45,18 @@ jobs:
         name: Checkout
         uses: actions/checkout@v1
       -
-        name: Build
-        env:
-          GO_VERSION: 1.12.4
-          TARGETS: windows/386 windows/amd64 linux/386 linux/amd64 darwin/386 darwin/amd64
-        run: |
-          docker run --rm -i \
-            -v "$(pwd):/source" \
-            -v "$(pwd)/release:/build/github.com/${{ github.event.repository.owner.login }}" \
-            -e "GOPROXY=https://goproxy.io" \
-            -e "GO111MODULE=on" \
-            -e "TARGETS=${TARGETS}" \
-            -e "FLAG_LDFLAGS=-s -w -X main.version=${TAG_NAME:-dev}" \
-            -e "FLAG_V=false" \
-            -e "FLAG_X=false" \
-            crazymax/xgo:${GO_VERSION}
-          sudo chown -R $(id -u):$(id -g) *
-          ls -al
-          file release/*
+        name: Xgo
+        uses: crazy-max/ghaction-xgo@master
+        with:
+          go_version: 1.12.4
+          targets: windows/386,windows/amd64,linux/386,linux/amd64,darwin/386,darwin/amd64
+          out: build/firefox-history-merger
+          ldflags: -s -w -X main.version=${TAG_NAME:-dev}
       -
         name: Check
         if: success()
         run: |
+          file release/*
           ./release/firefox-history-merger-linux-amd64 --version
       -
         name: GitHub Release
