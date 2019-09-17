@@ -50,7 +50,7 @@ jobs:
         with:
           go_version: 1.12.4
           targets: windows/386,windows/amd64,linux/386,linux/amd64,darwin/386,darwin/amd64
-          out: build/firefox-history-merger
+          out: release/firefox-history-merger
           ldflags: -s -w -X main.version=${TAG_NAME:-dev}
       -
         name: Check
