@@ -45,7 +45,7 @@ jobs:
           go_version: 1.12.4
           targets: windows/386,windows/amd64,linux/386,linux/amd64,darwin/386,darwin/amd64
           out: release/firefox-history-merger
-          ldflags: -s -w -X main.version=${{ steps.prepare.output.tag_name }}
+          ldflags: -s -w -X main.version=${{ steps.prepare.outputs.tag_name }}
       -
         name: Check
         if: success()
@@ -60,4 +60,4 @@ jobs:
         run: |
           go get -u github.com/tcnksm/ghr
           ghr --version
-          ghr -n ${TAG_NAME} -draft ${TAG_NAME} release/
+          ghr -n ${{ steps.prepare.outputs.tag_name }} -draft ${{ steps.prepare.outputs.tag_name }} release/
