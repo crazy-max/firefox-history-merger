@@ -15,20 +15,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       -
-        name: Dump GitHub env
+        name: Prepare release
+        id: prepare
         run: |
-          env
-      -
-        name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: |
-          echo "$GITHUB_CONTEXT"
-      -
-        name: Set TAG_NAME
-        if: startsWith(github.ref, 'refs/tags/')
-        run: |
-          echo "##[set-env name=TAG_NAME;]${GITHUB_REF#refs/tags/}"
+          if [[ $GITHUB_REF == refs/tags/* ]]; then
+            echo ::set-output name=tag_name::${GITHUB_REF#refs/tags/}
+          else
+            echo ::set-output name=tag_name::snapshot
+          fi
       -
         name: Set up Go
         uses: actions/setup-go@master
@@ -51,7 +45,7 @@ jobs:
           go_version: 1.12.4
           targets: windows/386,windows/amd64,linux/386,linux/amd64,darwin/386,darwin/amd64
           out: release/firefox-history-merger
-          ldflags: -s -w -X main.version=${TAG_NAME:-dev}
+          ldflags: -s -w -X main.version=${{ steps.prepare.output.tag_name }}
       -
         name: Check
         if: success()
