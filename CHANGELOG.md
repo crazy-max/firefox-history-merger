@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.1 (2019/09/18)
+
+* Switch to [ghaction-xgo](https://github.com/crazy-max/ghaction-xgo) GitHub Action
+
 ## 2.2.0 (2019/09/15)
 
 * Add implementation for Firefox 69 schema version v53
