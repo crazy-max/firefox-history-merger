@@ -44,14 +44,18 @@ jobs:
         with:
           go_version: 1.12.4
           targets: windows/386,windows/amd64,linux/386,linux/amd64,darwin/386,darwin/amd64
-          out: release/firefox-history-merger
+          dest: release
+          prefix: firefox-history-merger
           ldflags: -s -w -X main.version=${{ steps.prepare.outputs.tag_name }}
       -
         name: Check
         if: success()
         run: |
+          ls -al
+          ls -al release/
           file release/*
           ./release/firefox-history-merger-linux-amd64 --version
+          go get -u github.com/tcnksm/ghr
       -
         name: GitHub Release
         if: success() && startsWith(github.ref, 'refs/tags/')
