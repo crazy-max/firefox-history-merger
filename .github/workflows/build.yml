@@ -24,44 +24,32 @@ jobs:
             echo ::set-output name=tag_name::snapshot
           fi
       -
-        name: Set up Go
-        uses: actions/setup-go@master
-        with:
-          go-version: 1.12.4
-      -
-        name: Set GOPATH
-        # temporary fix (see https://github.com/actions/setup-go/issues/14)
-        run: |
-          echo "##[set-env name=GOPATH;]$(dirname $GITHUB_WORKSPACE)"
-          echo "##[add-path]$(dirname $GITHUB_WORKSPACE)/bin"
-      -
         # https://github.com/actions/checkout
         name: Checkout
         uses: actions/checkout@v1
       -
+        # https://github.com/crazy-max/ghaction-xgo
         name: Xgo
         uses: crazy-max/ghaction-xgo@master
         with:
           go_version: 1.12.4
-          targets: windows/386,windows/amd64,linux/386,linux/amd64,darwin/386,darwin/amd64
           dest: release
           prefix: firefox-history-merger
+          targets: windows/386,windows/amd64,linux/386,linux/amd64,darwin/386,darwin/amd64
           ldflags: -s -w -X main.version=${{ steps.prepare.outputs.tag_name }}
       -
         name: Check
         if: success()
         run: |
-          ls -al
-          ls -al release/
-          file release/*
           ./release/firefox-history-merger-linux-amd64 --version
-          go get -u github.com/tcnksm/ghr
       -
+        # https://github.com/softprops/action-gh-release
         name: GitHub Release
+        uses: softprops/action-gh-release@v1
         if: success() && startsWith(github.ref, 'refs/tags/')
+        with:
+          draft: true
+          files: release/*
+          name: ${{ steps.prepare.outputs.tag_name }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          go get -u github.com/tcnksm/ghr
-          ghr --version
-          ghr -n ${{ steps.prepare.outputs.tag_name }} -draft ${{ steps.prepare.outputs.tag_name }} release/
