@@ -1,17 +1,17 @@
-package main
+package cmd
 
 import (
 	"os"
 	"os/signal"
 	"syscall"
 
+	"github.com/alecthomas/kingpin"
 	"github.com/crazy-max/firefox-history-merger/internal/app"
 	"github.com/crazy-max/firefox-history-merger/internal/logging"
 	"github.com/crazy-max/firefox-history-merger/internal/model"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
-	"gopkg.in/alecthomas/kingpin.v2"
 )
 
 var (
@@ -28,9 +28,9 @@ const (
 func main() {
 	var err error
 
-	cmd := kingpin.New("firefox-history-merger", "Merge Firefox history and repair missing favicons with ease.")
+	cmd := kingpin.New("firefox-history-merger", "Merge Firefox history and repair missing favicons with ease.\nMoreinfo: https://github.com/crazy-max/firefox-history-merger")
 	cmd.Flag("log-level", "Set log level.").Default(zerolog.InfoLevel.String()).StringVar(&flags.LogLevel)
-	cmd.Flag("log-caller", "Enable to add file:line of the caller.").Envar("LOG_CALLER").Default("false").BoolVar(&flags.LogCaller)
+	cmd.Flag("log-caller", "Enable to add file:line of the caller.").Default("false").BoolVar(&flags.LogCaller)
 	cmd.UsageTemplate(kingpin.CompactUsageTemplate).Version(version).Author("CrazyMax")
 
 	info := cmd.Command("info", "Display info about places database.")
