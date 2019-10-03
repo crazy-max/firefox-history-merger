@@ -32,7 +32,7 @@ jobs:
         name: Xgo
         uses: crazy-max/ghaction-xgo@master
         with:
-          go_version: 1.12.4
+          go_version: 1.12.10
           dest: release
           prefix: firefox-history-merger
           targets: windows/386,windows/amd64,linux/386,linux/amd64,darwin/386,darwin/amd64
