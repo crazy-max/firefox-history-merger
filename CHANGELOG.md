@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.3.0 (2019/11/03)
+
+* Same schema (v53) for Firefox 70
+
 ## 2.2.2 (2019/09/19)
 
 * Use softprops/action-gh-release to create GitHub release
