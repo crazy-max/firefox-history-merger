@@ -10,7 +10,7 @@ import (
 	"github.com/crazy-max/firefox-history-merger/internal/db/places"
 	"github.com/crazy-max/firefox-history-merger/internal/utl"
 	"github.com/mat/besticon/besticon"
-	"github.com/panjf2000/ants"
+	"github.com/panjf2000/ants/v2"
 	"github.com/rs/zerolog/log"
 )
 
