@@ -1,5 +1,7 @@
 module github.com/crazy-max/firefox-history-merger
 
+go 1.12
+
 require (
 	github.com/PuerkitoBio/goquery v1.5.0 // indirect
 	github.com/alecthomas/kingpin v0.0.0-20190930021037-0a108b7f5563
