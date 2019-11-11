@@ -2,18 +2,31 @@ name: build
 
 on:
   pull_request:
-    branches:
-      - 'master'
+    branches: 'master'
+    paths:
+      - '.github/workflows/build.yml'
+      - 'internal/**'
+      - '*.go'
+      - 'go.mod'
+      - 'go.sum'
   push:
-    branches:
-      - 'master'
-    tags:
-      - '*.*.*'
+    branches: 'master'
+    tags: '*.*.*'
+    paths:
+      - '.github/workflows/build.yml'
+      - 'internal/**'
+      - '*.go'
+      - 'go.mod'
+      - 'go.sum'
 
 jobs:
   release:
     runs-on: ubuntu-latest
     steps:
+      -
+        # https://github.com/actions/checkout
+        name: Checkout
+        uses: actions/checkout@v1
       -
         name: Prepare release
         id: prepare
@@ -23,10 +36,6 @@ jobs:
           else
             echo ::set-output name=tag_name::snapshot
           fi
-      -
-        # https://github.com/actions/checkout
-        name: Checkout
-        uses: actions/checkout@v1
       -
         # https://github.com/crazy-max/ghaction-xgo
         name: Xgo
