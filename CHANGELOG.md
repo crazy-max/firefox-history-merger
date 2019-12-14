@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.4.0 (2019/12/15)
+
+* Same schema (v53) for Firefox 71
+* Go 1.13
+
 ## 2.3.0 (2019/11/03)
 
 * Same schema (v53) for Firefox 70
