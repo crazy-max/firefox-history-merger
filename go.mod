@@ -1,6 +1,6 @@
 module github.com/crazy-max/firefox-history-merger
 
-go 1.12
+go 1.13
 
 require (
 	github.com/PuerkitoBio/goquery v1.5.0 // indirect
@@ -11,5 +11,5 @@ require (
 	github.com/panjf2000/ants/v2 v2.2.2
 	github.com/rs/zerolog v1.17.2
 	github.com/vcraescu/go-paginator v0.0.0-20190303111026-ea6b7cb2aa93
-	golang.org/x/image v0.0.0-20191009234506-e7c1f5e7dbb8 // indirect
+	golang.org/x/image v0.0.0-20191214001246-9130b4cfad52 // indirect
 )
