@@ -12,7 +12,7 @@
 
 ## About
 
-**firefox-history-merger** is a CLI application written in [Go](https://golang.org/) to merge history of 🦊 [Firefox](https://www.mozilla.org/en-US/firefox/) and repair missing favicons with ease.
+**firefox-history-merger** is a CLI application written in [Go](https://golang.org/) to merge history of [Firefox](https://www.mozilla.org/en-US/firefox/) and repair missing favicons with ease.
 
 ![](.res/screenshot.png)
 > Screenshot of firefox-history-merger
@@ -28,7 +28,7 @@
 
 ## Requirements
 
-Schema version that can be used is **v39 (Firefox 57)** to **v53 (Firefox 71)**. Check if your `places.sqlite` is compatible with `info` command.
+Schema version that can be used is **v39 (Firefox 57)** to **v53 (Firefox 72)**. Check if your `places.sqlite` is compatible with `info` command.
 
 If your database is not compatible, you can copy your `places.sqlite` in a compatible Firefox [profile folder](https://support.mozilla.org/en-US/kb/profiles-where-firefox-stores-user-data), then launch/close Firefox and your `places.sqlite` should now be compatible. 
 
