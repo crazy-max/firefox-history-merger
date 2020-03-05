@@ -28,7 +28,7 @@
 
 ## Requirements
 
-Schema version that can be used is **v39 (Firefox 57)** to **v53 (Firefox 72)**. Check if your `places.sqlite` is compatible with `info` command.
+Schema version that can be used is **v39 (Firefox 57)** to **v53 (Firefox 73)**. Check if your `places.sqlite` is compatible with `info` command.
 
 If your database is not compatible, you can copy your `places.sqlite` in a compatible Firefox [profile folder](https://support.mozilla.org/en-US/kb/profiles-where-firefox-stores-user-data), then launch/close Firefox and your `places.sqlite` should now be compatible. 
 
