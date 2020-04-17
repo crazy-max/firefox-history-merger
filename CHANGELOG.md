@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.7.0 (2020/04/17)
+
+* Same schema (v53) for Firefox 74
+* Bump deps
+
 ## 2.6.0 (2020/03/05)
 
 * Same schema (v53) for Firefox 73
