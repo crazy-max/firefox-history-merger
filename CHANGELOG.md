@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.8.0 (2020/04/17)
+
+* Same schema (v53) for Firefox 75
+
 ## 2.7.0 (2020/04/17)
 
 * Same schema (v53) for Firefox 74
