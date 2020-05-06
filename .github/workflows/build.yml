@@ -26,7 +26,7 @@ jobs:
       -
         # https://github.com/actions/checkout
         name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
       -
         name: Prepare release
         id: prepare
@@ -39,7 +39,7 @@ jobs:
       -
         # https://github.com/crazy-max/ghaction-xgo
         name: Xgo
-        uses: crazy-max/ghaction-xgo@master
+        uses: crazy-max/ghaction-xgo@v1
         with:
           go_version: 1.13.x
           dest: release
