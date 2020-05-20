@@ -17,6 +17,21 @@
 ![](.res/screenshot.png)
 > Screenshot of firefox-history-merger
 
+___
+
+* [Features](#features)
+* [Requirements](#requirements)
+* [Download](#download)
+* [Usage](#usage)
+  * [Info](#info)
+  * [Merge](#merge)
+  * [Repair favicons](#repair-favicons)
+* [About Firefox places](#about-firefox-places)
+  * [Places expiration limit](#places-expiration-limit)
+  * [Databases schema](#databases-schema)
+* [How can I help?](#how-can-i-help)
+* [License](#license)
+
 ## Features
 
 * Merge history (`moz_places`) from `places.sqlite` file
@@ -110,7 +125,7 @@ Database schema version is stored in `user_version` [pragma statement](https://s
 ![Firefox v53 database schema](.res/schemas/v53.png)
 > [Edit this diagram](https://www.draw.io/?title=firefox_v53.png&url=https%3A%2F%2Fraw.githubusercontent.com%2Fcrazy-max%2Ffirefox-history-merger%2Fmaster%2F.res%2Fschemas%2Fv53.png%3Ft%3D0) in your browser. 
 
-## How can I help ?
+## How can I help?
 
 All kinds of contributions are welcome :raised_hands:! The most basic way to show your support is to star :star2: the project, or to raise issues :speech_balloon: You can also support this project by [**becoming a sponsor on GitHub**](https://github.com/sponsors/crazy-max) :clap: or by making a [Paypal donation](https://www.paypal.me/crazyws) to ensure this journey continues indefinitely! :rocket:
 
