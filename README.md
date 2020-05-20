@@ -3,7 +3,7 @@
 <p align="center">
   <a href="https://github.com/crazy-max/firefox-history-merger/releases/latest"><img src="https://img.shields.io/github/release/crazy-max/firefox-history-merger.svg?style=flat-square" alt="GitHub release"></a>
   <a href="https://github.com/crazy-max/firefox-history-merger/releases/latest"><img src="https://img.shields.io/github/downloads/crazy-max/firefox-history-merger/total.svg?style=flat-square" alt="Total downloads"></a>
-  <a href="https://github.com/crazy-max/firefox-history-merger/actions"><img src="https://github.com/crazy-max/firefox-history-merger/workflows/build/badge.svg" alt="Build Status"></a>
+  <a href="https://github.com/crazy-max/firefox-history-merger/actions?workflow=build"><img src="https://img.shields.io/github/workflow/status/crazy-max/firefox-history-merger/build?label=build&logo=github&style=flat-square" alt="Build Status"></a>
   <a href="https://goreportcard.com/report/github.com/crazy-max/firefox-history-merger"><img src="https://goreportcard.com/badge/github.com/crazy-max/firefox-history-merger?style=flat-square" alt="Go Report"></a>
   <a href="https://www.codacy.com/app/crazy-max/firefox-history-merger"><img src="https://img.shields.io/codacy/grade/85a6dc4ddaf14aeba2c4f1876126d785.svg?style=flat-square" alt="Code Quality"></a>
   <br /><a href="https://github.com/sponsors/crazy-max"><img src="https://img.shields.io/badge/sponsor-crazy--max-181717.svg?logo=github&style=flat-square" alt="Become a sponsor"></a>
