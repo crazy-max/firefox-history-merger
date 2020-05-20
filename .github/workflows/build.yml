@@ -24,7 +24,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       -
-        # https://github.com/actions/checkout
         name: Checkout
         uses: actions/checkout@v2
       -
@@ -37,7 +36,6 @@ jobs:
             echo ::set-output name=tag_name::snapshot
           fi
       -
-        # https://github.com/crazy-max/ghaction-xgo
         name: Xgo
         uses: crazy-max/ghaction-xgo@v1
         with:
@@ -52,7 +50,6 @@ jobs:
         run: |
           ./release/firefox-history-merger-linux-amd64 --version
       -
-        # https://github.com/softprops/action-gh-release
         name: GitHub Release
         uses: softprops/action-gh-release@v1
         if: success() && startsWith(github.ref, 'refs/tags/')
