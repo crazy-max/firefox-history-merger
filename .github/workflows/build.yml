@@ -6,7 +6,7 @@ on:
       - 'master'
       - 'v*'
     tags:
-      - 'v*'
+      - '*.*.*'
     paths-ignore:
       - '**.md'
   pull_request:
