@@ -1,6 +1,10 @@
 # Changelog
 
-## 2.9.0 (2020/06/17)
+## 2.10.0 (2020/06/27)
+
+* Same schema (v53) for Firefox 77
+
+## 2.9.0 (2020/06/27)
 
 * Same schema (v53) for Firefox 76
 * Update deps
