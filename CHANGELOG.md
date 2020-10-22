@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.11.0 (2020/10/22)
+
+* Same schema (v53) for Firefox 78
+
 ## 2.10.0 (2020/06/27)
 
 * Same schema (v53) for Firefox 77
