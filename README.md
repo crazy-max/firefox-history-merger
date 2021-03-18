@@ -12,7 +12,8 @@
 
 ## About
 
-**firefox-history-merger** is a CLI application written in [Go](https://golang.org/) to merge history of [Firefox](https://www.mozilla.org/en-US/firefox/) and repair missing favicons with ease.
+**firefox-history-merger** is a CLI application written in [Go](https://golang.org/) to merge history
+of [Firefox](https://www.mozilla.org/en-US/firefox/) and repair missing favicons with ease.
 
 ![](.res/screenshot.png)
 > Screenshot of firefox-history-merger
@@ -43,19 +44,24 @@ ___
 
 ## Requirements
 
-Schema version that can be used is **v39 (Firefox 57)** to **v53 (Firefox 81)**. Check if your `places.sqlite` is compatible with `info` command.
+Schema version that can be used is **v39 (Firefox 57)** to **v53 (Firefox 81)**. Check if your `places.sqlite` is
+compatible with `info` command.
 
-If your database is not compatible, you can copy your `places.sqlite` in a compatible Firefox [profile folder](https://support.mozilla.org/en-US/kb/profiles-where-firefox-stores-user-data), then launch/close Firefox and your `places.sqlite` should now be compatible. 
+If your database is not compatible, you can copy your `places.sqlite` in a compatible Firefox
+[profile folder](https://support.mozilla.org/en-US/kb/profiles-where-firefox-stores-user-data), then launch/close
+Firefox and your `places.sqlite` should now be compatible. 
 
 ## Download
 
-You can download the application matching your platform on the [**releases page**](https://github.com/crazy-max/firefox-history-merger/releases/latest).
+You can download the application matching your platform on the
+[**releases page**](https://github.com/crazy-max/firefox-history-merger/releases/latest).
 
 ## Usage
 
-First close Firefox and copy `places.sqlite` and `favicons.sqlite` files from [your Firefox profile folder](https://support.mozilla.org/en-US/kb/profiles-where-firefox-stores-user-data) somewhere.
+First close Firefox and copy `places.sqlite` and `favicons.sqlite` files from
+[your Firefox profile folder](https://support.mozilla.org/en-US/kb/profiles-where-firefox-stores-user-data) somewhere.
 
-In the following examples, this folder structure will be used :
+In the following examples, this folder structure will be used:
 
 ```
 favicons.sqlite
@@ -79,7 +85,7 @@ Sun, 23 Jun 2019 03:43:48 CEST INF Last used on:           2019-06-21 02:31:46
 
 ### Merge
 
-Now execute this command to merge `places_to_merge.sqlite` with your working `places.sqlite` :
+Now execute this command to merge `places_to_merge.sqlite` with your working `places.sqlite`:
 
 ```
 $ firefox-history-merger merge places.sqlite places_to_merge.sqlite
@@ -96,7 +102,8 @@ Sun, 23 Jun 2019 04:34:09 CEST INF Finished created=4478 errors=0 total=5199 upd
 
 ### Repair favicons
 
-If you want you can also repair missing favicons. It can take a long time depending on the number of entries in your history, since the favicon will be recovered for each entry if there is no attached favicon.
+If you want you can also repair missing favicons. It can take a long time depending on the number of entries in your
+history, since the favicon will be recovered for each entry if there is no attached favicon.
 
 ```
 $ firefox-history-merger repair-favicons places.sqlite favicons.sqlite
@@ -112,26 +119,39 @@ Sun, 23 Jun 2019 04:32:54 CEST INF Finished errors=618 linked=873 repaired=402 s
 
 ### Places expiration limit
 
-As stipulated in this [StackExchange thread](https://superuser.com/questions/895302/how-do-i-set-max-browsing-history-size/995459#995459), the relevant function is `_loadPrefs()` in [nsPlacesExpiration.js](https://dxr.mozilla.org/mozilla-central/source/toolkit/components/places/nsPlacesExpiration.js#714). It tries to determine the limit by first checking `PREF_MAX_URIS` (which is `"max_pages"`). If `PREF_MAX_URIS` isn't set or is a negative value, it then attempts to calculate the 'optimal database size' based on available memory and disk space.
+As stipulated in this [StackExchange thread](https://superuser.com/questions/895302/how-do-i-set-max-browsing-history-size/995459#995459),
+the relevant function is `_loadPrefs()` in
+[nsPlacesExpiration.js](https://dxr.mozilla.org/mozilla-central/source/toolkit/components/places/nsPlacesExpiration.js#714).
+It tries to determine the limit by first checking `PREF_MAX_URIS` (which is `"max_pages"`). If `PREF_MAX_URIS` isn't
+set or is a negative value, it then attempts to calculate the 'optimal database size' based on available memory
+and disk space.
 
-So if you want to retain all history ('infinite' history), you could set `places.history.expiration.max_pages` to 2147483647 (the highest 32-bit signed integer) in `about:config`.
+So if you want to retain all history ('infinite' history), you could set `places.history.expiration.max_pages`
+to 2147483647 (the highest 32-bit signed integer) in `about:config`.
 
-Once you create it and set it, check the value of `places.history.expiration.transient_current_max_pages`. It should automatically adjust itself to match your `max_pages` setting. 
+Once you create it and set it, check the value of `places.history.expiration.transient_current_max_pages`.
+It should automatically adjust itself to match your `max_pages` setting. 
 
 ### Databases schema
 
-Database schema version is stored in `user_version` [pragma statement](https://sqlite.org/pragma.html). Linked Firefox version to database schema can be found in [Database.cpp](https://dxr.mozilla.org/mozilla-central/source/toolkit/components/places/Database.cpp#993).
+Database schema version is stored in `user_version` [pragma statement](https://sqlite.org/pragma.html). Linked
+Firefox version to database schema can be found in
+[Database.cpp](https://dxr.mozilla.org/mozilla-central/source/toolkit/components/places/Database.cpp#993).
 
 ![Firefox v53 database schema](.res/schemas/v53.png)
 > [Edit this diagram](https://www.draw.io/?title=firefox_v53.png&url=https%3A%2F%2Fraw.githubusercontent.com%2Fcrazy-max%2Ffirefox-history-merger%2Fmaster%2F.res%2Fschemas%2Fv53.png%3Ft%3D0) in your browser. 
 
 ## How can I help?
 
-All kinds of contributions are welcome :raised_hands:! The most basic way to show your support is to star :star2: the project, or to raise issues :speech_balloon: You can also support this project by [**becoming a sponsor on GitHub**](https://github.com/sponsors/crazy-max) :clap: or by making a [Paypal donation](https://www.paypal.me/crazyws) to ensure this journey continues indefinitely! :rocket:
+All kinds of contributions are welcome :raised_hands:! The most basic way to show your support is to star :star2:
+the project, or to raise issues :speech_balloon: You can also support this project by
+[**becoming a sponsor on GitHub**](https://github.com/sponsors/crazy-max) :clap: or by making a
+[Paypal donation](https://www.paypal.me/crazyws) to ensure this journey continues indefinitely! :rocket:
 
 Thanks again for your support, it is much appreciated! :pray:
 
 ## License
 
 MIT. See `LICENSE` for more details.<br />
-Icon credit to [Zlatko Najdenovski](http://pixelbazaar.com/) (firefox icon) and [BomSymbols](https://creativemarket.com/BomSymbols) (clock icon).
+Icon credit to [Zlatko Najdenovski](http://pixelbazaar.com/) (firefox icon)
+and [BomSymbols](https://creativemarket.com/BomSymbols) (clock icon).
