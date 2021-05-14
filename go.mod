@@ -9,7 +9,7 @@ require (
 	github.com/jinzhu/gorm v1.9.16
 	github.com/mat/besticon v3.12.0+incompatible
 	github.com/panjf2000/ants/v2 v2.4.3
-	github.com/rs/zerolog v1.21.0
+	github.com/rs/zerolog v1.22.0
 	github.com/vcraescu/go-paginator v0.0.0-20190303111026-ea6b7cb2aa93
 	golang.org/x/image v0.0.0-20191214001246-9130b4cfad52 // indirect
 )
