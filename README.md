@@ -54,7 +54,18 @@ Firefox and your `places.sqlite` should now be compatible.
 
 You can download the application matching your platform on the
 [**releases page**](https://github.com/crazy-max/firefox-history-merger/releases/latest).
+## Compile
+1. Install golang
+	* Ubuntu: `sudo apt install golang -y`
+	* macOS (Homebrew): `brew install golang`
+2. Download and build:
+```
+git clone --depth 1 https://github.com/crazy-max/firefox-history-merger.git
+cd firefox-history-merger
+go build
+```
 
+ 
 ## Usage
 
 First close Firefox and copy `places.sqlite` and `favicons.sqlite` files from
