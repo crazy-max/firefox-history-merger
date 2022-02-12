@@ -64,7 +64,7 @@ git clone --depth 1 https://github.com/crazy-max/firefox-history-merger.git
 cd firefox-history-merger
 go build
 ```
-
+3. Give it permission to run: `sudo chmod 755 ./firefox-history-merger`
  
 ## Usage
 
@@ -164,3 +164,4 @@ Thanks again for your support, it is much appreciated! :pray:
 MIT. See `LICENSE` for more details.<br />
 Icon credit to [Zlatko Najdenovski](http://pixelbazaar.com/) (firefox icon)
 and [BomSymbols](https://creativemarket.com/BomSymbols) (clock icon).
+
