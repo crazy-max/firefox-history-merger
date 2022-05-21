@@ -36,7 +36,7 @@ ___
 
 * Merge history (`moz_places`) from `places.sqlite` file
 * `moz_historyvisits` are also merged
-* [Frecency](https://developer.mozilla.org/en-US/docs/Mozilla/Tech/Places/Frecency_algorithm) is recalculated during the merge
+* [Frecency](https://web.archive.org/web/20210421120120/https://developer.mozilla.org/en-US/docs/Mozilla/Tech/Places/Frecency_algorithm) is recalculated during the merge
 * Repair favicons
 * Display info about `places.sqlite`
 * Optimize database into a minimal amount of disk space
