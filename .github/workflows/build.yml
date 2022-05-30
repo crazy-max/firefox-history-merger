@@ -34,7 +34,7 @@ jobs:
           fi
       -
         name: Xgo
-        uses: crazy-max/ghaction-xgo@v1
+        uses: crazy-max/ghaction-xgo@v2
         with:
           go_version: 1.13.x
           dest: release
