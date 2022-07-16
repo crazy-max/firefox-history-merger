@@ -8,7 +8,7 @@ require (
 	github.com/golang/protobuf v1.4.2 // indirect
 	github.com/jinzhu/gorm v1.9.16
 	github.com/mat/besticon v3.12.0+incompatible
-	github.com/panjf2000/ants/v2 v2.4.6
+	github.com/panjf2000/ants/v2 v2.5.0
 	github.com/rs/zerolog v1.27.0
 	github.com/vcraescu/go-paginator v0.0.0-20190303111026-ea6b7cb2aa93
 	golang.org/x/crypto v0.0.0-20211215165025-cf75a172585e // indirect
